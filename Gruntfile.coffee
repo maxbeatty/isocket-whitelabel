@@ -1,6 +1,4 @@
-# Generated on 2013-03-11 using generator-webapp 0.1.5
-'use strict';
-lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
+lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet
 
 mountFolder = (connect, dir) ->
   connect.static require('path').resolve(dir)
@@ -16,14 +14,15 @@ module.exports = (grunt) ->
 
   grunt.initConfig
     yeoman: yeomanConfig
+
     watch:
       coffee:
         files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee']
-        tasks: ['coffee:dist']
+        tasks: ['coffeelint', 'coffee:dist']
 
       coffeeTest:
         files: ['test/spec/{,*/}*.coffee']
-        tasks: ['coffee:test']
+        tasks: ['coffeelint', 'coffee:test']
 
       compass:
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}']
@@ -75,7 +74,6 @@ module.exports = (grunt) ->
       options:
         jshintrc: '.jshintrc'
       all: [
-        'Gruntfile.js',
         '<%= yeoman.app %>/scripts/{,*/}*.js',
         '!<%= yeoman.app %>/scripts/vendor/*',
         'test/spec/{,*/}*.js'
@@ -103,6 +101,11 @@ module.exports = (grunt) ->
           src: '*.coffee',
           dest: 'test/spec'
         ]
+    coffeelint:
+      dist: [
+        'Gruntfile.coffee',
+        '<%= yeoman.app %>/scripts/*.coffee'
+        ]
     compass:
       options:
         sassDir: '<%= yeoman.app %>/styles'
@@ -122,9 +125,9 @@ module.exports = (grunt) ->
     concat:
         dist: {}
     ###
+    # Ref: https://github.com/jrburke/r.js/blob/master/build/example.build.js
     requirejs:
       dist:
-        # Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
         options:
           # `name` and `out` is set by grunt-usemin
           baseUrl: 'app/scripts'
@@ -139,14 +142,14 @@ module.exports = (grunt) ->
           wrap: true
           # uglify2: {} // https://github.com/mishoo/UglifyJS2
     useminPrepare:
-        html: '<%= yeoman.app %>/index.html'
-        options:
-          dest: '<%= yeoman.dist %>'
+      html: '<%= yeoman.app %>/index.html'
+      options:
+        dest: '<%= yeoman.dist %>'
     usemin:
-        html: ['<%= yeoman.dist %>/{,*/}*.html']
-        css: ['<%= yeoman.dist %>/styles/{,*/}*.css']
-        options:
-          dirs: ['<%= yeoman.dist %>']
+      html: ['<%= yeoman.dist %>/{,*/}*.html']
+      css: ['<%= yeoman.dist %>/styles/{,*/}*.css']
+      options:
+        dirs: ['<%= yeoman.dist %>']
     imagemin:
       dist:
         files: [
@@ -170,37 +173,36 @@ module.exports = (grunt) ->
           src: '*.html'
           dest: '<%= yeoman.dist %>'
         ]
-    copy:
-      dist:
-        files: [
-          expand: true
-          dot: true
-          cwd: '<%= yeoman.app %>'
-          dest: '<%= yeoman.dist %>'
-          src: [
-            '*.{ico,txt}'
-            '.htaccess'
-          ]
-        ]
     bower:
       all:
         rjsConfig: '<%= yeoman.app %>/scripts/main.js'
+    s3:
+      key: "***REMOVED***"
+      secret: '***REMOVED***'
+      bucket: 'buyads-whitelabel'
+      access: 'public-read'
+      upload: [
+        src: 'app/scripts/main.js'
+        dest: 'main.js'
+        gzip: true
+      ]
+
 
   grunt.renameTask 'regarde', 'watch'
 
   grunt.registerTask 'server', (target) ->
-      if target is 'dist'
-        return grunt.task.run ['build', 'open', 'connect:dist:keepalive']
+    if target is 'dist'
+      return grunt.task.run ['build', 'open', 'connect:dist:keepalive']
 
-      grunt.task.run [
-        'clean:server',
-        'coffee:dist',
-        'compass:server',
-        'livereload-start',
-        'connect:livereload',
-        'open',
-        'watch'
-      ]
+    grunt.task.run [
+      'clean:server',
+      'coffee:dist',
+      'compass:server',
+      'livereload-start',
+      'connect:livereload',
+      'open',
+      'watch'
+    ]
 
   grunt.registerTask 'test', [
     'clean:server',
@@ -221,12 +223,12 @@ module.exports = (grunt) ->
     'concat',
     'cssmin',
     'uglify',
-    'copy',
     'usemin'
   ]
 
   grunt.registerTask 'default', [
       'jshint',
+      'coffeelint',
       'test',
       'build'
   ]

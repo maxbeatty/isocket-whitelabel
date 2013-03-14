@@ -204,6 +204,9 @@ module.exports = (grunt) ->
       'watch'
     ]
 
+  grunt.registerTask 'deploy', (user) ->
+    grunt.task.run ['s3'] if user is 'jenkins'
+
   grunt.registerTask 'test', [
     'clean:server',
     'coffee',

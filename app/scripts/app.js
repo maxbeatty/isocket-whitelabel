@@ -1,6 +1,15 @@
 /*global define */
-define([], function () {
-    'use strict';
+'use strict';
 
-    return '\'Allo \'Allo!';
-});
+define([
+  // components
+], function () {
+
+    var initialize = function () {
+      console.log('hello');
+    };
+
+    return {
+      initialize: initialize
+    };
+  });

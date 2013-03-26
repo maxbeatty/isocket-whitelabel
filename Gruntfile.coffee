@@ -15,7 +15,7 @@ module.exports = (grunt) ->
   grunt.initConfig
     yeoman: yeomanConfig
 
-    watch:
+    regarde:
       coffee:
         files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee']
         tasks: ['coffeelint', 'coffee:dist']
@@ -84,6 +84,8 @@ module.exports = (grunt) ->
           run: true
           urls: ['http://localhost:<%= connect.options.port %>/index.html']
     coffee:
+      options:
+        bare: true
       dist:
         files: [
           # rather than compiling multiple files here you should
@@ -119,18 +121,16 @@ module.exports = (grunt) ->
       server:
         options:
           debugInfo: true
-    ###
-    # not used since Uglify task does concat,
-    # but still available if needed
-    concat:
-        dist: {}
-    ###
+
     # Ref: https://github.com/jrburke/r.js/blob/master/build/example.build.js
     requirejs:
       dist:
         options:
-          # `name` and `out` is set by grunt-usemin
+          # `name`, `out`, and `mainConfigFile` set by grunt-usemin
           baseUrl: 'app/scripts'
+          paths:
+            requireLib: '../components/requirejs/require'
+          include: 'requireLib'
           optimize: 'none'
           # TODO: Figure out how to make sourcemaps work with grunt-usemin
           # https://github.com/yeoman/grunt-usemin/issues/30
@@ -142,7 +142,7 @@ module.exports = (grunt) ->
           wrap: true
           # uglify2: {} // https://github.com/mishoo/UglifyJS2
     useminPrepare:
-      html: '<%= yeoman.app %>/index.html'
+      html: '<%= yeoman.app %>/_build.html'
       options:
         dest: '<%= yeoman.dist %>'
     usemin:
@@ -173,22 +173,25 @@ module.exports = (grunt) ->
           src: '*.html'
           dest: '<%= yeoman.dist %>'
         ]
-    bower:
-      all:
-        rjsConfig: '<%= yeoman.app %>/scripts/main.js'
+
     s3:
       key: "***REMOVED***"
       secret: '***REMOVED***'
       bucket: 'buyads-whitelabel'
       access: 'public-read'
-      upload: [
-        src: 'app/scripts/main.js'
-        dest: 'main.js'
+      upload: [{
+        src: '<%= yeoman.dist %>/scripts/front.js'
+        dest: 'front.js'
         gzip: true
+      },
+      {
+        src: '<%= coffee.dist.files[0].dest %>/store.js'
+        dest: 'store.js'
+        gzip: true
+      }
       ]
 
 
-  grunt.renameTask 'regarde', 'watch'
 
   grunt.registerTask 'server', (target) ->
     if target is 'dist'
@@ -201,7 +204,7 @@ module.exports = (grunt) ->
       'livereload-start',
       'connect:livereload',
       'open',
-      'watch'
+      'regarde'
     ]
 
   grunt.registerTask 'deploy', (user) ->

@@ -22,10 +22,10 @@ if [ $? -ne 0 ]; then
   exit 1;
 fi
 
-if [ $# -lt 2 ] || [[ $2 =~ ^(major|minor|patch|build)$ ]]; then
-  release=$2
-else
+if [ $# -lt 2 ] || ! [[ $2 =~ ^(major|minor|patch|build)$ ]]; then
   release="build"
+else
+  release=$2
 fi
 
 grunt deploy:$USER:$1:$release

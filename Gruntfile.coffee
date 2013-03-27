@@ -9,11 +9,17 @@ module.exports = (grunt) ->
 
   # configurable paths
   yeomanConfig =
-      app: 'app'
-      dist: 'dist'
+    app: 'app'
+    dist: 'dist'
+
+  isocketConfig =
+    api: 'v0'
+    dev: 'whitelabel.dev'
+    prod: 'whitelabel.buyads.com'
 
   grunt.initConfig
     yeoman: yeomanConfig
+    isocket: isocketConfig
 
     regarde:
       coffee:
@@ -126,21 +132,26 @@ module.exports = (grunt) ->
     requirejs:
       dist:
         options:
-          # `name`, `out`, and `mainConfigFile` set by grunt-usemin
-          baseUrl: 'app/scripts'
+          baseUrl: '.tmp/scripts'
           paths:
-            requireLib: '../components/requirejs/require'
+            requireLib: '../../components/requirejs/require'
           include: 'requireLib'
-          optimize: 'none'
-          # TODO: Figure out how to make sourcemaps work with grunt-usemin
-          # https://github.com/yeoman/grunt-usemin/issues/30
-          #generateSourceMaps: true,
-          # required to support SourceMaps
-          # http://requirejs.org/docs/errors.html#sourcemapcomments
+          optimize: 'uglify2'
+          generateSourceMaps: true
           preserveLicenseComments: false
           useStrict: true
           wrap: true
-          # uglify2: {} // https://github.com/mishoo/UglifyJS2
+          name: 'front'
+          out: '<%= yeoman.dist %>/scripts/front.js'
+          mainConfigFile: '.tmp/scripts/front.js'
+    uglify:
+      options:
+        mangle:
+          except: ['jQuery']
+        compress: true
+      dist:
+        files:
+          'dist/scripts/store.js': ['dist/scripts/store.js']
     useminPrepare:
       html: '<%= yeoman.app %>/_build.html'
       options:
@@ -181,39 +192,81 @@ module.exports = (grunt) ->
       access: 'public-read'
       upload: [{
         src: '<%= yeoman.dist %>/scripts/front.js'
-        dest: 'front.js'
+        dest: '<%= isocket.api %>/<%= build %>/front.js'
         gzip: true
+        headers:
+          "Cache-Control": "max-age=94608000" # 3 years
       },
       {
-        src: '<%= coffee.dist.files[0].dest %>/store.js'
-        dest: 'store.js'
+        src: '<%= yeoman.dist %>/scripts/store.js'
+        dest: '<%= isocket.api %>/store.js'
         gzip: true
       }
       ]
 
+    bumpup:
+      files: [ 'package.json', 'component.json' ]
+    tagrelease:
+      file: 'package.json'
+
+    replace:
+      dist:
+        options:
+          variables:
+            'BUILD': '<%= build %>'
+            'CDN': '<%= isocket.prod %>'
+            'VERSION': '<%= isocket.api %>'
+        files: [
+          expand: true
+          flatten: true
+          src: ['<%= yeoman.dist %>/scripts/store.js']
+          dest: '<%= yeoman.dist %>/scripts/'
+        ]
+      server:
+        options:
+          variables:
+            'BUILD': 'scripts'
+            'CDN': '<%= isocket.dev %>'
+            'VERSION': '<%= yeoman.dist %>'
+        files: [
+          expand: true
+          flatten: true
+          src: ['<%= yeoman.dist %>/scripts/store.js']
+          dest: '<%= yeoman.dist %>/scripts/'
+        ]
 
 
   grunt.registerTask 'server', (target) ->
     if target is 'dist'
-      return grunt.task.run ['build', 'open', 'connect:dist:keepalive']
+      return grunt.task.run ['build', 'replace:server', 'open', 'connect:dist:keepalive']
 
     grunt.task.run [
       'clean:server',
       'coffee:dist',
-      'compass:server',
+      # 'compass:server',
       'livereload-start',
       'connect:livereload',
       'open',
       'regarde'
     ]
 
-  grunt.registerTask 'deploy', (user) ->
-    grunt.task.run ['s3'] if user is 'jenkins'
+  grunt.registerTask 'deploy', (user, build, type) ->
+    releaseTypes = ["major","minor", "patch", "build"]
+
+    if user is 'jenkins' and !isNaN(build) and releaseTypes.indexOf(type) != -1
+      grunt.config.set "build", build
+
+      grunt.task.run [
+        'replace:dist',
+        'bumpup:' + type,
+        'tagrelease',
+        's3'
+      ]
 
   grunt.registerTask 'test', [
     'clean:server',
     'coffee',
-    'compass',
+    # 'compass',
     'connect:test',
     'mocha'
   ]
@@ -221,20 +274,20 @@ module.exports = (grunt) ->
   grunt.registerTask 'build', [
     'clean:dist',
     'coffee',
-    'compass:dist',
+    # 'compass:dist',
     'useminPrepare',
     'requirejs',
     'imagemin',
     'htmlmin',
     'concat',
     'cssmin',
-    'uglify',
+    'uglify:dist',
     'usemin'
   ]
 
   grunt.registerTask 'default', [
-      'jshint',
-      'coffeelint',
-      'test',
-      'build'
+    'jshint',
+    'coffeelint',
+    'test',
+    'build'
   ]

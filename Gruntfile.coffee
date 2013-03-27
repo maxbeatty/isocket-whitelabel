@@ -192,7 +192,7 @@ module.exports = (grunt) ->
       access: 'public-read'
       upload: [{
         src: '<%= yeoman.dist %>/scripts/front.js'
-        dest: '<%= isocket.api %>/<%= grunt.option("build") %>/front.js'
+        dest: '<%= isocket.api %>/<%= build %>/front.js'
         gzip: true
         headers:
           "Cache-Control": "max-age=94608000" # 3 years
@@ -213,7 +213,7 @@ module.exports = (grunt) ->
       dist:
         options:
           variables:
-            'BUILD': '<%= grunt.option("build") %>'
+            'BUILD': '<%= build %>'
             'CDN': '<%= isocket.prod %>'
             'VERSION': '<%= isocket.api %>'
         files: [
@@ -254,6 +254,8 @@ module.exports = (grunt) ->
     releaseTypes = ["major","minor", "patch", "build"]
 
     if user is 'jenkins' and !isNaN(build) and releaseTypes.indexOf(type) != -1
+      grunt.config.set "build", build
+
       grunt.task.run [
         'replace:dist',
         'bumpup:' + type,

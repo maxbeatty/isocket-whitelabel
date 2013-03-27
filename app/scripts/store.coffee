@@ -2,10 +2,13 @@
 
 front = document.createElement 'script'
 front.async = true
-# TODO: set far future caching header for front.js
-# TODO: rev front.js and update path here
 # TODO: allow to be loaded over HTTPS
-front.src = 'http://whitelabel.buyads.com/front.js'
+front.src = 'http://@@CDN/@@VERSION/@@BUILD/front.js'
 
 whitelabel = document.getElementById 'buyads-whitelabel'
 whitelabel.parentNode.insertBefore front, whitelabel.nextSibling
+
+# xhr request for API v0 assuming this is /v0/store.js
+# figure out who is making the request
+#   by domain?
+#   by token?

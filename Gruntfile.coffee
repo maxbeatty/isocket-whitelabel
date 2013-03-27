@@ -204,6 +204,9 @@ module.exports = (grunt) ->
       }
       ]
 
+    bumpup:
+      files: [ 'package.json', 'component.json' ]
+
 
 
   grunt.registerTask 'server', (target) ->

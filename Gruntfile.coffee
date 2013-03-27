@@ -148,6 +148,10 @@ module.exports = (grunt) ->
       options:
         mangle:
           except: ['jQuery']
+        compress: true
+      dist:
+        files:
+          'dist/scripts/store.js': ['dist/scripts/store.js']
     useminPrepare:
       html: '<%= yeoman.app %>/_build.html'
       options:
@@ -217,6 +221,7 @@ module.exports = (grunt) ->
     ]
 
   grunt.registerTask 'deploy', (user) ->
+    console.log grunt.option("build")
     grunt.task.run ['s3'] if user is 'jenkins'
 
   grunt.registerTask 'test', [
@@ -237,7 +242,7 @@ module.exports = (grunt) ->
     'htmlmin',
     'concat',
     'cssmin',
-    'uglify',
+    'uglify:dist',
     'usemin'
   ]
 

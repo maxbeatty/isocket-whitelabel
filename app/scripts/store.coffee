@@ -2,10 +2,8 @@
 
 front = document.createElement 'script'
 front.async = true
-# TODO: update path based on env
-# TODO: update rev path on deploy (/v0/{{build}}/front.js)
 # TODO: allow to be loaded over HTTPS
-front.src = 'http://whitelabel.buyads.com/v0/1/front.js'
+front.src = 'http://@@CDN/@@VERSION/@@BUILD/front.js'
 
 whitelabel = document.getElementById 'buyads-whitelabel'
 whitelabel.parentNode.insertBefore front, whitelabel.nextSibling

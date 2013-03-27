@@ -7,7 +7,7 @@ if [ "$USER" != "$allowableUser" ]; then
   exit 1;
 fi
 
-if [ $# -lt 1 ] || ! [[ "$1" =~ ^[0-9]+$ ]]; then
+if [ $# -lt 1 ] || ! [[ $1 =~ ^[0-9]+$ ]]; then
   echo "Build number needed for deploy!"
   exit 1;
 fi
@@ -22,4 +22,10 @@ if [ $? -ne 0 ]; then
   exit 1;
 fi
 
-grunt deploy:$USER --build=$1
+if [ $# -lt 2 ] || [[ $2 =~ ^(major|minor|patch|build)$ ]]; then
+  release=$2
+else
+  release="build"
+fi
+
+grunt deploy:$USER:$1:$release

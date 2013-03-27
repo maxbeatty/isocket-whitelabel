@@ -206,6 +206,8 @@ module.exports = (grunt) ->
 
     bumpup:
       files: [ 'package.json', 'component.json' ]
+    tagrelease:
+      file: 'package.json'
 
     replace:
       dist:
@@ -234,12 +236,9 @@ module.exports = (grunt) ->
         ]
 
 
-
-
-
   grunt.registerTask 'server', (target) ->
     if target is 'dist'
-      return grunt.task.run ['build', 'open', 'connect:dist:keepalive']
+      return grunt.task.run ['build', 'replace:server', 'open', 'connect:dist:keepalive']
 
     grunt.task.run [
       'clean:server',
@@ -251,10 +250,14 @@ module.exports = (grunt) ->
       'regarde'
     ]
 
-  grunt.registerTask 'deploy', (user) ->
-    if user is 'jenkins' and !isNaN(grunt.option("build"))
+  grunt.registerTask 'deploy', (user, build, type) ->
+    releaseTypes = ["major","minor", "patch", "build"]
+
+    if user is 'jenkins' and !isNaN(build) and releaseTypes.indexOf(type) != -1
       grunt.task.run [
         'replace:dist',
+        'bumpup:' + type,
+        'tagrelease',
         's3'
       ]
 
@@ -264,13 +267,6 @@ module.exports = (grunt) ->
     # 'compass',
     'connect:test',
     'mocha'
-  ]
-
-  # TODO: fully bake this
-  grunt.registerTask 'watch', [
-    'clean:dist',
-    'replace:server'
-    'regarde'
   ]
 
   grunt.registerTask 'build', [

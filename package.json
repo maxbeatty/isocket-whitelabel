@@ -26,7 +26,8 @@
     "grunt-coffeelint": "0.0.6",
     "grunt-s3": "~0.1.0",
     "grunt-bumpup": "~0.2.0",
-    "grunt-replace": "~0.4.0"
+    "grunt-replace": "~0.4.0",
+    "grunt-tagrelease": "~0.2.0"
   },
   "engines": {
     "node": ">=0.8.0"

@@ -207,6 +207,34 @@ module.exports = (grunt) ->
     bumpup:
       files: [ 'package.json', 'component.json' ]
 
+    replace:
+      dist:
+        options:
+          variables:
+            'BUILD': '<%= grunt.option("build") %>'
+            'CDN': '<%= isocket.prod %>'
+            'VERSION': '<%= isocket.api %>'
+        files: [
+          expand: true
+          flatten: true
+          src: ['<%= yeoman.dist %>/scripts/store.js']
+          dest: '<%= yeoman.dist %>/scripts/'
+        ]
+      server:
+        options:
+          variables:
+            'BUILD': 'scripts'
+            'CDN': '<%= isocket.dev %>'
+            'VERSION': '<%= yeoman.dist %>'
+        files: [
+          expand: true
+          flatten: true
+          src: ['<%= yeoman.dist %>/scripts/store.js']
+          dest: '<%= yeoman.dist %>/scripts/'
+        ]
+
+
+
 
 
   grunt.registerTask 'server', (target) ->
@@ -224,8 +252,11 @@ module.exports = (grunt) ->
     ]
 
   grunt.registerTask 'deploy', (user) ->
-    console.log grunt.option("build")
-    grunt.task.run ['s3'] if user is 'jenkins'
+    if user is 'jenkins' and !isNaN(grunt.option("build"))
+      grunt.task.run [
+        'replace:dist',
+        's3'
+      ]
 
   grunt.registerTask 'test', [
     'clean:server',
@@ -233,6 +264,13 @@ module.exports = (grunt) ->
     # 'compass',
     'connect:test',
     'mocha'
+  ]
+
+  # TODO: fully bake this
+  grunt.registerTask 'watch', [
+    'clean:dist',
+    'replace:server'
+    'regarde'
   ]
 
   grunt.registerTask 'build', [
@@ -250,8 +288,8 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'default', [
-      'jshint',
-      'coffeelint',
-      'test',
-      'build'
+    'jshint',
+    'coffeelint',
+    'test',
+    'build'
   ]

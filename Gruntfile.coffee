@@ -13,9 +13,14 @@ module.exports = (grunt) ->
     dist: 'dist'
 
   isocketConfig =
-    api: 'v0'
-    dev: 'whitelabel.dev'
-    prod: 'whitelabel.buyads.com'
+    api:
+      version: 'v0'
+      host:
+        dev: 'buyads.dev'
+        prod: 'www.buyads.com'
+    cdn:
+      dev: 'whitelabel.dev'
+      prod: 'whitelabel.buyads.com'
 
   grunt.initConfig
     yeoman: yeomanConfig
@@ -142,7 +147,7 @@ module.exports = (grunt) ->
           useStrict: true
           wrap: true
           name: 'front'
-          out: '<%= yeoman.dist %>/scripts/front.js'
+          out: '<%= yeoman.dist %>/<%= isocket.api.version %>/front.js'
           mainConfigFile: '.tmp/scripts/front.js'
     uglify:
       options:
@@ -151,7 +156,9 @@ module.exports = (grunt) ->
         compress: true
       dist:
         files:
-          'dist/scripts/store.js': ['dist/scripts/store.js']
+          '<%= yeoman.dist %>/<%= isocket.api.version %>/store.js': [
+            '<%= yeoman.dist %>/<%= isocket.api.version %>/store.js'
+          ]
     useminPrepare:
       html: '<%= yeoman.app %>/_build.html'
       options:
@@ -184,22 +191,25 @@ module.exports = (grunt) ->
           src: '*.html'
           dest: '<%= yeoman.dist %>'
         ]
-
+    concat:
+      '<%= yeoman.dist %>/<%= isocket.api.version %>/store.js': [
+        '.tmp/scripts/store.js'
+      ]
     s3:
       key: "***REMOVED***"
       secret: '***REMOVED***'
       bucket: 'buyads-whitelabel'
       access: 'public-read'
       upload: [{
-        src: '<%= yeoman.dist %>/scripts/front.js'
-        dest: '<%= isocket.api %>/<%= build %>/front.js'
+        src: '<%= yeoman.dist %>/<%= isocket.api.version %>/front.js'
+        dest: '<%= isocket.api.version %>/<%= build %>/front.js'
         gzip: true
         headers:
           "Cache-Control": "max-age=94608000" # 3 years
       },
       {
-        src: '<%= yeoman.dist %>/scripts/store.js'
-        dest: '<%= isocket.api %>/store.js'
+        src: '<%= yeoman.dist %>/<%= isocket.api.version %>/store.js'
+        dest: '<%= isocket.api.version %>/store.js'
         gzip: true
       }
       ]
@@ -213,32 +223,46 @@ module.exports = (grunt) ->
       dist:
         options:
           variables:
+            'API_HOST': '<%= isocket.api.host.prod %>'
             'BUILD': '<%= build %>'
-            'CDN': '<%= isocket.prod %>'
-            'VERSION': '<%= isocket.api %>'
+            'CDN': '<%= isocket.cdn.prod %>'
+            'VERSION': '<%= isocket.api.version %>'
         files: [
           expand: true
           flatten: true
-          src: ['<%= yeoman.dist %>/scripts/store.js']
-          dest: '<%= yeoman.dist %>/scripts/'
+          src: ['<%= yeoman.dist %>/<%= isocket.api.version %>/store.js']
+          dest: '<%= yeoman.dist %>/<%= isocket.api.version %>/'
         ]
       server:
         options:
           variables:
-            'BUILD': 'scripts'
-            'CDN': '<%= isocket.dev %>'
-            'VERSION': '<%= yeoman.dist %>'
-        files: [
+            'API_HOST': '<%= isocket.api.host.dev %>'
+            'BUILD': '../dist/<%= isocket.api.version %>' #YOLO
+            'CDN': '<%= isocket.cdn.dev %>'
+            'VERSION': '<%= isocket.api.version %>'
+        files: [{
           expand: true
           flatten: true
-          src: ['<%= yeoman.dist %>/scripts/store.js']
-          dest: '<%= yeoman.dist %>/scripts/'
+          src: ['<%= yeoman.dist %>/<%= isocket.api.version %>/store.js']
+          dest: '<%= yeoman.dist %>/<%= isocket.api.version %>/'
+          },
+          {
+            expand: true
+            flatten: true
+            src: ['<%= yeoman.dist %>/index.html']
+            dest: '<%= yeoman.dist %>/'
+          }
         ]
 
 
   grunt.registerTask 'server', (target) ->
     if target is 'dist'
-      return grunt.task.run ['build', 'replace:server', 'open', 'connect:dist:keepalive']
+      return grunt.task.run [
+        'build',
+        'replace:server',
+        'open',
+        'connect:dist:keepalive'
+      ]
 
     grunt.task.run [
       'clean:server',

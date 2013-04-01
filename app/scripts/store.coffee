@@ -4,8 +4,12 @@
 
   @BuyAdsWhiteLabel =
     populate: (el) ->
-      url = 'https://@@API_HOST/@@VERSION/api.php/inventory/' +
-        el.getAttribute('data-property')
+      property = el.getAttribute('data-property')
+      apiKey   = el.getAttribute('data-key')
+      data =
+        token: apiKey
+        endpoint: 'inventory/' + property
+      url = '@@API_HOST' + '?data=' + encodeURIComponent(JSON.stringify(data))
 
       if window.XMLHttpRequest # Mozilla, Safari, ...
         httpRequest = new XMLHttpRequest()
@@ -19,10 +23,10 @@
 
       return false if !httpRequest
 
+      httpRequest.open 'GET', url, true
       httpRequest.onreadystatechange = BuyAdsWhiteLabel.render
-      httpRequest.withCredentials = true
-      httpRequest.open 'GET', url, true, 'token', el.getAttribute('data-key')
       httpRequest.send()
+
 
     render: () ->
       if httpRequest.readyState is 4

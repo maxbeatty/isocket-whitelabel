@@ -16,8 +16,8 @@ module.exports = (grunt) ->
     api:
       version: 'v0'
       host:
-        dev: 'buyads.dev'
-        prod: 'www.buyads.com'
+        dev: 'http://localhost:3000/wl'
+        prod: 'http://f.isocket.com/wl'
     cdn:
       dev: 'whitelabel.dev'
       prod: 'whitelabel.buyads.com'

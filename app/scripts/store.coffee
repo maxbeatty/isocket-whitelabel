@@ -1,8 +1,19 @@
 # Store is embedded on a publisher's site and loads our latest front
 (() ->
-  httpRequest = null
-
   @BuyAdsWhiteLabel =
+    createCORSRequest: (method, url) ->
+      xhr = new XMLHttpRequest()
+
+      if xhr.withCredentials isnt undefined # Mozilla, Safari, ...
+        xhr.open method, url, true
+      else if typeof XDomainRequest != "undefined" # IE8-9
+        xhr = new XDomainRequest()
+        xhr.open method, url
+      else
+        xhr = null
+
+      xhr
+
     populate: (el) ->
       property = el.getAttribute('data-property')
       apiKey   = el.getAttribute('data-key')
@@ -11,29 +22,13 @@
         endpoint: 'inventory/' + property
       url = '@@API_HOST' + '?data=' + encodeURIComponent(JSON.stringify(data))
 
-      if window.XMLHttpRequest # Mozilla, Safari, ...
-        httpRequest = new XMLHttpRequest()
-      else if window.ActiveXObject # IE
-        try
-          httpRequest = new ActiveXObject "Msxml2.XMLHTTP"
-        catch e
-          try
-            httpRequest = new ActiveXObject "Microsoft.XMLHTTP"
-          catch e
+      httpRequest = BuyAdsWhiteLabel.createCORSRequest 'GET', url
 
-      return false if !httpRequest
-
-      httpRequest.open 'GET', url, true
-      httpRequest.onreadystatechange = BuyAdsWhiteLabel.render
-      httpRequest.send()
-
-
-    render: () ->
-      if httpRequest.readyState is 4
-        if httpRequest.status is 200
+      if httpRequest
+        httpRequest.onload = ->
           console.log httpRequest.responseText
-        else
-          console.log 'There was a problem with the request.', httpRequest
+
+        httpRequest.send()
 
 ).call(@)
 

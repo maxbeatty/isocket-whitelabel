@@ -14,7 +14,7 @@ if [ `grep -c "whitelabel.dev" /etc/hosts` -eq 0 ]
 then
   echo '' | sudo tee -a /etc/hosts
   echo '# via whitelabel' | sudo tee -a /etc/hosts
-  echo '127.0.0.1 whitelabel.dev' | sudo tee -a /etc/hosts
+  echo '127.0.0.1 whitelabel.dev f.dev' | sudo tee -a /etc/hosts
 fi
 
 # restart apache

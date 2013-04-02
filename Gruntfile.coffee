@@ -16,11 +16,12 @@ module.exports = (grunt) ->
     api:
       version: 'v0'
       host:
-        dev: 'http://f.dev/wl'
-        prod: 'http://f.isocket.com/wl'
+        dev: 'f.dev/wl'
+        prod: 'f.isocket.com/wl'
     cdn:
       dev: 'whitelabel.dev'
       prod: 'whitelabel.buyads.com'
+      prodSSL: 'd2y4kgzxmykmku.cloudfront.net'
 
   grunt.initConfig
     yeoman: yeomanConfig
@@ -223,10 +224,11 @@ module.exports = (grunt) ->
       dist:
         options:
           variables:
-            'API_HOST': '<%= isocket.api.host.prod %>'
-            'BUILD': '<%= build %>'
-            'CDN': '<%= isocket.cdn.prod %>'
-            'VERSION': '<%= isocket.api.version %>'
+            API_HOST: '<%= isocket.api.host.prod %>'
+            BUILD: '<%= build %>'
+            CDN: '<%= isocket.cdn.prod %>'
+            CDN_SSL: '<%= isocket.cdn.prodSSL %>'
+            VERSION: '<%= isocket.api.version %>'
         files: [
           expand: true
           flatten: true
@@ -236,10 +238,11 @@ module.exports = (grunt) ->
       server:
         options:
           variables:
-            'API_HOST': '<%= isocket.api.host.dev %>'
-            'BUILD': '../dist/<%= isocket.api.version %>' #YOLO
-            'CDN': '<%= isocket.cdn.dev %>'
-            'VERSION': '<%= isocket.api.version %>'
+            API_HOST: '<%= isocket.api.host.dev %>'
+            BUILD: '../dist/<%= isocket.api.version %>' #YOLO
+            CDN: '<%= isocket.cdn.dev %>'
+            CDN_SSL: '<%= isocket.cdn.dev %>'
+            VERSION: '<%= isocket.api.version %>'
         files: [{
           expand: true
           flatten: true

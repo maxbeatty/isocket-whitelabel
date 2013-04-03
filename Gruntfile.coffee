@@ -253,6 +253,11 @@ module.exports = (grunt) ->
             dest: '<%= yeoman.dist %>/'
           }
         ]
+    grunticon:
+      options:
+        src: "<%= yeoman.app %>/images/"
+        dest: "<%= yeoman.dist %>/images/"
+        previewhtml: "icons.html"
 
 
   grunt.registerTask 'server', (target) ->
@@ -268,6 +273,7 @@ module.exports = (grunt) ->
       'clean:server',
       'coffee:dist',
       # 'compass:server',
+      'replace:server',
       'livereload-start',
       'connect:livereload',
       'open',
@@ -299,6 +305,7 @@ module.exports = (grunt) ->
     'clean:dist',
     'coffee',
     # 'compass:dist',
+    'grunticon',
     'useminPrepare',
     'requirejs',
     'imagemin',

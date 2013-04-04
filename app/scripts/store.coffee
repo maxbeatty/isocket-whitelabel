@@ -47,10 +47,9 @@ class BuyAdsWhiteLabel
     httpRequest = @createCORSRequest 'GET', url
 
     if httpRequest
-      httpRequest.onload = ->
+      httpRequest.onload = =>
         @inventory = httpRequest.responseText
-        # tell front to render?
 
       httpRequest.send()
 
-new BuyAdsWhiteLabel {}
+this.YourBuyAdsWhiteLabel = new BuyAdsWhiteLabel {}

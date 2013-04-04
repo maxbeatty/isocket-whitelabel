@@ -20,7 +20,7 @@
       data =
         token: apiKey
         endpoint: 'inventory/' + property
-      url = '@@API_HOST' + '?data=' + encodeURIComponent(JSON.stringify(data))
+      url = '//@@API_HOST' + '?data=' + encodeURIComponent(JSON.stringify(data))
 
       httpRequest = BuyAdsWhiteLabel.createCORSRequest 'GET', url
 
@@ -33,10 +33,15 @@
 ).call(@)
 
 (() ->
+  fpath = '/@@VERSION/@@BUILD/front.js'
+  fhost = if 'https:' is document.location.protocol
+    's://@@CDN_SSL'
+  else
+    '://@@CDN'
+
   front = document.createElement 'script'
   front.async = true
-  # TODO: allow to be loaded over HTTPS
-  front.src = 'http://@@CDN/@@VERSION/@@BUILD/front.js'
+  front.src = 'http' + fhost + fpath
 
   whitelabel = document.getElementById 'buyads-whitelabel'
   whitelabel.parentNode.insertBefore front, whitelabel.nextSibling

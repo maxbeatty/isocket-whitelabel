@@ -5,7 +5,7 @@
     "requirejs": "~2.1.5",
     "jquery": "1.8.3",
     "es5-shim": "git://github.com/kriskowal/es5-shim.git#2.0.0",
-    "flight": "~1.0.5"
+    "flight": "~1.0.7"
   },
   "devDependencies": {}
 }

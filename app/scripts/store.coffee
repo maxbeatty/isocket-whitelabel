@@ -1,51 +1,56 @@
 # Store is embedded on a publisher's site and loads our latest front
-(() ->
-  @BuyAdsWhiteLabel =
-    createCORSRequest: (method, url) ->
-      xhr = new XMLHttpRequest()
 
-      if xhr.withCredentials isnt undefined # Mozilla, Safari, ...
-        xhr.open method, url, true
-      else if typeof XDomainRequest != "undefined" # IE8-9
-        xhr = new XDomainRequest()
-        xhr.open method, url
-      else
-        xhr = null
+class BuyAdsWhiteLabel
+  constructor: (@inventory) ->
+    @el = document.getElementById 'buyads-whitelabel'
+    @getFront()
+    @setupShop()
+    @populate @el.getAttribute('data-property'), @el.getAttribute('data-key')
 
-      xhr
+  getFront: ->
+    fpath = '/@@VERSION/@@BUILD/front.js'
+    fhost = if 'https:' is document.location.protocol
+      '//@@CDN_SSL'
+    else
+      '//@@CDN'
 
-    populate: (el) ->
-      property = el.getAttribute('data-property')
-      apiKey   = el.getAttribute('data-key')
-      data =
-        token: apiKey
-        endpoint: 'inventory/' + property
-      url = '//@@API_HOST' + '?data=' + encodeURIComponent(JSON.stringify(data))
+    front = document.createElement 'script'
+    front.async = true
+    front.src = document.location.protocol + fhost + fpath
 
-      httpRequest = BuyAdsWhiteLabel.createCORSRequest 'GET', url
+    @el.parentNode.insertBefore front, @el.nextSibling
 
-      if httpRequest
-        httpRequest.onload = ->
-          console.log httpRequest.responseText
+  setupShop: ->
+    store = document.createElement 'div'
+    store.className = 'buyads-whitelabel-container'
+    @el.parentNode.insertBefore store, @el.nextSibling
 
-        httpRequest.send()
+  createCORSRequest: (method, url) ->
+    xhr = new XMLHttpRequest()
 
-).call(@)
+    if xhr.withCredentials isnt undefined # Mozilla, Safari, ...
+      xhr.open method, url, true
+    else if typeof XDomainRequest != "undefined" # IE8-9
+      xhr = new XDomainRequest()
+      xhr.open method, url
+    else
+      xhr = null
 
-(() ->
-  fpath = '/@@VERSION/@@BUILD/front.js'
-  fhost = if 'https:' is document.location.protocol
-    's://@@CDN_SSL'
-  else
-    '://@@CDN'
+    xhr
 
-  front = document.createElement 'script'
-  front.async = true
-  front.src = 'http' + fhost + fpath
+  populate: (property, apiKey) ->
+    data =
+      token: apiKey
+      endpoint: 'inventory/' + property
+    url = '//@@API_HOST' + '?data=' + encodeURIComponent(JSON.stringify(data))
 
-  whitelabel = document.getElementById 'buyads-whitelabel'
-  whitelabel.parentNode.insertBefore front, whitelabel.nextSibling
+    httpRequest = @createCORSRequest 'GET', url
 
-  BuyAdsWhiteLabel.populate whitelabel
+    if httpRequest
+      httpRequest.onload = ->
+        @inventory = httpRequest.responseText
+        # tell front to render?
 
-).call(@)
+      httpRequest.send()
+
+new BuyAdsWhiteLabel {}

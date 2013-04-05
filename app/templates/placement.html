@@ -1,0 +1,15 @@
+<% zones.forEach(function(z) {%>
+  <div class="buyads-placement">
+    <h3>
+      <span><%= z.width %> &times; <%= z.height %></span>
+      <br>
+      <small><%= z.location %></small>
+    </h3>
+
+    <% z.Packages.forEach(function(p){%>
+      <p><%= p.price %> <% p.type %> <% p.unit %></p>
+    <%})%>
+
+    <button>Add to cart</button>
+</div>
+<%}) %>

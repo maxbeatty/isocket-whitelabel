@@ -3,8 +3,8 @@
 class BuyAdsWhiteLabel
   constructor: (@inventory) ->
     @el = document.getElementById 'buyads-whitelabel'
-    @getFront()
     @setupShop()
+    @getFront()
     @populate @el.getAttribute('data-property'), @el.getAttribute('data-key')
 
   getFront: ->
@@ -48,7 +48,9 @@ class BuyAdsWhiteLabel
 
     if httpRequest
       httpRequest.onload = =>
-        @inventory = httpRequest.responseText
+        @inventory = JSON.parse httpRequest.responseText
+        evt = new CustomEvent 'inventoryReady'
+        document.dispatchEvent evt
 
       httpRequest.send()
 

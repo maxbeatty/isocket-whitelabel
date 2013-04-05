@@ -3,6 +3,7 @@ require.config
     jquery: '../../components/jquery/jquery'
     es5shim: '../../components/es5-shim/es5-shim'
     es5sham: '../../components/es5-shim/es5-sham'
+    text: '../../components/requirejs-text/text'
   map:
     '*':
       'flight/component': '../../components/flight/lib/component'

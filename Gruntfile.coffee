@@ -104,7 +104,7 @@ module.exports = (grunt) ->
           # require them into your main .coffee file
           expand: true,
           cwd: '<%= yeoman.app %>/scripts',
-          src: '*.coffee',
+          src: '**/*.coffee',
           dest: '.tmp/scripts',
           ext: '.js'
         ]
@@ -256,6 +256,11 @@ module.exports = (grunt) ->
             dest: '<%= yeoman.dist %>/'
           }
         ]
+    grunticon:
+      options:
+        src: "<%= yeoman.app %>/images/"
+        dest: "<%= yeoman.dist %>/images/"
+        previewhtml: "icons.html"
 
 
   grunt.registerTask 'server', (target) ->
@@ -271,6 +276,7 @@ module.exports = (grunt) ->
       'clean:server',
       'coffee:dist',
       # 'compass:server',
+      'replace:server',
       'livereload-start',
       'connect:livereload',
       'open',
@@ -302,6 +308,7 @@ module.exports = (grunt) ->
     'clean:dist',
     'coffee',
     # 'compass:dist',
+    'grunticon',
     'useminPrepare',
     'requirejs',
     'imagemin',

@@ -49,8 +49,11 @@ class BuyAdsWhiteLabel
     if httpRequest
       httpRequest.onload = =>
         @inventory = JSON.parse httpRequest.responseText
-        evt = new CustomEvent 'inventoryReady'
-        document.dispatchEvent evt
+
+        if document.createEvent # !IE8
+          evt = document.createEvent "CustomEvent"
+          evt.initCustomEvent 'inventoryReady', true, true, @inventory
+          document.dispatchEvent evt
 
       httpRequest.send()
 

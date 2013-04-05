@@ -1,7 +1,8 @@
 define [
-  # components
-], () ->
-  initialize = () ->
-    console.log 'hello'
+  './ui/placement'
+], (Placement) ->
+  initialize = ->
+    Placement.attachTo '.buyads-whitelabel-container'
+    return
 
-  return { initialize: initialize }
+  initialize: initialize

@@ -274,6 +274,23 @@
     background-image: -moz-gradient(center top, #ebeff2 0%, #ffffff 100%);
   }
 
+  .buyads-cart-submit:disabled {
+    background-color: #ffffff;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(60%, #ffffff), color-stop(100%, #f5f7fa));
+    background-image: -webkit-linear-gradient(#ffffff 60%, #f5f7fa 100%);
+    background-image: -moz-linear-gradient(center top, #ffffff 60%, #f5f7fa 100%);
+    background-image: -moz-gradient(center top, #ffffff 60%, #f5f7fa 100%);
+    border: 1px solid #b8c3c9;
+    color: #89949b;
+    cursor: default;
+    opacity: 0.5;
+    text-shadow: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -o-box-shadow: none;
+  }
+
   .buyads-item-cpm-equation {
     vertical-align: super;
   }
@@ -427,7 +444,7 @@
 
       <p class="buyads-tos-help">You must accept terms before continuing</p>
 
-      <button type="button" class="buyads-cart-submit">Submit Order for Approval</button>
+      <button type="button" class="buyads-cart-submit" disabled>Submit Order for Approval</button>
     </div>
 
   </div>

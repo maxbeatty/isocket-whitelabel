@@ -53,7 +53,7 @@ class BuyAdsWhiteLabel
 
         if document.createEvent # !IE8
           evt = document.createEvent "CustomEvent"
-          evt.initCustomEvent 'inventoryReady', true, true, {}
+          evt.initCustomEvent 'dataInventory', true, true, {}
           document.dispatchEvent evt
 
       httpRequest.send()

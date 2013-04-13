@@ -9,19 +9,19 @@ define [
     template = utils.tmpl placementTmpl
 
     @render = (e) ->
-      @off document, 'inventoryReady'
-      @$node.html template zones: YourBuyAdsWhiteLabel.inventory.Zones
+      @off document, 'dataInventory'
+      @$node.html template zones: YourBuyAdsWhiteLabel.inventory
 
     @pollInventory = ->
       if YourBuyAdsWhiteLabel.inventory.Zones
-        @trigger document, 'inventoryReady'
+        @trigger document, 'dataInventory'
       else
         # poll for IE8
         setTimeout (=> @pollInventory()), 500
 
     @after 'initialize', ->
       # listen for API response
-      @on document, 'inventoryReady', @render
+      @on document, 'dataInventory', @render
       # check to see if it came already
       @pollInventory()
 

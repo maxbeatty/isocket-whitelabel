@@ -13,7 +13,7 @@ define [
       @$node.html template zones: YourBuyAdsWhiteLabel.inventory
 
     @pollInventory = ->
-      if YourBuyAdsWhiteLabel.inventory.Zones
+      if YourBuyAdsWhiteLabel.inventory
         @trigger document, 'dataInventory'
       else
         # poll for IE8

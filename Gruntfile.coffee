@@ -86,7 +86,7 @@ module.exports = (grunt) ->
       options:
         jshintrc: '.jshintrc'
       all: [
-        '<%= yeoman.app %>/scripts/{,*/}*.js',
+        '<%= yeoman.app %>/scripts/{,*/}*!{utils}.js',
         '!<%= yeoman.app %>/scripts/vendor/*',
         'test/spec/{,*/}*.js'
       ]
@@ -197,7 +197,7 @@ module.exports = (grunt) ->
         '.tmp/scripts/store.js'
       ]
     s3:
-      key: "***REMOVED***"
+      key: '***REMOVED***'
       secret: '***REMOVED***'
       bucket: 'buyads-whitelabel'
       access: 'public-read'
@@ -206,7 +206,7 @@ module.exports = (grunt) ->
         dest: '<%= isocket.api.version %>/<%= build %>/front.js'
         gzip: true
         headers:
-          "Cache-Control": "max-age=94608000" # 3 years
+          'Cache-Control': 'max-age=94608000' # 3 years
       },
       {
         src: '<%= yeoman.dist %>/<%= isocket.api.version %>/store.js'
@@ -258,9 +258,9 @@ module.exports = (grunt) ->
         ]
     grunticon:
       options:
-        src: "<%= yeoman.app %>/images/"
-        dest: "<%= yeoman.dist %>/images/"
-        previewhtml: "icons.html"
+        src: '<%= yeoman.app %>/images/'
+        dest: '<%= yeoman.dist %>/images/'
+        previewhtml: 'icons.html'
 
 
   grunt.registerTask 'server', (target) ->
@@ -284,10 +284,10 @@ module.exports = (grunt) ->
     ]
 
   grunt.registerTask 'deploy', (user, build, type) ->
-    releaseTypes = ["major","minor", "patch", "build"]
+    releaseTypes = ['major','minor', 'patch', 'build']
 
     if user is 'jenkins' and !isNaN(build) and releaseTypes.indexOf(type) != -1
-      grunt.config.set "build", build
+      grunt.config.set 'build', build
 
       grunt.task.run [
         'replace:dist',

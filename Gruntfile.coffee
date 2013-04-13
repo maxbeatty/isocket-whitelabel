@@ -127,12 +127,16 @@ module.exports = (grunt) ->
         imagesDir: '<%= yeoman.app %>/images'
         javascriptsDir: '<%= yeoman.app %>/scripts'
         fontsDir: '<%= yeoman.app %>/styles/fonts'
-        importPath: 'app/components'
+        importPath: 'components'
         relativeAssets: true
-      dist: {}
+      dist:
+        options:
+          outputStyle: 'compressed'
+          noLineComments: true
       server:
         options:
           debugInfo: true
+          trace: true
 
     # Ref: https://github.com/jrburke/r.js/blob/master/build/example.build.js
     requirejs:
@@ -275,7 +279,7 @@ module.exports = (grunt) ->
     grunt.task.run [
       'clean:server',
       'coffee:dist',
-      # 'compass:server',
+      'compass:server',
       'replace:server',
       'livereload-start',
       'connect:livereload',
@@ -299,7 +303,7 @@ module.exports = (grunt) ->
   grunt.registerTask 'test', [
     'clean:server',
     'coffee',
-    # 'compass',
+    'compass',
     'connect:test',
     'mocha'
   ]
@@ -307,7 +311,7 @@ module.exports = (grunt) ->
   grunt.registerTask 'build', [
     'clean:dist',
     'coffee',
-    # 'compass:dist',
+    'compass:dist',
     'grunticon',
     'useminPrepare',
     'requirejs',

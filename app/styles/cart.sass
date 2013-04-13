@@ -1,0 +1,77 @@
+@import compass
+@import compass/css3/background-clip
+@import compass/css3/box-shadow
+@import compass/css3/opacity
+@import compass/css3/transform
+@import compass/css3/transition
+
+@import cart_buttons
+@import cart_inputs
+@import cart_placements
+
+body
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+  font-size: 14px
+  line-height: 20px
+  color: #333333
+
+fieldset
+  border: 0
+  margin: 0
+  padding: 0
+
+.buyads-cart-backdrop
+  position: fixed
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  z-index: 9999
+  background: #000
+  background: rgba(0, 0, 0, 0.8)
+  +background(radial-gradient(50% 50%, ellipse closest-corner, rgba(0, 0, 0, 0.45) 1%, rgba(0, 0, 0, 0.8) 100%))
+  +opacity(1)
+  +single-transition(400ms, opacity, ease)
+  +translate3d(0, 0, 0)
+  &.is-off
+    +opacity(0)
+
+.buyads-cart
+  position: fixed
+  top: 10%
+  left: 50%
+  z-index: 10000
+  $breakpoint: 768px
+  $width: $breakpoint - ($breakpoint * .2)
+  width: $width
+  margin-left: $width / -2
+  background-color: #fff
+  border: 1px solid #999
+  border: 1px solid rgba(0, 0, 0, 0.3)
+  border-radius: 6px
+  +box-shadow(0 3px 7px rgba(0, 0, 0, 0.3))
+  +background-clip(padding-box)
+  outline: none
+  h2
+    margin-left: 30px
+
+.buyads-cols
+  float: left
+  width: 50%
+
+.buyads-cart-items, .buyads-cart-info
+  float: left
+  padding-bottom: 30px
+  box-sizing: border-box
+
+.buyads-cart-items
+  width: 50%
+  padding-left: 30px
+  max-height: 500px
+  overflow-y: auto
+
+.buyads-cart-info
+  width: 50%
+  padding-right: 30px
+  input
+    margin-bottom: 1em

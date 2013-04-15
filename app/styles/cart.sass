@@ -21,6 +21,7 @@ fieldset
   padding: 0
 
 .buyads-cart-backdrop
+  display: none
   position: fixed
   top: 0
   right: 0
@@ -30,20 +31,23 @@ fieldset
   background: #000
   background: rgba(0, 0, 0, 0.8)
   +background(radial-gradient(50% 50%, ellipse closest-corner, rgba(0, 0, 0, 0.45) 1%, rgba(0, 0, 0, 0.8) 100%))
-  +opacity(1)
   +single-transition(400ms, opacity, ease)
   +translate3d(0, 0, 0)
-  &.is-off
-    +opacity(0)
+  .buyads-cart.is-open + &
+    display: block
 
 .buyads-cart
+  display: none
   position: fixed
   top: 10%
   left: 50%
   z-index: 10000
   $breakpoint: 768px
-  $width: $breakpoint - ($breakpoint * .2)
+  $padding: 30px
+  $width: $breakpoint - ($breakpoint * .2) - $padding
   width: $width
+  padding: $padding
+  padding-top: 0
   margin-left: $width / -2
   background-color: #fff
   border: 1px solid #999
@@ -52,26 +56,17 @@ fieldset
   +box-shadow(0 3px 7px rgba(0, 0, 0, 0.3))
   +background-clip(padding-box)
   outline: none
-  h2
-    margin-left: 30px
+  &.is-open
+    display: block
 
 .buyads-cols
   float: left
   width: 50%
 
-.buyads-cart-items, .buyads-cart-info
-  float: left
-  padding-bottom: 30px
-  box-sizing: border-box
-
 .buyads-cart-items
-  width: 50%
-  padding-left: 30px
-  max-height: 500px
+  max-height: 400px
   overflow-y: auto
 
 .buyads-cart-info
-  width: 50%
-  padding-right: 30px
   input
     margin-bottom: 1em

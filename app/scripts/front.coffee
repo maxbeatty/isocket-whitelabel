@@ -15,3 +15,6 @@ require.config
 
 require ['app'], (App) ->
   App.initialize()
+
+  # load cart styles later?
+  # load cart calendar styles later?

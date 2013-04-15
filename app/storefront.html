@@ -7,123 +7,165 @@
   <link rel="stylesheet" href="/components/pickadate/themes/pickadate.02.classic.css" />
 </head>
 
-<div class="buyads-container">
+<div class="buyads-whitelabel-container">
+  <!-- placements.html -->
+  <div class="buyads-placement">
+    <h3 class="buyads-placement-summary">
+      {{width}} &times; {{height}}
+      <small>{{placement name}}</small>
+    </h3>
+
+    <p>{{rate}} {{unit}}</p>
+
+    <button>Add to cart</button>
+  </div>
+
+  <div class="buyads-placement">
+    <h3>
+      <span>{{width}} &times; {{height}}</span>
+      <br>
+      <small>{{placement name}}</small>
+    </h3>
+
+    <p>{{rate}} {{unit}}</p>
+
+    <button>Add to cart</button>
+  </div>
+
+  <div class="buyads-placement">
+    <h3>
+      <span>{{width}} &times; {{height}}</span>
+      <br>
+      <small>{{placement name}}</small>
+    </h3>
+
+    <p>{{rate}} {{unit}}</p>
+
+    <button>Add to cart</button>
+  </div>
+
+  <!-- cart button -->
+  <button type="button" class="buyads-cart-btn">Your Cart</button>
+
   <div class="buyads-cart">
     <h2>
       Campaign
       <!-- cart icon w/ count? -->
     </h2>
-    <div class="buyads-cart-items">
+
+    <div class="buyads-cols">
       <h3>Placements</h3>
 
-      <div class="buyads-cart-item">
-        <h4 class="buyads-placement-summary">
-          {{width}} &times; {{height}}
-          <small>{{location}}</small>
-        </h4>
+      <div class="buyads-cart-items">
+        <div class="buyads-cart-item">
+          <h4 class="buyads-placement-summary">
+            {{width}} &times; {{height}}
+            <small>{{location}}</small>
+          </h4>
 
-        <div class="buyads-cart-item-detail">
-          <!-- TODO: creative -->
-          <div class="box">Configure Creative</div>
+          <div class="buyads-cart-item-detail">
+            <!-- TODO: creative -->
+            <div class="box">Configure Creative</div>
 
-          <fieldset class="picker-holder--classic">
-            <!-- start -->
-            <div class="buyads-cols">
-              <label for="buyads-cart-item_0-start">Start Date</label>
-              <!-- asap? -->
-              <input name="buyads-cart-item_0-start" class="buyads-datepicker">
+            <fieldset class="picker-holder--classic">
+              <!-- start -->
+              <div class="buyads-cols">
+                <label for="buyads-cart-item_0-start">Start Date</label>
+                <!-- asap? -->
+                <input name="buyads-cart-item_0-start" class="buyads-datepicker">
+              </div>
+
+              <!-- end -->
+              <div class="buyads-cols">
+                <label for="buyads-cart-item_0-end">End Date</label>
+                <!-- duration? -->
+                <input name="buyads-cart-item_0-end" class="buyads-datepicker">
+              </div>
+            </fieldset>
+
+            <!-- impressions / duration -->
+            <!-- if placement.type is cpm -->
+            <label for="buyads-cart-item_0-Kimps">Impressions</label>
+            <div class="buyads-input-append">
+              <input type="text" name="buyads-cart-item_0-Kimps" class="buyads-input-small">
+              <span class="buyads-input-add-on">K</span>
             </div>
+            <!-- else if placement.type is tenancy -->
 
-            <!-- end -->
-            <div class="buyads-cols">
-              <label for="buyads-cart-item_0-end">End Date</label>
-              <!-- duration? -->
-              <input name="buyads-cart-item_0-end" class="buyads-datepicker">
-            </div>
-          </fieldset>
 
-          <!-- impressions / duration -->
-          <!-- if placement.type is cpm -->
-          <label for="buyads-cart-item_0-Kimps">Impressions</label>
-          <div class="buyads-input-append">
-            <input type="text" name="buyads-cart-item_0-Kimps" class="buyads-input-small">
-            <span class="buyads-input-add-on">K</span>
+            <!-- endif -->
+            <span class="buyads-item-cpm-equation">
+              &times;
+
+              <!-- {{rate}} -->
+              $22 CPM
+
+              =
+
+              <!-- {{subtotal}} -->
+              $2,222
+            </span>
           </div>
-          <!-- else if placement.type is tenancy -->
-
-
-          <!-- endif -->
-          <span class="buyads-item-cpm-equation">
-            &times;
-
-            <!-- {{rate}} -->
-            $22 CPM
-
-            =
-
-            <!-- {{subtotal}} -->
-            $2,222
-          </span>
         </div>
-      </div>
 
-      <div class="buyads-cart-item">
-        <h4 class="buyads-placement-summary">
-          {{width}} &times; {{height}}
-          <small>{{location}}</small>
-        </h4>
+        <div class="buyads-cart-item">
+          <h4 class="buyads-placement-summary">
+            {{width}} &times; {{height}}
+            <small>{{location}}</small>
+          </h4>
 
-        <div class="buyads-cart-item-detail">
-          <!-- TODO: creative -->
-          <div class="box">Configure Creative</div>
+          <div class="buyads-cart-item-detail">
+            <!-- TODO: creative -->
+            <div class="box">Configure Creative</div>
 
-          <fieldset class="picker-holder--classic">
-            <!-- start -->
-            <div class="buyads-cols">
-              <label for="buyads-cart-item_0-start">Start Date</label>
-              <!-- asap? -->
-              <input name="buyads-cart-item_0-start" class="buyads-datepicker">
-            </div>
+            <fieldset class="picker-holder--classic">
+              <!-- start -->
+              <div class="buyads-cols">
+                <label for="buyads-cart-item_0-start">Start Date</label>
+                <!-- asap? -->
+                <input name="buyads-cart-item_0-start" class="buyads-datepicker">
+              </div>
 
-            <!-- end -->
-            <div class="buyads-cols">
-              <label for="buyads-cart-item_0-end">End Date</label>
-              <!-- duration? -->
-              <input name="buyads-cart-item_0-end" class="buyads-datepicker">
-            </div>
-          </fieldset>
+              <!-- end -->
+              <div class="buyads-cols">
+                <label for="buyads-cart-item_0-end">End Date</label>
+                <!-- duration? -->
+                <input name="buyads-cart-item_0-end" class="buyads-datepicker">
+              </div>
+            </fieldset>
 
-          <!-- impressions / duration -->
-          <!-- if placement.type is tenancy -->
-          <label for="buyads-cart-item_1-duration">Duration</label>
-          <select name="buyads-cart-item_1-duration">
-            <option value="7">1 week</option>
-            <option value="14">2 weeks</option>
-            <option value="21">3 weeks</option>
-            <option value="30" selected="selected">1 month</option>
-            <option value="60">2 months</option>
-            <option value="90">1 quarter</option>
-            <option value="180">2 quarters</option>
-            <option value="270">3 quarters</option>
-            <option value="365">4 quarters</option>
-          </select>
-          <!-- endif -->
-          <span class="buyads-item-equation">
-            &times;
+            <!-- impressions / duration -->
+            <!-- if placement.type is tenancy -->
+            <label for="buyads-cart-item_1-duration">Duration</label>
+            <select name="buyads-cart-item_1-duration">
+              <option value="7">1 week</option>
+              <option value="14">2 weeks</option>
+              <option value="21">3 weeks</option>
+              <option value="30" selected="selected">1 month</option>
+              <option value="60">2 months</option>
+              <option value="90">1 quarter</option>
+              <option value="180">2 quarters</option>
+              <option value="270">3 quarters</option>
+              <option value="365">4 quarters</option>
+            </select>
+            <!-- endif -->
+            <span class="buyads-item-equation">
+              &times;
 
-            <!-- {{rate}} -->
-            <span>$436 per quarter</span>
+              <!-- {{rate}} -->
+              <span>$436 per quarter</span>
 
-            =
+              =
 
-            <!-- {{subtotal}} -->
-            $22,222.22
-          </span>
+              <!-- {{subtotal}} -->
+              $22,222.22
+            </span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="buyads-cart-info">
+    <div class="buyads-cols buyads-cart-info">
       <h3>Buyer</h3>
 
       <label>Your name</label>
@@ -148,45 +190,9 @@
     </div>
 
   </div>
-
-  <div class="buyads-placements">
-    <div class="buyads-placement">
-      <h3 class="buyads-placement-summary">
-        {{width}} &times; {{height}}
-        <small>{{placement name}}</small>
-      </h3>
-
-      <p>{{rate}} {{unit}}</p>
-
-      <button>Add to cart</button>
-    </div>
-
-    <div class="buyads-placement">
-      <h3>
-        <span>{{width}} &times; {{height}}</span>
-        <br>
-        <small>{{placement name}}</small>
-      </h3>
-
-      <p>{{rate}} {{unit}}</p>
-
-      <button>Add to cart</button>
-    </div>
-
-    <div class="buyads-placement">
-      <h3>
-        <span>{{width}} &times; {{height}}</span>
-        <br>
-        <small>{{placement name}}</small>
-      </h3>
-
-      <p>{{rate}} {{unit}}</p>
-
-      <button>Add to cart</button>
-    </div>
-  </div>
+  <div class="buyads-cart-backdrop"></div>
 </div>
-<div class="buyads-cart-backdrop"></div>
+
 
 <script src="/../components/jquery/jquery.min.js"></script>
 <script src="/../components/pickadate/source/pickadate.js"></script>
@@ -196,5 +202,18 @@ $(function() {
     dateMin: true,
     format: 'd mmm, yyyy'
   });
+
+  function toggleCart() {
+    $('.buyads-cart').toggleClass('is-open');
+  }
+
+  $('.buyads-cart-btn').click(function() {
+    toggleCart();
+  });
+
+  $('.buyads-cart-backdrop').click(function() {
+    // also listen for esc key and a close button in modal header
+    toggleCart();
+  })
 });
 </script>

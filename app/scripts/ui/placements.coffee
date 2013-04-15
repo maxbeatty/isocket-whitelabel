@@ -1,12 +1,12 @@
 "use strict"
 define [
   'flight/component',
-  'text!../../../app/templates/placement.html',
+  'text!../../../app/templates/placements.html',
   '../../../app/scripts/utils.js'
-], (defineComponent, placementTmpl, utils) ->
+], (defineComponent, placementsTmpl, utils) ->
 
-  placement = ->
-    template = utils.tmpl placementTmpl
+  placements = ->
+    template = utils.tmpl placementsTmpl
 
     @render = (e) ->
       @off document, 'dataInventory'
@@ -28,7 +28,7 @@ define [
       return
     return
 
-  defineComponent placement
+  defineComponent placements
 
 
 # "use strict"

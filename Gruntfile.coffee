@@ -10,6 +10,7 @@ module.exports = (grunt) ->
   # configurable paths
   yeomanConfig =
     app: 'app'
+    tmp: '.tmp'
     dist: 'dist'
 
   isocketConfig =
@@ -43,8 +44,8 @@ module.exports = (grunt) ->
       livereload:
         files: [
           '<%= yeoman.app %>/*.html',
-          '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
-          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+          '{<%= yeoman.tmp %>,<%= yeoman.app %>}/styles/{,*/}*.css',
+          '{<%= yeoman.tmp %>,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,webp}'
         ]
         tasks: ['livereload']
@@ -60,14 +61,14 @@ module.exports = (grunt) ->
           middleware: (connect) ->
             [
               lrSnippet,
-              mountFolder(connect, '.tmp'),
+              mountFolder(connect, '<%= yeoman.tmp %>'),
               mountFolder(connect, 'app')
             ]
       test:
         options:
           middleware: (connect) ->
             [
-              mountFolder(connect, '.tmp'),
+              mountFolder(connect, '<%= yeoman.tmp %>'),
               mountFolder(connect, 'test')
             ]
       dist:
@@ -80,8 +81,8 @@ module.exports = (grunt) ->
       server:
         path: 'http://localhost:<%= connect.options.port %>'
     clean:
-      dist: ['.tmp', '<%= yeoman.dist %>/*']
-      server: '.tmp'
+      dist: ['<%= yeoman.tmp %>', '<%= yeoman.dist %>/*']
+      server: '<%= yeoman.tmp %>'
     jshint:
       options:
         jshintrc: '.jshintrc'
@@ -105,13 +106,13 @@ module.exports = (grunt) ->
           expand: true,
           cwd: '<%= yeoman.app %>/scripts',
           src: '**/*.coffee',
-          dest: '.tmp/scripts',
+          dest: '<%= yeoman.tmp %>/scripts',
           ext: '.js'
         ]
       test:
         files: [
           expand: true,
-          cwd: '.tmp/spec',
+          cwd: '<%= yeoman.tmp %>/spec',
           src: '*.coffee',
           dest: 'test/spec'
         ]
@@ -123,7 +124,7 @@ module.exports = (grunt) ->
     compass:
       options:
         sassDir: '<%= yeoman.app %>/styles'
-        cssDir: '.tmp/styles'
+        cssDir: '<%= yeoman.tmp %>/styles'
         imagesDir: '<%= yeoman.app %>/images'
         javascriptsDir: '<%= yeoman.app %>/scripts'
         fontsDir: '<%= yeoman.app %>/styles/fonts'
@@ -142,9 +143,22 @@ module.exports = (grunt) ->
     requirejs:
       dist:
         options:
-          baseUrl: '.tmp/scripts'
+          baseUrl: '<%= yeoman.tmp %>/scripts'
+          # paths relative to baseUrl
           paths:
             requireLib: '../../components/requirejs/require'
+            jquery: '../../components/jquery/jquery'
+            es5shim: '../../components/es5-shim/es5-shim'
+            es5sham: '../../components/es5-shim/es5-sham'
+            text: '../../components/requirejs-text/text'
+          map:
+            '*':
+              'flight/component': '../../components/flight/lib/component'
+          shim:
+            '../../components/flight/lib/index':
+              deps: ['jquery', 'es5shim', 'es5sham']
+            'app':
+              deps: ['../../components/flight/lib/index']
           include: 'requireLib'
           optimize: 'uglify2'
           generateSourceMaps: true
@@ -153,7 +167,7 @@ module.exports = (grunt) ->
           wrap: true
           name: 'front'
           out: '<%= yeoman.dist %>/<%= isocket.api.version %>/front.js'
-          mainConfigFile: '.tmp/scripts/front.js'
+          mainConfigFile: '<%= yeoman.tmp %>/scripts/front.js'
     uglify:
       options:
         mangle:
@@ -184,9 +198,10 @@ module.exports = (grunt) ->
     cssmin:
       dist:
         files:
-          '<%= yeoman.dist %>/styles/main.css': [
-            '.tmp/styles/{,*/}*.css',
-            '<%= yeoman.app %>/styles/{,*/}*.css'
+          '<%= yeoman.dist %>/styles/buyads-whitelabel.css': [
+            '<%= yeoman.tmp %>/styles/{,*/}*.css',
+            '<%= yeoman.app %>/styles/{,*/}*.css',
+            'components/pickadate/themes/pickadate.02.classic.css'
           ]
     htmlmin:
       dist:
@@ -198,7 +213,7 @@ module.exports = (grunt) ->
         ]
     concat:
       '<%= yeoman.dist %>/<%= isocket.api.version %>/store.js': [
-        '.tmp/scripts/store.js'
+        '<%= yeoman.tmp %>/scripts/store.js'
       ]
     s3:
       key: '***REMOVED***'

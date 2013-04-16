@@ -1,12 +1,16 @@
 "use strict"
 define [
   'flight/component',
+  'text!../../styles/buyads_whitelabel.css'
   'text!../../../app/templates/placements.html',
   '../../../app/scripts/utils.js'
-], (defineComponent, placementsTmpl, utils) ->
+], (defineComponent, appStyle, placementsTmpl, utils) ->
 
   placements = ->
     template = utils.tmpl placementsTmpl
+
+    @insertStyles = (css) ->
+      this.$node.prepend('<style type="text/css">' + css + '</style>')
 
     @render = (e) ->
       @off document, 'dataInventory'
@@ -20,6 +24,8 @@ define [
         setTimeout (=> @pollInventory()), 500
 
     @after 'initialize', ->
+      @insertStyles appStyle
+
       # listen for API response
       @on document, 'dataInventory', @render
       # check to see if it came already

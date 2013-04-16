@@ -8,7 +8,7 @@
 @import cart_states
 @import cart_buttons
 @import cart_inputs
-@import cart_placements
+@import cart_items
 
 .buyads-cart-backdrop
   position: fixed
@@ -30,7 +30,7 @@
   z-index: 10000
   $breakpoint: 768px
   $padding: 30px
-  $width: $breakpoint - ($breakpoint * .2) - $padding
+  $width: $breakpoint - ($breakpoint * .1) - $padding
   width: $width
   padding: $padding
   padding-top: 0
@@ -53,14 +53,9 @@
 
 .buyads-cols
   float: left
-  width: 50%
+  width: 48%
+  &.buyads-cart-info
+    margin-left: 4%
 
-.buyads-cart-items
-  max-height: 400px
-  overflow-y: auto
-  background: linear-gradient(white 30%, rgba(255,255,255,0)), linear-gradient(rgba(255,255,255,0), white 70%) 0 100%, radial-gradient(50% 0, farthest-side, rgba(0,0,0,.2), rgba(0,0,0,0)), radial-gradient(50% 100%,farthest-side, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%
-  background: linear-gradient(white 30%, rgba(255,255,255,0)), linear-gradient(rgba(255,255,255,0), white 70%) 0 100%, radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.2), rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%
-  background-repeat: no-repeat
-  background-color: #fff
-  background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px
-  background-attachment: local, local, scroll, scroll
+.outline
+  outline: 1px solid red

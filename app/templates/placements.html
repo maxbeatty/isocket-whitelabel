@@ -1,3 +1,6 @@
+<!-- TODO: dynamic grid for even rows -->
+<!-- TODO: row view (spreadsheet) -->
+
 <% zones.forEach(function(z, i) {%>
   <div class="buyads-placement">
     <h4 class="buyads-placement-summary">
@@ -11,10 +14,10 @@
       </p>
     <%})%>
 
-    <button type="button" class="btn" data-inventory="<%= i %>">
+    <button type="button" class="buyads-add-inv btn" data-inventory="<%= i %>" data-disabled-text="Added to cart">
       Add to cart
     </button>
 </div>
 <%}) %>
 
-<button type="button" class="buyads-cart-btn">Your Cart</button>
+<button type="button" class="buyads-cart-btn btn">Your Cart</button>

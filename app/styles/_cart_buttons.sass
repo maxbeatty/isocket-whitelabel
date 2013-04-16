@@ -36,6 +36,10 @@
     opacity: 0.5
     text-shadow: none
     +box-shadow(none)
+  &.buyads-cart-submit
+    position: absolute
+    bottom: 30px
+    right: 75px
 
 .buyads-cart-close
   position: absolute
@@ -44,14 +48,16 @@
   padding: 0
   background-color: #e6e6e6
   border: 0
-  $size: 24px
-  height: $size
+  $size: 22px
+  $stupid: 2px
+  padding-bottom: $stupid * 2
+  height: $size - $stupid
   width: $size
   border-radius: $size / 2
-  color: #bbb
-  font-size: 14px
-  line-height: 20px
+  color: #fff
+  font-size: $size
+  line-height: 0
+  font-weight: bolder
   &:hover,
   &:active
-    color: #888
-    background-color: #ddd
+    background-color: #d5d5d5

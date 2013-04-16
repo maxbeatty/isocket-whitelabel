@@ -47,4 +47,4 @@ define ["flight/component"], (defineComponent) ->
 #       @on document, "formSubmittal", @functionthatoccurs
 
 
-  return defineComponent(flightTemplate)
+  defineComponent cart

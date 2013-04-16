@@ -1,7 +1,7 @@
 # Store is embedded on a publisher's site and loads our latest front
 
 class BuyAdsWhiteLabel
-  constructor: (@inventory) ->
+  constructor: ->
     @el = document.getElementById 'buyads-whitelabel'
     @setupShop()
     @getFront()
@@ -58,4 +58,4 @@ class BuyAdsWhiteLabel
 
       httpRequest.send()
 
-this.YourBuyAdsWhiteLabel = new BuyAdsWhiteLabel {}
+this.YourBuyAdsWhiteLabel = new BuyAdsWhiteLabel()

@@ -315,13 +315,13 @@ module.exports = (grunt) ->
     'clean:dist',
     'coffee',
     'compass:dist',
+    'cssmin',
     'grunticon',
     'useminPrepare',
     'requirejs',
     'imagemin',
     'htmlmin',
     'concat',
-    'cssmin',
     'uglify:dist',
     'usemin'
   ]

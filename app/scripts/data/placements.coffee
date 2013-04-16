@@ -1,7 +1,7 @@
 "use strict"
 define [
   'flight/component',
-  'text!../../styles/buyads_whitelabel.css'
+  'text!../../../dist/styles/buyads-whitelabel.css'
   'text!../../../app/templates/placements.html',
   '../../../app/scripts/utils'
 ], (defineComponent, appStyle, placementsTmpl, utils) ->

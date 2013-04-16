@@ -16,7 +16,7 @@ define [
       @off document, 'dataInventory'
 
       @trigger 'dataPlacementsServed',
-        markup: template zones: YourBuyAdsWhiteLabel.inventory
+        markup: template { zones: YourBuyAdsWhiteLabel.inventory }
 
     @pollInventory = ->
       if YourBuyAdsWhiteLabel.inventory
@@ -26,9 +26,11 @@ define [
         setTimeout (=> @pollInventory()), 500
 
     @after 'initialize', ->
-      @on 'uiStylesRequested', @serveStyles
+      @serveStyles()
 
       # listen for API response
-      @on document, 'dataInventory', @render
+      @on document, 'dataInventory', @servePlacements
       # check to see if it came already
       @pollInventory()
+
+  defineComponent placements

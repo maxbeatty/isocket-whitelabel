@@ -5,9 +5,6 @@ define [
 
   placements = ->
 
-    @requestStyles = ->
-      @trigger 'uiStylesRequested'
-
     @renderStyles = (e, data) ->
       @$node.before data.markup
 
@@ -15,10 +12,7 @@ define [
       @$node.prepend data.markup
 
     @after 'initialize', ->
-      @on 'dataStylesServed', @renderStyles
       @on 'dataPlacementsServed', @renderPlacements
-
-      @requestStyles()
-
+      @on 'dataStylesServed', @renderStyles
 
   defineComponent placements

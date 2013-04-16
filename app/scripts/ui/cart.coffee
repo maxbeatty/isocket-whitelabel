@@ -15,6 +15,7 @@ define [
       cartItemsSelector: '.buyads-cart-items'
       cartButtonSelector: '.buyads-cart-btn'
       cartPickadateSelector: '.buyads-datepicker'
+      cartCloseButtonSelector: '.buyads-cart-close'
 
     @renderCart = ->
       @$node.append cartTmpl
@@ -33,6 +34,7 @@ define [
       @on 'click',
         cartButtonSelector: @toggleCart
         cartBackdropSelector: @toggleCart
+        cartCloseButtonSelector: @toggleCart
 
 
 

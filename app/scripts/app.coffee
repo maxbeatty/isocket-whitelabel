@@ -3,7 +3,8 @@ define [
   'ui/cart'
 ], (Placements, Cart) ->
   initialize = ->
-    Placements.attachTo '.buyads-whitelabel-container' # created by store
+    # .buyads-whitelabel-container created by store
+    Placements.attachTo '.buyads-whitelabel-container'
     Cart.attachTo '.buyads-whitelabel-container'
     return
 

@@ -23,7 +23,7 @@ class BuyAdsWhiteLabel
   setupShop: ->
     store = document.createElement 'div'
     store.className = 'buyads-whitelabel-container'
-    store.innerHTML = "Loading inventory..."
+    store.innerHTML = '<span class="buyads-loading">Loading inventory...</span>'
     @el.parentNode.insertBefore store, @el.nextSibling
 
   createCORSRequest: (method, url) ->

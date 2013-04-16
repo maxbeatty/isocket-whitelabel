@@ -1,6 +1,43 @@
 "use strict"
-define ["flight/component"], (defineComponent) ->
+define [
+  'flight/component',
+  'text!../../../app/templates/cart.html',
+  'text!../../../app/templates/cart_item.html',
+  '../../../app/scripts/utils',
+  'pickadate'
+], (defineComponent, cartTmpl, cartItemTmpl, utils, pickadate) ->
   cart = ->
+    cartItemTemplate = utils.tmpl cartItemTmpl
+
+    @defaultAttrs
+      cartSelector: '.buyads-cart'
+      cartBackdropSelector: '.buyads-cart-backdrop'
+      cartItemsSelector: '.buyads-cart-items'
+      cartButtonSelector: '.buyads-cart-btn'
+      cartPickadateSelector: '.buyads-datepicker'
+
+    @renderCart = ->
+      @$node.append cartTmpl
+
+      @$node.select('cartPickadateSelector').pickadate
+        dateMin: true,
+        format: 'd mmm, yyyy'
+
+    @toggleCart = ->
+      @select('cartSelector').toggleClass 'is-open'
+
+
+    @after 'initialize', ->
+      @renderCart()
+
+      @on 'click',
+        cartButtonSelector: @toggleCart
+        cartBackdropSelector: @toggleCart
+
+
+
+      return
+    return
     #Four main sections of each component
     # Attributes, Functions, Internal Events, External Events.
 

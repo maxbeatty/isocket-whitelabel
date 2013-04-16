@@ -3,18 +3,18 @@ define [
   'flight/component',
   'text!../../styles/buyads_whitelabel.css'
   'text!../../../app/templates/placements.html',
-  '../../../app/scripts/utils.js'
+  '../../../app/scripts/utils'
 ], (defineComponent, appStyle, placementsTmpl, utils) ->
 
   placements = ->
     template = utils.tmpl placementsTmpl
 
     @insertStyles = (css) ->
-      this.$node.prepend('<style type="text/css">' + css + '</style>')
+      this.$node.before '<style type="text/css">' + css + '</style>'
 
     @render = (e) ->
       @off document, 'dataInventory'
-      @$node.html template zones: YourBuyAdsWhiteLabel.inventory
+      @$node.prepend template zones: YourBuyAdsWhiteLabel.inventory
 
     @pollInventory = ->
       if YourBuyAdsWhiteLabel.inventory

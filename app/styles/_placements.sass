@@ -8,14 +8,16 @@
   &:after
     clear: both
 
+$cartBtnWidth: 80px
+
 .buyads-whitelabel-container
   position: relative
-  padding-right: 80px // room for cart-btn
+  padding-right: $cartBtnWidth // room for cart-btn
   +clearfix()
 
 .buyads-placement
   float: left
-  margin-right: 20px
+  margin-right: $cartBtnWidth / 2
   &:last-child
     margin-right: 0
 

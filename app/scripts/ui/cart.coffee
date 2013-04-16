@@ -1,41 +1,45 @@
 "use strict"
 define [
   'flight/component',
-  'text!../../../app/templates/placement.html',
-  '../../../app/scripts/utils.js'
-], (defineComponent, placementTmpl, utils) ->
+  'text!../../../app/templates/cart.html',
+  'text!../../../app/templates/cart_item.html',
+  '../../../app/scripts/utils',
+  'pickadate'
+], (defineComponent, cartTmpl, cartItemTmpl, utils, pickadate) ->
+  cart = ->
+    cartItemTemplate = utils.tmpl cartItemTmpl
 
-  placement = ->
-    template = utils.tmpl placementTmpl
+    @defaultAttrs
+      cartSelector: '.buyads-cart'
+      cartBackdropSelector: '.buyads-cart-backdrop'
+      cartItemsSelector: '.buyads-cart-items'
+      cartButtonSelector: '.buyads-cart-btn'
+      cartPickadateSelector: '.buyads-datepicker'
 
-    @render = (e) ->
-      @off document, 'inventoryReady'
-      @$node.html template zones: YourBuyAdsWhiteLabel.inventory.Zones
+    @renderCart = ->
+      @$node.append cartTmpl
 
-    @pollInventory = ->
-      if YourBuyAdsWhiteLabel.inventory.Zones
-        @trigger document, 'inventoryReady'
-      else
-        # poll for IE8
-        setTimeout (=> @pollInventory()), 500
+      @$node.select('cartPickadateSelector').pickadate
+        dateMin: true,
+        format: 'd mmm, yyyy'
+
+    @toggleCart = ->
+      @select('cartSelector').toggleClass 'is-open'
+
 
     @after 'initialize', ->
-      # listen for API response
-      @on document, 'inventoryReady', @render
-      # check to see if it came already
-      @pollInventory()
+      @renderCart()
+
+      @on 'click',
+        cartButtonSelector: @toggleCart
+        cartBackdropSelector: @toggleCart
+
+
 
       return
     return
-
-  defineComponent placement
-
-
-# "use strict"
-# define ["flight/component"], (defineComponent) ->
-#   flightTemplate = ->
-#     #Four main sections of each component
-#     # Attributes, Functions, Internal Events, External Events.
+    #Four main sections of each component
+    # Attributes, Functions, Internal Events, External Events.
 
 
 
@@ -80,4 +84,4 @@ define [
 #       @on document, "formSubmittal", @functionthatoccurs
 
 
-#   return defineComponent(flightTemplate)
+  defineComponent cart

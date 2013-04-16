@@ -10,6 +10,7 @@ module.exports = (grunt) ->
   # configurable paths
   yeomanConfig =
     app: 'app'
+    tmp: '.tmp'
     dist: 'dist'
 
   isocketConfig =
@@ -43,8 +44,8 @@ module.exports = (grunt) ->
       livereload:
         files: [
           '<%= yeoman.app %>/*.html',
-          '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
-          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+          '{<%= yeoman.tmp %>,<%= yeoman.app %>}/styles/{,*/}*.css',
+          '{<%= yeoman.tmp %>,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,webp}'
         ]
         tasks: ['livereload']
@@ -60,14 +61,14 @@ module.exports = (grunt) ->
           middleware: (connect) ->
             [
               lrSnippet,
-              mountFolder(connect, '.tmp'),
+              mountFolder(connect, '<%= yeoman.tmp %>'),
               mountFolder(connect, 'app')
             ]
       test:
         options:
           middleware: (connect) ->
             [
-              mountFolder(connect, '.tmp'),
+              mountFolder(connect, '<%= yeoman.tmp %>'),
               mountFolder(connect, 'test')
             ]
       dist:
@@ -80,13 +81,13 @@ module.exports = (grunt) ->
       server:
         path: 'http://localhost:<%= connect.options.port %>'
     clean:
-      dist: ['.tmp', '<%= yeoman.dist %>/*']
-      server: '.tmp'
+      dist: ['<%= yeoman.tmp %>', '<%= yeoman.dist %>/*']
+      server: '<%= yeoman.tmp %>'
     jshint:
       options:
         jshintrc: '.jshintrc'
       all: [
-        '<%= yeoman.app %>/scripts/{,*/}*.js',
+        '<%= yeoman.app %>/scripts/{,*/}*!{utils}.js',
         '!<%= yeoman.app %>/scripts/vendor/*',
         'test/spec/{,*/}*.js'
       ]
@@ -105,13 +106,13 @@ module.exports = (grunt) ->
           expand: true,
           cwd: '<%= yeoman.app %>/scripts',
           src: '**/*.coffee',
-          dest: '.tmp/scripts',
+          dest: '<%= yeoman.tmp %>/scripts',
           ext: '.js'
         ]
       test:
         files: [
           expand: true,
-          cwd: '.tmp/spec',
+          cwd: '<%= yeoman.tmp %>/spec',
           src: '*.coffee',
           dest: 'test/spec'
         ]
@@ -123,22 +124,27 @@ module.exports = (grunt) ->
     compass:
       options:
         sassDir: '<%= yeoman.app %>/styles'
-        cssDir: '.tmp/styles'
+        cssDir: '<%= yeoman.tmp %>/styles'
         imagesDir: '<%= yeoman.app %>/images'
         javascriptsDir: '<%= yeoman.app %>/scripts'
         fontsDir: '<%= yeoman.app %>/styles/fonts'
-        importPath: 'app/components'
+        importPath: 'components'
         relativeAssets: true
-      dist: {}
+      dist:
+        options:
+          outputStyle: 'compressed'
+          noLineComments: true
       server:
         options:
           debugInfo: true
+          trace: true
 
     # Ref: https://github.com/jrburke/r.js/blob/master/build/example.build.js
     requirejs:
       dist:
         options:
-          baseUrl: '.tmp/scripts'
+          baseUrl: '<%= yeoman.tmp %>/scripts'
+          # paths relative to baseUrl
           paths:
             requireLib: '../../components/requirejs/require'
           include: 'requireLib'
@@ -149,7 +155,7 @@ module.exports = (grunt) ->
           wrap: true
           name: 'front'
           out: '<%= yeoman.dist %>/<%= isocket.api.version %>/front.js'
-          mainConfigFile: '.tmp/scripts/front.js'
+          mainConfigFile: '<%= yeoman.tmp %>/scripts/front.js'
     uglify:
       options:
         mangle:
@@ -180,9 +186,10 @@ module.exports = (grunt) ->
     cssmin:
       dist:
         files:
-          '<%= yeoman.dist %>/styles/main.css': [
-            '.tmp/styles/{,*/}*.css',
-            '<%= yeoman.app %>/styles/{,*/}*.css'
+          '<%= yeoman.dist %>/styles/buyads-whitelabel.css': [
+            '<%= yeoman.tmp %>/styles/{,*/}*.css',
+            '<%= yeoman.app %>/styles/{,*/}*.css',
+            'components/pickadate/themes/pickadate.02.classic.css'
           ]
     htmlmin:
       dist:
@@ -194,10 +201,10 @@ module.exports = (grunt) ->
         ]
     concat:
       '<%= yeoman.dist %>/<%= isocket.api.version %>/store.js': [
-        '.tmp/scripts/store.js'
+        '<%= yeoman.tmp %>/scripts/store.js'
       ]
     s3:
-      key: "***REMOVED***"
+      key: '***REMOVED***'
       secret: '***REMOVED***'
       bucket: 'buyads-whitelabel'
       access: 'public-read'
@@ -206,7 +213,7 @@ module.exports = (grunt) ->
         dest: '<%= isocket.api.version %>/<%= build %>/front.js'
         gzip: true
         headers:
-          "Cache-Control": "max-age=94608000" # 3 years
+          'Cache-Control': 'max-age=94608000' # 3 years
       },
       {
         src: '<%= yeoman.dist %>/<%= isocket.api.version %>/store.js'
@@ -258,9 +265,9 @@ module.exports = (grunt) ->
         ]
     grunticon:
       options:
-        src: "<%= yeoman.app %>/images/"
-        dest: "<%= yeoman.dist %>/images/"
-        previewhtml: "icons.html"
+        src: '<%= yeoman.app %>/images/'
+        dest: '<%= yeoman.dist %>/images/'
+        previewhtml: 'icons.html'
 
 
   grunt.registerTask 'server', (target) ->
@@ -275,7 +282,7 @@ module.exports = (grunt) ->
     grunt.task.run [
       'clean:server',
       'coffee:dist',
-      # 'compass:server',
+      'compass:server',
       'replace:server',
       'livereload-start',
       'connect:livereload',
@@ -284,10 +291,10 @@ module.exports = (grunt) ->
     ]
 
   grunt.registerTask 'deploy', (user, build, type) ->
-    releaseTypes = ["major","minor", "patch", "build"]
+    releaseTypes = ['major','minor', 'patch', 'build']
 
     if user is 'jenkins' and !isNaN(build) and releaseTypes.indexOf(type) != -1
-      grunt.config.set "build", build
+      grunt.config.set 'build', build
 
       grunt.task.run [
         'replace:dist',
@@ -299,7 +306,7 @@ module.exports = (grunt) ->
   grunt.registerTask 'test', [
     'clean:server',
     'coffee',
-    # 'compass',
+    'compass',
     'connect:test',
     'mocha'
   ]
@@ -307,7 +314,7 @@ module.exports = (grunt) ->
   grunt.registerTask 'build', [
     'clean:dist',
     'coffee',
-    # 'compass:dist',
+    'compass:dist',
     'grunticon',
     'useminPrepare',
     'requirejs',

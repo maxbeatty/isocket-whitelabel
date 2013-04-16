@@ -1,0 +1,37 @@
+@import compass/css3/user-interface
+
+.buyads-cart-submit
+  border: 1px solid #b8c3c9
+  font-family: "lucida grande","Open Sans",tahoma,verdana,arial,sans-serif
+  line-height: 26px
+  display: inline-block
+  padding: 4px 16px
+  color: #4b5c66
+  cursor: pointer
+  outline: none
+  position: relative
+  border-radius: 4px
+  +background-clip(padding-box)
+  background-color: #fff
+  +background-image(linear-gradient(white 60%, #f5f7fa 100%))
+  +box-shadow(0px 1px 0 0px rgba(0, 0, 0, 0.07))
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5)
+  +user-select(none)
+  -webkit-font-smoothing: auto
+  font-size: 14px
+  &:hover, &:focus
+    text-decoration: none
+    background-color: #ffffff
+    +background-image(linear-gradient(white 60%, #ebeff2 100%))
+  &:active
+    background-color: #ebeff2
+    +background-image(linear-gradient(#ebeff2 0%, white 100%))
+  &:disabled
+    background-color: #ffffff
+    +background-image(linear-gradient(white 60%, #f5f7fa 100%))
+    border: 1px solid #b8c3c9
+    color: #89949b
+    cursor: default
+    opacity: 0.5
+    text-shadow: none
+    +box-shadow(none)

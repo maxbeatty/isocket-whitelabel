@@ -1,11 +1,12 @@
 @import compass/css3/user-interface
 
-.buyads-cart-submit
+.buyads-btn
   border: 1px solid #b8c3c9
   font-family: "lucida grande","Open Sans",tahoma,verdana,arial,sans-serif
   line-height: 26px
   display: inline-block
   padding: 4px 16px
+  margin-top: 16px
   color: #4b5c66
   cursor: pointer
   outline: none
@@ -35,3 +36,28 @@
     opacity: 0.5
     text-shadow: none
     +box-shadow(none)
+  &.buyads-cart-submit
+    position: absolute
+    bottom: 30px
+    right: 75px
+
+.buyads-cart-close
+  position: absolute
+  top: 2%
+  right: 2%
+  padding: 0
+  background-color: #e6e6e6
+  border: 0
+  $size: 22px
+  $stupid: 2px
+  padding-bottom: $stupid * 2
+  height: $size - $stupid
+  width: $size
+  border-radius: $size / 2
+  color: #fff
+  font-size: $size
+  line-height: 0
+  font-weight: bolder
+  &:hover,
+  &:active
+    background-color: #d5d5d5

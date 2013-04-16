@@ -17,6 +17,7 @@ define [
       cartPickadateSelector: '.buyads-datepicker'
       cartCloseButtonSelector: '.buyads-cart-close'
       tosHelpSelector: '.buyads-tos-help'
+      emptyCartButtonSelector: '.buyads-empty-cart'
 
     @renderCart = ->
       @$node.append cartTmpl
@@ -43,6 +44,7 @@ define [
         cartButtonSelector: @uiToggleCart
         cartBackdropSelector: @uiToggleCart
         cartCloseButtonSelector: @uiToggleCart
+        emptyCartButtonSelector: @uiToggleCart
 
       @on '[name="buyadsTosAcceptance"]', 'change', @uiToggleTosHelp
 

@@ -1,8 +1,11 @@
 define [
-  './ui/placement'
-], (Placement) ->
+  'ui/placements',
+  'ui/cart'
+], (Placements, Cart) ->
   initialize = ->
-    Placement.attachTo '.buyads-whitelabel-container'
+    # .buyads-whitelabel-container created by store
+    Placements.attachTo '.buyads-whitelabel-container'
+    Cart.attachTo '.buyads-whitelabel-container'
     return
 
   initialize: initialize

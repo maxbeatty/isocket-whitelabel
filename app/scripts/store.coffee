@@ -1,7 +1,7 @@
 # Store is embedded on a publisher's site and loads our latest front
 
 class BuyAdsWhiteLabel
-  constructor: (@inventory) ->
+  constructor: ->
     @el = document.getElementById 'buyads-whitelabel'
     @setupShop()
     @getFront()
@@ -23,7 +23,7 @@ class BuyAdsWhiteLabel
   setupShop: ->
     store = document.createElement 'div'
     store.className = 'buyads-whitelabel-container'
-    store.innerHTML = "Loading inventory..."
+    store.innerHTML = '<span class="buyads-loading">Loading inventory...</span>'
     @el.parentNode.insertBefore store, @el.nextSibling
 
   createCORSRequest: (method, url) ->
@@ -53,9 +53,9 @@ class BuyAdsWhiteLabel
 
         if document.createEvent # !IE8
           evt = document.createEvent "CustomEvent"
-          evt.initCustomEvent 'inventoryReady', true, true, {}
+          evt.initCustomEvent 'dataInventory', true, true, {}
           document.dispatchEvent evt
 
       httpRequest.send()
 
-this.YourBuyAdsWhiteLabel = new BuyAdsWhiteLabel {}
+this.YourBuyAdsWhiteLabel = new BuyAdsWhiteLabel()

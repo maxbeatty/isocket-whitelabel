@@ -1,4 +1,5 @@
 <div class="buyads-cart">
+  <button type="button" class="buyads-cart-close">&times;</button>
   <h2>
     Campaign
     <!-- cart icon w/ count? -->
@@ -8,6 +9,9 @@
 
       <div class="buyads-cart-items">
         <!-- cart_item.html -->
+        <p class="buyads-empty-cart">You haven't added any placements yet</p>
+
+        <button class="buyads-btn" data-full-state-text="Add More">View Inventory</button>
       </div>
   </div>
 
@@ -30,9 +34,9 @@
       I accept the <a href="https://www.buyads.com/terms" target="_blank">BuyAds Terms of Service</a>
     </label>
 
-    <p class="buyads-tos-help">You must accept terms before continuing</p>
+    <p class="buyads-tos-help">You must accept the terms before continuing</p>
 
-    <button type="button" class="buyads-cart-submit" disabled>Submit Order for Approval</button>
+    <button type="button" class="buyads-cart-submit buyads-btn" disabled>Submit Order for Approval</button>
   </div>
 
 </div>

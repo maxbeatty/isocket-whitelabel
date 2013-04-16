@@ -1,11 +1,16 @@
 define [
+  'data/cart',
+  'data/placements',
   'ui/placements',
   'ui/cart'
-], (Placements, Cart) ->
+], (CartData, PlacementsData, PlacementsUI, CartUI) ->
   initialize = ->
     # .buyads-whitelabel-container created by store
-    Placements.attachTo '.buyads-whitelabel-container'
-    Cart.attachTo '.buyads-whitelabel-container'
+    PlacementsUI.attachTo '.buyads-whitelabel-container'
+    CartUI.attachTo '.buyads-whitelabel-container'
+    CartData.attachTo '.buyads-whitelabel-container'
+    PlacementsData.attachTo '.buyads-whitelabel-container'
+
     return
 
   initialize: initialize

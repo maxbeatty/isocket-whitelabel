@@ -1,87 +1,92 @@
 "use strict"
 define [
   'flight/component',
-  'text!../../../app/templates/cart.html',
-  'text!../../../app/templates/cart_item.html',
-  '../../../app/scripts/utils',
   'pickadate'
-], (defineComponent, cartTmpl, cartItemTmpl, utils, pickadate) ->
+], (defineComponent, pickadate) ->
   cart = ->
-    cartItemTemplate = utils.tmpl cartItemTmpl
+    cartRequested = false
+    cartEmpty = true
 
     @defaultAttrs
       cartSelector: '.buyads-cart'
+      # external to cart
       cartBackdropSelector: '.buyads-cart-backdrop'
+      addToCartBtnSelector: '.buyads-add-inv'
+      cartBtnSelector: '.buyads-cart-btn'
+      # internal to cart
       cartItemsSelector: '.buyads-cart-items'
-      cartButtonSelector: '.buyads-cart-btn'
+      cartCloseButtonSelector: '.buyads-cart-close'
+      tosCheckboxSelector: '[name="buyadsTosAcceptance"]'
+      tosHelpSelector: '.buyads-tos-help'
+      emptyCartButtonSelector: '.buyads-empty-cart + .buyads-btn'
       cartPickadateSelector: '.buyads-datepicker'
 
-    @renderCart = ->
-      @$node.append cartTmpl
+    @requestCart = ->
+      @trigger 'uiCartRequested' unless cartRequested
 
-      @$node.select('cartPickadateSelector').pickadate
+    @launchCart = (e, data) ->
+      @$node.append data.markup
+
+      cartRequested = true
+
+      @toggleCart()
+
+    @toggleCart = ->
+      if cartRequested
+        @select('cartSelector').toggleClass 'is-open'
+      else
+        @requestCart()
+
+    @dismissCart = (e) ->
+      # dismiss cart when 'esc' key is pressed
+      if e.which is 27 and @select('cartSelector').hasClass 'is-open'
+        @toggleCart()
+
+    @toggleTosHelp = (e) ->
+      @select('tosHelpSelector').toggleClass 'is-accepted', $(e.target).is ':checked'
+
+    @addToCart = (e) ->
+      $(e.target).prop('disabled', true).text($(e.target).data('disabled-text'))
+      @trigger 'uiCartItemRequested', placement: e.target
+
+    @removeFromCart = (e) ->
+      # remove html from cartItemsSelector
+      # TODO: cartEmpty = true if cart is empty
+      # TODO: change empty button back to empty state
+
+    @renderCartItem = (e, data) ->
+      # requires cart to be rendered and cartItemsSelector
+      @toggleCart()
+
+      # No clue why this doesn't work
+      # @$node.select('cartItemsSelector').prepend data.markup
+      @$node.find('.buyads-cart-items').prepend data.markup
+
+      # @$node.select('cartPickadateSelector').pickadate
+      @$node.find('.buyads-datepicker').pickadate
         dateMin: true,
         format: 'd mmm, yyyy'
 
-    @toggleCart = ->
-      @select('cartSelector').toggleClass 'is-open'
+      cartEmpty = false
+      # TODO: change empty button text to encourage adding more
 
+    # TODO: make sure end date is after end date
 
     @after 'initialize', ->
-      @renderCart()
+      @on 'dataCartServed', @launchCart
+      @on 'dataCartItemServed', @renderCartItem
 
       @on 'click',
-        cartButtonSelector: @toggleCart
+        cartBtnSelector: @toggleCart
         cartBackdropSelector: @toggleCart
+        cartCloseButtonSelector: @toggleCart
+        emptyCartButtonSelector: @toggleCart
+        addToCartBtnSelector: @addToCart
 
+      @on 'change',
+        tosCheckboxSelector: @toggleTosHelp
 
-
-      return
-    return
-    #Four main sections of each component
-    # Attributes, Functions, Internal Events, External Events.
-
-
-
-
-#     #Component Attributes
-#     #define DOM elements to a selector that you'll use in functions within this Component
-#     @defaultAttrs
-#       labelForClass: ('.nullClass')
-#       labelForId: ('#nullId')
-#       activeCssClass: ('activated')
-
-
-
-
-
-#     #functionalities of Component
-#     #what this component does based off incoming events from the interior or the exterior of this component.
-#     #Note that Flight is event based which is beautiful, because it forces innate organization and logic into the construction of your SPA.
-#     @actionThatClickingIdDoes = () ->
-#       @select('labelForClass').toggleClass(this.attr.activeCssClass);
-#       #this emmits
-#       @trigger 'eventToBeSentToExternalComponent'
-
-#     @functionThatOccurs = () ->
-#       #functionality that accors when formSubmittal is emmitted from a different DOM Node
-
-
-
-
-
-#     @after "initialize", ->
-#       # events from within the Component
-#       #these are functionalities that are begat from within this DOM Node(component)
-#       @on "click", labelForId: @actionThatClickingIdDoes
-
-
-
-
-
-#       # incoming events from other Components
-#       #these are function defined above ^ that are triggered externally.
-#       @on document, "formSubmittal", @functionthatoccurs
+      @on document, 'keyup', @dismissCart
 
 
   defineComponent cart

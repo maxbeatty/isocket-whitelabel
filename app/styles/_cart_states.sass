@@ -1,0 +1,16 @@
+.buyads-cart-backdrop
+  display: none
+
+.buyads-cart
+  display: none
+  &.is-open
+    display: block
+    & + .buyads-cart-backdrop
+      display: block
+
+.buyads-tos-help
+  &.is-accepted
+    display: none
+
+.buyads-cart-item ~ .buyads-empty-cart
+  display: none

@@ -26,13 +26,15 @@ define [
         format: 'd mmm, yyyy'
 
     @uiToggleCart = ->
-      # TODO: also toggle on keyPress 'esc'
       @select('cartSelector').toggleClass 'is-open'
+
+    @uiDismissCart = (e) ->
+      # dismiss cart when 'esc' key is pressed
+      if e.which is 27 and @select('cartSelector').hasClass 'is-open'
+        @uiToggleCart()
 
     @uiToggleTosHelp = (e) ->
       @select('tosHelpSelector').toggleClass 'is-accepted', $(e.target).is ':checked'
-
-
 
     @after 'initialize', ->
       @renderCart()
@@ -44,7 +46,7 @@ define [
 
       @on '[name="buyadsTosAcceptance"]', 'change', @uiToggleTosHelp
 
-
+      @on document, 'keyup', @uiDismissCart
 
       return
     return

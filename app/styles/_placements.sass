@@ -1,0 +1,29 @@
+@mixin clearfix
+  zoom: 1
+  &:before, &:after
+    content: "\0020"
+    display: block
+    height: 0
+    overflow: hidden
+  &:after
+    clear: both
+
+.buyads-whitelabel-container
+  position: relative
+  padding-right: 80px // room for cart-btn
+  +clearfix()
+
+.buyads-placement
+  float: left
+  margin-right: 20px
+  &:last-child
+    margin-right: 0
+
+.buyads-placement-summary
+  small
+    display: block
+
+.buyads-cart-btn
+  position: absolute
+  top: 0
+  right: 0

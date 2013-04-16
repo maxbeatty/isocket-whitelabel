@@ -1,9 +1,12 @@
 require.config
   paths:
+    # required dependencies
     jquery: '../../components/jquery/jquery'
     es5shim: '../../components/es5-shim/es5-shim'
     es5sham: '../../components/es5-shim/es5-sham'
+    # plugins
     text: '../../components/requirejs-text/text'
+    pickadate: '../../components/pickadate/source/pickadate.legacy'
   map:
     '*':
       'flight/component': '../../components/flight/lib/component'

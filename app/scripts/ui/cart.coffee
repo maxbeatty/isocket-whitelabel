@@ -16,6 +16,7 @@ define [
       cartButtonSelector: '.buyads-cart-btn'
       cartPickadateSelector: '.buyads-datepicker'
       cartCloseButtonSelector: '.buyads-cart-close'
+      tosHelpSelector: '.buyads-tos-help'
 
     @renderCart = ->
       @$node.append cartTmpl
@@ -24,17 +25,24 @@ define [
         dateMin: true,
         format: 'd mmm, yyyy'
 
-    @toggleCart = ->
+    @uiToggleCart = ->
+      # TODO: also toggle on keyPress 'esc'
       @select('cartSelector').toggleClass 'is-open'
+
+    @uiToggleTosHelp = (e) ->
+      @select('tosHelpSelector').toggleClass 'is-accepted', $(e.target).is ':checked'
+
 
 
     @after 'initialize', ->
       @renderCart()
 
       @on 'click',
-        cartButtonSelector: @toggleCart
-        cartBackdropSelector: @toggleCart
-        cartCloseButtonSelector: @toggleCart
+        cartButtonSelector: @uiToggleCart
+        cartBackdropSelector: @uiToggleCart
+        cartCloseButtonSelector: @uiToggleCart
+
+      @on '[name="buyadsTosAcceptance"]', 'change', @uiToggleTosHelp
 
 
 

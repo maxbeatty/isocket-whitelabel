@@ -5,12 +5,12 @@
 @import compass/css3/transform
 @import compass/css3/transition
 
+@import cart_states
 @import cart_buttons
 @import cart_inputs
 @import cart_placements
 
 .buyads-cart-backdrop
-  display: none
   position: fixed
   top: 0
   right: 0
@@ -22,11 +22,8 @@
   +background(radial-gradient(50% 50%, ellipse closest-corner, rgba(0, 0, 0, 0.45) 1%, rgba(0, 0, 0, 0.8) 100%))
   +single-transition(400ms, opacity, ease)
   +translate3d(0, 0, 0)
-  .buyads-cart.is-open + &
-    display: block
 
 .buyads-cart
-  display: none
   position: fixed
   top: 10%
   left: 50%
@@ -49,8 +46,6 @@
   font-size: 14px
   line-height: 20px
   color: #333333
-  &.is-open
-    display: block
   fieldset
     border: 0
     margin: 0

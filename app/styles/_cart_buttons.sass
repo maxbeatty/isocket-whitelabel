@@ -6,6 +6,7 @@
   line-height: 26px
   display: inline-block
   padding: 4px 16px
+  margin-top: 16px
   color: #4b5c66
   cursor: pointer
   outline: none
@@ -38,16 +39,17 @@
 
 .buyads-cart-close
   position: absolute
-  top: 1%
-  right: 1%
+  top: 2%
+  right: 2%
   padding: 0
   background-color: #e6e6e6
   border: 0
-  border-radius: 12px
+  $size: 24px
+  height: $size
+  width: $size
+  border-radius: $size / 2
   color: #bbb
   font-size: 14px
-  height: 24px
-  width: 24px
   line-height: 20px
   &:hover,
   &:active

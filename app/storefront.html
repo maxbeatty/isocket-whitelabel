@@ -20,28 +20,6 @@
     <button>Add to cart</button>
   </div>
 
-  <div class="buyads-placement">
-    <h3 class="buyads-placement-summary">
-      {{width}} &times; {{height}}
-      <small>{{placement name}}</small>
-    </h3>
-
-    <p>{{rate}} {{unit}}</p>
-
-    <button>Add to cart</button>
-  </div>
-
-  <div class="buyads-placement">
-    <h3 class="buyads-placement-summary">
-      <span>{{width}} &times; {{height}}</span>
-      <small>{{placement name}}</small>
-    </h3>
-
-    <p>{{rate}} {{unit}}</p>
-
-    <button>Add to cart</button>
-  </div>
-
   <!-- cart button -->
   <button type="button" class="buyads-cart-btn">Your Cart</button>
 
@@ -163,30 +141,6 @@
       </div>
     </div>
 
-    <div class="buyads-cols buyads-cart-info">
-      <h3>Buyer</h3>
-
-      <label>Your name</label>
-      <input name="buyadsFirst" type="text" required placeholder="First" class="buyads-input-medium">
-      <input name="buyadsLast" type="text" required placeholder="Last" class="buyads-input-medium">
-
-      <label for="buyadsEmail">Your email address</label>
-      <input name="buyadsEmail" type="email" required class="buyads-input-large">
-
-      <label for="buyadsCompany">Your company name</label>
-      <input name="buyadsCompany" type="text" required class="buyads-input-large">
-
-
-      <label>
-        <input name="buyadsTosAcceptance" type="checkbox">
-        I accept the <a href="https://www.buyads.com/terms" target="_blank">BuyAds Terms of Service</a>
-      </label>
-
-      <p class="buyads-tos-help">You must accept terms before continuing</p>
-
-      <button type="button" class="buyads-cart-submit" disabled>Submit Order for Approval</button>
-    </div>
-
   </div>
   <div class="buyads-cart-backdrop"></div>
 </div>
@@ -200,18 +154,5 @@ $(function() {
     dateMin: true,
     format: 'd mmm, yyyy'
   });
-
-  function toggleCart() {
-    $('.buyads-cart').toggleClass('is-open');
-  }
-
-  $('.buyads-cart-btn').click(function() {
-    toggleCart();
-  });
-
-  $('.buyads-cart-backdrop').click(function() {
-    // also listen for esc key and a close button in modal header
-    toggleCart();
-  })
 });
 </script>

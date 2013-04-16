@@ -1,4 +1,4 @@
-<% zones.forEach(function(z) {%>
+<% zones.forEach(function(z, i) {%>
   <div class="buyads-placement">
     <h4 class="buyads-placement-summary">
       <%= z.width %> &times; <%= z.height %>
@@ -11,7 +11,9 @@
       </p>
     <%})%>
 
-    <button>Add to cart</button>
+    <button type="button" class="btn" data-inventory="<%= i %>">
+      Add to cart
+    </button>
 </div>
 <%}) %>
 

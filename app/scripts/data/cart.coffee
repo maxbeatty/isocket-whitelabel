@@ -12,7 +12,20 @@ define [
       @trigger 'dataCartServed',
         markup: cartTmpl
 
+    @serveCartItem = (e, data) ->
+      inventoryIndex = $(data.placement).data 'inventory'
+      placement = YourBuyAdsWhiteLabel.inventory[inventoryIndex]
+      placement.index = inventoryIndex
+
+      # TODO: allow user to select quick package before adding to cart
+      placement.package = placement.Packages[0]
+
+      @trigger 'dataCartItemServed',
+        markup: cartItemTemplate { p: placement }
+
     @after 'initialize', ->
       @on 'uiCartRequested', @serveCart
+
+      @on 'uiCartItemRequested', @serveCartItem
 
   defineComponent cart

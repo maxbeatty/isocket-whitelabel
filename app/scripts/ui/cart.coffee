@@ -5,59 +5,88 @@ define [
 ], (defineComponent, pickadate) ->
   cart = ->
     cartRequested = false
+    cartEmpty = true
 
     @defaultAttrs
       cartSelector: '.buyads-cart'
+      # external to cart
       cartBackdropSelector: '.buyads-cart-backdrop'
+      addToCartBtnSelector: '.buyads-add-inv'
+      cartBtnSelector: '.buyads-cart-btn'
+      # internal to cart
       cartItemsSelector: '.buyads-cart-items'
-      cartButtonSelector: '.buyads-cart-btn'
-      cartPickadateSelector: '.buyads-datepicker'
       cartCloseButtonSelector: '.buyads-cart-close'
       tosCheckboxSelector: '[name="buyadsTosAcceptance"]'
       tosHelpSelector: '.buyads-tos-help'
-      emptyCartButtonSelector: '.buyads-empty-cart'
-
-      # @$node.select('cartPickadateSelector').pickadate
-      #   dateMin: true,
-      #   format: 'd mmm, yyyy'
+      emptyCartButtonSelector: '.buyads-empty-cart + .buyads-btn'
+      cartPickadateSelector: '.buyads-datepicker'
 
     @requestCart = ->
-      @trigger 'uiCartRequested'
+      @trigger 'uiCartRequested' unless cartRequested
 
     @launchCart = (e, data) ->
       @$node.append data.markup
 
       cartRequested = true
 
-      @uiToggleCart()
+      @toggleCart()
 
-    @uiToggleCart = ->
+    @toggleCart = ->
       if cartRequested
         @select('cartSelector').toggleClass 'is-open'
       else
         @requestCart()
 
-    @uiDismissCart = (e) ->
+    @dismissCart = (e) ->
       # dismiss cart when 'esc' key is pressed
       if e.which is 27 and @select('cartSelector').hasClass 'is-open'
-        @uiToggleCart()
+        @toggleCart()
 
-    @uiToggleTosHelp = (e) ->
+    @toggleTosHelp = (e) ->
       @select('tosHelpSelector').toggleClass 'is-accepted', $(e.target).is ':checked'
+
+    @addToCart = (e) ->
+      $(e.target).prop('disabled', true).text($(e.target).data('disabled-text'))
+      @trigger 'uiCartItemRequested', placement: e.target
+
+    @removeFromCart = (e) ->
+      # remove html from cartItemsSelector
+      # TODO: cartEmpty = true if cart is empty
+      # TODO: change empty button back to empty state
+
+    @renderCartItem = (e, data) ->
+      # requires cart to be rendered and cartItemsSelector
+      @toggleCart()
+
+      # No clue why this doesn't work
+      # @$node.select('cartItemsSelector').prepend data.markup
+      @$node.find('.buyads-cart-items').prepend data.markup
+
+      # @$node.select('cartPickadateSelector').pickadate
+      @$node.find('.buyads-datepicker').pickadate
+        dateMin: true,
+        format: 'd mmm, yyyy'
+
+      cartEmpty = false
+      # TODO: change empty button text to encourage adding more
+
+    # TODO: make sure end date is after end date
 
     @after 'initialize', ->
       @on 'dataCartServed', @launchCart
+      @on 'dataCartItemServed', @renderCartItem
 
       @on 'click',
-        cartButtonSelector: @uiToggleCart
-        cartBackdropSelector: @uiToggleCart
-        cartCloseButtonSelector: @uiToggleCart
-        emptyCartButtonSelector: @uiToggleCart
+        cartBtnSelector: @toggleCart
+        cartBackdropSelector: @toggleCart
+        cartCloseButtonSelector: @toggleCart
+        emptyCartButtonSelector: @toggleCart
+        addToCartBtnSelector: @addToCart
 
       @on 'change',
-        tosCheckboxSelector: @uiToggleTosHelp
+        tosCheckboxSelector: @toggleTosHelp
 
-      @on document, 'keyup', @uiDismissCart
+      @on document, 'keyup', @dismissCart
 
 
   defineComponent cart

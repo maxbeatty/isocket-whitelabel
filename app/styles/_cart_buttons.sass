@@ -39,9 +39,7 @@
     text-shadow: none
     +box-shadow(none)
   &.buyads-cart-submit
-    position: absolute
-    bottom: 30px
-    right: 75px
+    float: right
   &.btn-small
     margin: 0
     padding: 2px 8px
@@ -52,19 +50,12 @@
   top: 2%
   right: 2%
   padding: 0
-  background-color: #e6e6e6
+  background-color: transparent
   border: 0
-  $size: 22px
-  $stupid: 2px
-  padding-bottom: $stupid * 2
-  height: $size - $stupid
-  width: $size
-  border-radius: $size / 2
-  color: #fff
-  font-size: $size
-  line-height: 0
+  color: #e6e6e6
   font-weight: bolder
+  font-size: 22px
   &:hover,
   &:active
     cursor: pointer
-    background-color: #d5d5d5
+    color: #d5d5d5

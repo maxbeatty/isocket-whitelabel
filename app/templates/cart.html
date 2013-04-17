@@ -1,43 +1,45 @@
 <div class="buyads-cart">
   <button type="button" class="buyads-cart-close">&times;</button>
   <h2>
-    Campaign
+    Your Campaign
     <!-- cart icon w/ count? -->
   </h2>
-  <div class="buyads-cols">
-      <h3>Placements</h3>
 
-      <div class="buyads-cart-items">
-        <!-- cart_item.html -->
-        <p class="buyads-empty-cart">You haven't added any placements yet</p>
+  <div class="buyads-cart-items">
+    <!-- cart_item.html -->
 
-        <button class="buyads-btn" data-full-state-text="Add More">View Inventory</button>
-      </div>
+
+    <!-- <p class="buyads-empty-cart">You haven't added any placements yet</p>
+
+    <button class="buyads-btn" data-full-state-text="Add More">View Inventory</button> -->
   </div>
 
-  <div class="buyads-cols buyads-cart-info">
-    <h3>Buyer</h3>
+  <!-- <hr> -->
 
-    <label>Your name</label>
-    <input name="buyadsFirst" type="text" required placeholder="First" class="buyads-input-medium">
-    <input name="buyadsLast" type="text" required placeholder="Last" class="buyads-input-medium">
+  <div class="buyads-cart-info">
+    <div class="buyads-cols">
+      <label for="buyadsEmail">Your email address</label>
+      <input name="buyadsEmail" type="email" required class="buyads-input-block">
 
-    <label for="buyadsEmail">Your email address</label>
-    <input name="buyadsEmail" type="email" required class="buyads-input-large">
+      <label for="buyadsCompany">Your company name</label>
+      <input name="buyadsCompany" type="text" required class="buyads-input-block">
+    </div>
 
-    <label for="buyadsCompany">Your company name</label>
-    <input name="buyadsCompany" type="text" required class="buyads-input-large">
+    <div class="buyads-cols">
+      <label>Your name</label>
+      <input name="buyadsFirst" type="text" required placeholder="First" class="buyads-input-medium">
+      <input name="buyadsLast" type="text" required placeholder="Last" class="buyads-input-medium">
 
+      <label class="buyads-input-checkbox">
+        <input name="buyadsTosAcceptance" type="checkbox">
+        I accept the <a href="https://www.buyads.com/terms" target="_blank">BuyAds Terms of Service</a>
+      </label>
 
-    <label>
-      <input name="buyadsTosAcceptance" type="checkbox">
-      I accept the <a href="https://www.buyads.com/terms" target="_blank">BuyAds Terms of Service</a>
-    </label>
+      <p class="buyads-tos-help">You must accept the terms before continuing</p>
 
-    <p class="buyads-tos-help">You must accept the terms before continuing</p>
-
-    <button type="button" class="buyads-cart-submit buyads-btn" disabled>Submit Order for Approval</button>
+      <button type="button" class="buyads-cart-submit buyads-btn" disabled>Submit Order for Approval</button>
+    </div>
   </div>
-
 </div>
+
 <div class="buyads-cart-backdrop"></div>

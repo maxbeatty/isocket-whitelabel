@@ -54,5 +54,11 @@
 .buyads-cols
   float: left
   width: 48%
-  &.buyads-cart-info
-    margin-left: 4%
+  & + &
+    margin: 0 2%
+
+.buyads-cart-info
+  +clearfix()
+
+.buyads-tos-help
+  margin: 10px 0 0

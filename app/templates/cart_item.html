@@ -6,8 +6,98 @@
   </h4>
 
   <div class="buyads-cart-item-detail">
-    <!-- TODO: creative -->
-    <div class="box">Configure Creative</div>
+    <input type="hidden" name="buyads-cart-item[<%= p.index %>]-creative">
+    <button type="button" class="buyads-btn buyads-config-creative">Configure Creative</button>
+    <div class="pickadate__holder">
+      <div class="pickadate__frame">
+        <div class="pickadate__wrap">
+          <div class="pickadate__calendar">
+            <div class="pickadate__header">
+              <!-- <div class="pickadate__nav--next" data-nav="1">
+                &#9654;
+              </div>
+
+              <div class="pickadate__month">
+                April
+              </div>
+
+              <div class="pickadate__year">
+                2013
+              </div> -->
+            </div>
+
+            <div class="tabbable">
+              <ul class="nav nav-tabs" id="configure-method">
+                <li class="active">
+                  <a class="show-paste" data-toggle="tab" href="#paste">Paste</a>
+                </li>
+                <li class="">
+                  <a class="show-upload" data-toggle="tab" href="#upload">Upload</a>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane active" id="paste">
+                  <textarea class="tag" placeholder="Paste your creative tag here"></textarea>
+                  <label class="control-label">
+                    <strong>Have macros?</strong>
+                    Use
+                    <em>CLICK_URL</em>
+                    to add a click tracking url and
+                    <em>RANDOM</em>
+                    to add a cachebuster
+                  </label>
+                </div>
+
+                <div class="tab-pane form-horizontal" id="upload">
+                  <div class="alert hidden">
+                    Please upload an image and set a click through URL before saving.
+                  </div>
+                  <div class="alert alert-error hidden">
+                    That creative does not match the size of
+                    <!-- size appended by JS -->
+                  </div>
+
+                  <div class="control-group preview" style="display: none;">
+                    <div class="controls">
+                      <img>
+                    </div>
+                  </div>
+
+                  <div class="control-group file">
+
+                    <div class="controls">
+                      <div class="fp-picker" style="padding: 1px;">
+                        <button type="button" class="btn btn-primary">Pick File</button>
+                        <div style="border: 1px dashed rgb(170, 170, 170); display: inline-block; margin: 0px 0px 0px 4px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; background-color: rgb(243, 243, 243); color: rgb(51, 51, 51); font-size: 14px; line-height: 22px; padding: 2px 4px; vertical-align: middle; cursor: pointer; overflow: hidden;" class="">Or drop files here
+                        </div>
+                      </div>
+                      <input id="filepicker" type="filepicker-dragdrop" data-fp-button-class="btn btn-primary" data-fp-option-services="COMPUTER,URL" data-fp-mimetypes="image/*" data-fp-option-multiple="false" data-fp-class="fp-picker" style="display: none;">
+                      <input id="fileUrl" type="hidden" value="">
+                    </div>
+                  </div>
+
+                  <div class="control-group url">
+                    <label class="control-label">Click-Through URL</label>
+                    <div class="controls">
+                      <input id="clickThru" type="text">
+                      <label>
+                        <em>URLs must begin with "http://" or "https://"</em>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pickadate__footer">
+              <button class="pickadate__button--clear" data-clear="1" tabindex="0">Close</button>
+              <button class="pickadate__button--today" data-date="2013/04/16" tabindex="0">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <fieldset class="picker-holder--classic">
       <!-- start -->

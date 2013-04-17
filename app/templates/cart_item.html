@@ -5,8 +5,7 @@
     <small><%= p.location%></small>
   </h4>
 
-  <div class="buyads-cart-item-detail">
-    <button type="button" class="buyads-btn buyads-config-creative">Configure Creative</button>
+<!--     <button type="button" class="buyads-btn buyads-config-creative">Configure Creative</button>
     <div class="pickadate__holder">
       <div class="pickadate__frame">
         <div class="pickadate__wrap">
@@ -22,7 +21,7 @@
 
               <div class="pickadate__year">
                 2013
-              </div> -->
+              </div> --
             </div>
 
             <div class="tabbable">
@@ -55,7 +54,7 @@
                   </div>
                   <div class="alert alert-error hidden">
                     That creative does not match the size of
-                    <!-- size appended by JS -->
+                    <!-- size appended by JS --
                   </div>
 
                   <div class="control-group preview" style="display: none;">
@@ -97,23 +96,25 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <fieldset class="picker-holder--classic">
-      <!-- start -->
       <div class="buyads-cols">
+        <!-- start -->
         <label for="buyads-cart-item[<%= p.index %>]-start">Start Date</label>
         <!-- asap? -->
         <input name="buyads-cart-item[<%= p.index %>]-start" class="buyads-datepicker" type="text">
       </div>
 
-      <!-- end -->
       <div class="buyads-cols">
+        <!-- end -->
         <label for="buyads-cart-item[<%= p.index %>]-end">End Date</label>
         <!-- duration? -->
         <input name="buyads-cart-item[<%= p.index %>]-end" class="buyads-datepicker" type="text">
       </div>
     </fieldset>
+
+    <div class="buyads-cart-math">
 
     <!-- impressions / duration -->
     <% if (p.package.type === 'cpm') { %>
@@ -149,5 +150,5 @@
 
         <span class="buyads-cart-item[<%= p.index %>]-subtotal"></span>
       </span>
-  </div>
+    </div>
 </div>

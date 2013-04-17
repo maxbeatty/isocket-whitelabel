@@ -10,13 +10,20 @@
 @import cart_items
 @import cart_creative
 
+@import pickadate
+
+$breakpoint: 1024px
+$sidebar: 260px
+$padding: 20px
+$width: $breakpoint - ($padding * 4)
+
 .buyads-cart-backdrop
   position: fixed
   top: 0
   right: 0
   bottom: 0
   left: 0
-  z-index: 9999
+  z-index: $zIndexBackdrop
   background: #000
   background: rgba(0, 0, 0, 0.8)
   +background(radial-gradient(50% 50%, ellipse closest-corner, rgba(0, 0, 0, 0.45) 1%, rgba(0, 0, 0, 0.8) 100%))
@@ -25,16 +32,13 @@
 
 .buyads-cart
   position: fixed
-  top: 10%
+  top: 2%
   left: 50%
-  z-index: 10000
-  $breakpoint: 768px
-  $padding: 30px
-  $width: $breakpoint - ($breakpoint * .1) - $padding
+  z-index: $zIndexModal
   width: $width
   padding: $padding
   padding-top: 0
-  margin-left: $width / -2
+  margin-left: $width / -2 - $padding
   background-color: #fff
   border: 1px solid #999
   border: 1px solid rgba(0, 0, 0, 0.3)
@@ -43,13 +47,18 @@
   +background-clip(padding-box)
   outline: none
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
-  font-size: 14px
-  line-height: 20px
-  color: #333333
+  font-size: $baseFontSize
+  line-height: $baseLineHeight
+  color: #333
+  +clearfix()
   fieldset
     border: 0
     margin: 0
     padding: 0
+  h2
+    display: block
+    font-size: 21px
+    margin: 15px 0
 
 .buyads-cols
   float: left
@@ -58,7 +67,14 @@
     margin: 0 2%
 
 .buyads-cart-info
-  +clearfix()
+  float: left
+  width: $sidebar
+  margin: 0 $padding
+
+.buyads-cart-items
+  float: left
+  width: $width - ($sidebar + ($padding * 2))
 
 .buyads-tos-help
   margin: 10px 0 0
+  color: $warningText

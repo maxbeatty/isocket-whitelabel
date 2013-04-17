@@ -188,8 +188,7 @@ module.exports = (grunt) ->
         files:
           '<%= yeoman.dist %>/styles/buyads-whitelabel.css': [
             '<%= yeoman.tmp %>/styles/{,*/}*.css',
-            '<%= yeoman.app %>/styles/{,*/}*.css',
-            'components/pickadate/themes/pickadate.02.classic.css'
+            '<%= yeoman.app %>/styles/{,*/}*.css'
           ]
     htmlmin:
       dist:
@@ -315,7 +314,7 @@ module.exports = (grunt) ->
     'clean:dist',
     'coffee',
     'compass:dist',
-    'cssmin',
+    # 'cssmin',
     'grunticon',
     'useminPrepare',
     'requirejs',

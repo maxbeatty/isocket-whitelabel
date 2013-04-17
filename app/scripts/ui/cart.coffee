@@ -59,11 +59,9 @@ define [
       @toggleCart()
 
       # No clue why this doesn't work
-      # @$node.select('cartItemsSelector').prepend data.markup
-      @$node.find('.buyads-cart-items').prepend data.markup
+      @select('cartItemsSelector').prepend data.markup
 
-      # @$node.select('cartPickadateSelector').pickadate
-      @$node.find('.buyads-datepicker').pickadate
+      @select('cartPickadateSelector').pickadate
         dateMin: true,
         format: 'd mmm, yyyy'
 

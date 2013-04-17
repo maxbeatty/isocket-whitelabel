@@ -7,20 +7,23 @@ define [
 
     @defaultAttrs
       configBtnSelector: '.buyads-config-creative'
+      closeBtnSelector: '.pickadate__button--clear'
+      saveBtnSelector: '.pickadate__button--today'
 
     @toggleConfig = (e) ->
-      $(e.target).toggleClass('is-active pickadate__input--active')
+      # change big button state
+      @select('configBtnSelector').toggleClass('is-active pickadate__input--active')
         .next()
+        # change state of popover
         .toggleClass('pickadate__holder--opened pickadate__holder--focused')
-
 
     ###
     TODO:
-      - on click closeBtnFooter, toggleConfig
       - on click saveBtnFooter, saveValueToHidden && toggleConfig
     ###
     @after 'initialize', ->
       @on 'click',
         configBtnSelector: @toggleConfig
+        closeBtnSelector: @toggleConfig
 
   defineComponent creative

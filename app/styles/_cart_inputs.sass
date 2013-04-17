@@ -1,3 +1,18 @@
+@mixin bootstrapInput($height)
+  display: inline-block
+  padding: 4px 6px
+  margin: 0
+  background-color: #fff
+  border: 1px solid #ccc
+  border-radius: 4px
+  +box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075))
+  +transition(border linear 0.2s, box-shadow linear 0.2s)
+  height: $height
+  min-height: 1px
+  line-height: 20px
+  color: #555
+  font-size: 14px
+
 .buyads-cart
   label
     display: block
@@ -6,23 +21,15 @@
   input
     &[type="text"],
     &[type="email"]
-      display: inline-block
-      background-color: #fff
-      border: 1px solid #ccc
-      +box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075))
-      +transition(border linear 0.2s, box-shadow linear 0.2s)
-      height: 20px
-      padding: 4px 6px
-      line-height: 20px
-      color: #555
-      min-height: 1px
-      margin: 0
-      font-size: 14px
-      border-radius: 4px
+      +bootstrapInput(20px)
     &[type="checkbox"]
       margin: 0
     &[readonly]
       cursor: pointer
+  textarea
+    +bootstrapInput(60px)
+  input,
+  textarea
     &:focus
       border-color: rgba(82, 168, 236, 0.8)
       outline: 0

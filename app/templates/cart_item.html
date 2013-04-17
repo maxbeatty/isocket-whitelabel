@@ -6,7 +6,6 @@
   </h4>
 
   <div class="buyads-cart-item-detail">
-    <input type="hidden" name="buyads-cart-item[<%= p.index %>]-creative">
     <button type="button" class="buyads-btn buyads-config-creative">Configure Creative</button>
     <div class="pickadate__holder">
       <div class="pickadate__frame">
@@ -38,7 +37,8 @@
 
               <div class="tab-content">
                 <div class="tab-pane active" id="paste">
-                  <textarea class="tag" placeholder="Paste your creative tag here"></textarea>
+
+                  <textarea name="buyads-cart-item[<%= p.index %>]-creative" placeholder="Paste your creative tag here"></textarea>
                   <label class="control-label">
                     <strong>Have macros?</strong>
                     Use

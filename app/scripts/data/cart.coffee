@@ -17,6 +17,9 @@ define [
       placement = YourBuyAdsWhiteLabel.inventory[inventoryIndex]
       placement.index = inventoryIndex
 
+      # don't let location descriptions ramble on
+      placement.location.slice(0, 70) + '...' if placement.location.length > 70
+
       # TODO: allow user to select quick package before adding to cart
       placement.package = placement.Packages[0]
 

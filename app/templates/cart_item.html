@@ -57,15 +57,14 @@
                   </div>
                 </div>
 
-                <div class="control-group url">
-                  <label class="control-label">Click-Through URL</label>
-                  <div class="controls">
-                    <input id="clickThru" type="text">
-                    <label>
-                      <em>URLs must begin with "http://" or "https://"</em>
-                    </label>
-                  </div>
-                </div>
+                <label for="buyadsClickThrough">Click-Through URL</label>
+                <input name="buyadsClickThrough" type="url" required pattern="https?://.+">
+                <span class="help-text">
+                  URLs must begin with
+                  <em>http://</em>
+                  or
+                  <em>https://</em>
+                </span>
               </div>
             </div>
           </div>

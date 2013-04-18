@@ -21,7 +21,7 @@
 // The frame that bounds the calendar
 .pickadate__frame
   position: relative
-  max-width: 420px
+  max-width: 405px
   min-width: 256px
   max-height: 0
   overflow-y: hidden
@@ -29,15 +29,14 @@
 
 // When the calendar opens
 .pickadate__holder--opened .pickadate__frame
-  top: .5em
+  top: .25em
   max-height: 25em
-  +box-shadow(0 6px 18px 1px rgba(0,0,0,.12))
 
 // The calendar itself
 .pickadate__calendar
   color: #000
   background: #fff
-  padding: 1em
+  padding: 10px
   font-size: 1em
   border: 1px solid $lighterGray
   border-radius: 6px
@@ -108,7 +107,7 @@
 
 // The weekday labels
 .pickadate__weekday
-  width: 100% / 7
+  width: (100% / 7)
   font-size: .75em
   padding-bottom: .5em
   color: $darkerGray
@@ -116,7 +115,7 @@
 
 // The days on the calendar
 .pickadate__day
-  padding: .33em 0 .25em
+  padding: 5px 0 4px
   font-weight: 100
   border: 1px solid #fff
   margin-bottom: 1px

@@ -1,154 +1,114 @@
 <div class="buyads-cart-item">
-  <h4 class="buyads-placement-summary">
-    <!-- TODO: expand/collapse icon to accordian detail -->
+
+  <button type="button" class="buyads-config-creative">Configure Creative</button>
+  <div class="pickadate__holder">
+    <div class="pickadate__frame">
+      <div class="pickadate__wrap">
+        <div class="pickadate__calendar">
+          <div class="pickadate__header">
+            <!-- <div class="pickadate__nav--next" data-nav="1">
+              &#9654;
+            </div>
+
+            <div class="pickadate__month">
+              April
+            </div>
+
+            <div class="pickadate__year">
+              2013
+            </div> -->
+          </div>
+
+          <div class="tabbable">
+            <ul class="nav nav-tabs">
+              <li class="active">
+                <a data-toggle="tab" href="#paste">Paste</a>
+              </li>
+              <li class="">
+                <a data-toggle="tab" href="#upload">Upload</a>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <div class="tab-pane active" id="paste">
+
+                <textarea name="buyads-cart-item[<%= p.index %>]-creative" placeholder="Paste your creative tag here"></textarea>
+                <label class="control-label">
+                  <strong>Have macros?</strong>
+                  Use
+                  <em>CLICK_URL</em>
+                  to add a click tracking url and
+                  <em>RANDOM</em>
+                  to add a cachebuster
+                </label>
+              </div>
+
+              <div class="tab-pane form-horizontal" id="upload">
+                <div class="alert hidden">
+                  Please upload an image and set a click through URL before saving.
+                </div>
+                <div class="alert alert-error hidden">
+                  That creative does not match the size of
+                  <!-- size appended by JS -->
+                </div>
+
+                <div class="control-group preview" style="display: none;">
+                  <div class="controls">
+                    <img>
+                  </div>
+                </div>
+
+                <div class="control-group file">
+
+                  <div class="controls">
+                    <div class="fp-picker" style="padding: 1px;">
+                      <button type="button" class="btn btn-primary">Pick File</button>
+                      <div style="border: 1px dashed rgb(170, 170, 170); display: inline-block; margin: 0px 0px 0px 4px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; background-color: rgb(243, 243, 243); color: rgb(51, 51, 51); font-size: 14px; line-height: 22px; padding: 2px 4px; vertical-align: middle; cursor: pointer; overflow: hidden;" class="">Or drop files here
+                      </div>
+                    </div>
+                    <input id="filepicker" type="filepicker-dragdrop" data-fp-button-class="btn btn-primary" data-fp-option-services="COMPUTER,URL" data-fp-mimetypes="image/*" data-fp-option-multiple="false" data-fp-class="fp-picker" style="display: none;">
+                    <input id="fileUrl" type="hidden" value="">
+                  </div>
+                </div>
+
+                <div class="control-group url">
+                  <label class="control-label">Click-Through URL</label>
+                  <div class="controls">
+                    <input id="clickThru" type="text">
+                    <label>
+                      <em>URLs must begin with "http://" or "https://"</em>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pickadate__footer">
+            <button class="pickadate__button--clear" data-clear="1" tabindex="0">Close</button>
+            <button class="pickadate__button--today" data-date="2013/04/16" tabindex="0">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4>
     <%= p.width %> &times; <%= p.height%>
     <small><%= p.location%></small>
   </h4>
 
-<!--     <button type="button" class="buyads-btn buyads-config-creative">Configure Creative</button>
-    <div class="pickadate__holder">
-      <div class="pickadate__frame">
-        <div class="pickadate__wrap">
-          <div class="pickadate__calendar">
-            <div class="pickadate__header">
-              <!-- <div class="pickadate__nav--next" data-nav="1">
-                &#9654;
-              </div>
-
-              <div class="pickadate__month">
-                April
-              </div>
-
-              <div class="pickadate__year">
-                2013
-              </div> --
-            </div>
-
-            <div class="tabbable">
-              <ul class="nav nav-tabs">
-                <li class="active">
-                  <a data-toggle="tab" href="#paste">Paste</a>
-                </li>
-                <li class="">
-                  <a data-toggle="tab" href="#upload">Upload</a>
-                </li>
-              </ul>
-
-              <div class="tab-content">
-                <div class="tab-pane active" id="paste">
-
-                  <textarea name="buyads-cart-item[<%= p.index %>]-creative" placeholder="Paste your creative tag here"></textarea>
-                  <label class="control-label">
-                    <strong>Have macros?</strong>
-                    Use
-                    <em>CLICK_URL</em>
-                    to add a click tracking url and
-                    <em>RANDOM</em>
-                    to add a cachebuster
-                  </label>
-                </div>
-
-                <div class="tab-pane form-horizontal" id="upload">
-                  <div class="alert hidden">
-                    Please upload an image and set a click through URL before saving.
-                  </div>
-                  <div class="alert alert-error hidden">
-                    That creative does not match the size of
-                    <!-- size appended by JS --
-                  </div>
-
-                  <div class="control-group preview" style="display: none;">
-                    <div class="controls">
-                      <img>
-                    </div>
-                  </div>
-
-                  <div class="control-group file">
-
-                    <div class="controls">
-                      <div class="fp-picker" style="padding: 1px;">
-                        <button type="button" class="btn btn-primary">Pick File</button>
-                        <div style="border: 1px dashed rgb(170, 170, 170); display: inline-block; margin: 0px 0px 0px 4px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; background-color: rgb(243, 243, 243); color: rgb(51, 51, 51); font-size: 14px; line-height: 22px; padding: 2px 4px; vertical-align: middle; cursor: pointer; overflow: hidden;" class="">Or drop files here
-                        </div>
-                      </div>
-                      <input id="filepicker" type="filepicker-dragdrop" data-fp-button-class="btn btn-primary" data-fp-option-services="COMPUTER,URL" data-fp-mimetypes="image/*" data-fp-option-multiple="false" data-fp-class="fp-picker" style="display: none;">
-                      <input id="fileUrl" type="hidden" value="">
-                    </div>
-                  </div>
-
-                  <div class="control-group url">
-                    <label class="control-label">Click-Through URL</label>
-                    <div class="controls">
-                      <input id="clickThru" type="text">
-                      <label>
-                        <em>URLs must begin with "http://" or "https://"</em>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="pickadate__footer">
-              <button class="pickadate__button--clear" data-clear="1" tabindex="0">Close</button>
-              <button class="pickadate__button--today" data-date="2013/04/16" tabindex="0">Save</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <fieldset class="picker-holder--classic">
-      <div class="buyads-cols">
-        <!-- start -->
-        <label for="buyads-cart-item[<%= p.index %>]-start">Start Date</label>
-        <!-- asap? -->
-        <input name="buyads-cart-item[<%= p.index %>]-start" class="buyads-datepicker" type="text">
-      </div>
-
-      <div class="buyads-cols">
-        <!-- end -->
-        <label for="buyads-cart-item[<%= p.index %>]-end">End Date</label>
-        <!-- duration? -->
-        <input name="buyads-cart-item[<%= p.index %>]-end" class="buyads-datepicker" type="text">
-      </div>
-    </fieldset>
-
-    <div class="buyads-cart-math">
-
-    <!-- impressions / duration -->
-    <% if (p.package.type === 'cpm') { %>
-      <label for="buyads-cart-item[<%= p.index %>]-Kimps">Impressions</label>
-      <div class="buyads-input-append">
-        <input type="text" name="buyads-cart-item[<%= p.index %>]-Kimps" class="buyads-input-small">
-        <span class="buyads-input-add-on">K</span>
-      </div>
-
-      <span class="buyads-item-cpm-equation">
-
-    <% } else { %>
-      <label for="buyads-cart-item[<%= p.index %>]-duration">Duration</label>
-      <select name="buyads-cart-item[<%= p.index %>]-duration">
-        <option value="7">1 week</option>
-        <option value="14">2 weeks</option>
-        <option value="21">3 weeks</option>
-        <option value="30" selected="selected">1 month</option>
-        <option value="60">2 months</option>
-        <option value="90">1 quarter</option>
-        <option value="180">2 quarters</option>
-        <option value="270">3 quarters</option>
-        <option value="365">4 quarters</option>
-      </select>
-
-      <span class="buyads-item-equation">
-    <% } %>
-        &times;
-
-        <span><%= p.package.humanPrice %></span>
-
-        =
-
-        <span class="buyads-cart-item[<%= p.index %>]-subtotal"></span>
-      </span>
+  <fieldset class="picker-holder--classic">
+    <div class="buyads-cols">
+      <label for="buyads-cart-item[<%= p.index %>]-start">Start Date</label>
+      <!-- asap? -->
+      <input name="buyads-cart-item[<%= p.index %>]-start" class="buyads-datepicker" type="text">
     </div>
+
+    <div class="buyads-cols">
+      <label for="buyads-cart-item[<%= p.index %>]-end">End Date</label>
+      <!-- duration? -->
+      <input name="buyads-cart-item[<%= p.index %>]-end" class="buyads-datepicker" type="text">
+    </div>
+  </fieldset>
 </div>

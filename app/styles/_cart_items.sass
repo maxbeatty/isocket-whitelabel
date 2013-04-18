@@ -1,6 +1,7 @@
 .buyads-cart-items
   position: relative
   max-height: 475px
+  min-height: 400px
   overflow-y: auto
   overflow-x: hidden
   // from http://lea.verou.me/2012/04/background-attachment-local/
@@ -12,17 +13,23 @@
   background-attachment: local, local, scroll, scroll
 
 .buyads-cart-item
-  padding-bottom: 5px
-  margin-bottom: 5px
+  padding-bottom: 9px
+  margin-bottom: 10px
   border-bottom: 1px solid #eee
-  .picker-holder--classic,
-  .buyads-cart-math
+  +clearfix()
+  h4
     float: left
+    margin: 0
+    width: 500px // mostly to push datepickers to new line
+    small
+      display: inline-block
+      max-width: 400px
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+  .picker-holder--classic
+    width: 240px
 
-.buyads-placement-summary
-  float: left
-  width: 210px
-  margin-right: 10px
 
 .buyads-item-cpm-equation
   vertical-align: super

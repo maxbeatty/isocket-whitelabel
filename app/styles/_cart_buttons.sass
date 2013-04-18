@@ -14,7 +14,7 @@
   border-radius: 4px
   +background-clip(padding-box)
   background-color: #fff
-  +background-image(linear-gradient(white 60%, #f5f7fa 100%))
+  +background-image(linear-gradient(#fff 60%, #f5f7fa 100%))
   +box-shadow(0px 1px 0 0px rgba(0, 0, 0, 0.07))
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5)
   +user-select(none)
@@ -23,15 +23,15 @@
   &:hover,
   &:focus
     text-decoration: none
-    background-color: #ffffff
-    +background-image(linear-gradient(white 60%, #ebeff2 100%))
+    background-color: #fff
+    +background-image(linear-gradient(#fff 60%, #ebeff2 100%))
   &:active,
   &.is-active
     background-color: #ebeff2
-    +background-image(linear-gradient(#ebeff2 0%, white 100%))
+    +background-image(linear-gradient(#ebeff2 0%, #fff 100%))
   &:disabled
-    background-color: #ffffff
-    +background-image(linear-gradient(white 60%, #f5f7fa 100%))
+    background-color: #fff
+    +background-image(linear-gradient(#fff 60%, #f5f7fa 100%))
     border: 1px solid #b8c3c9
     color: #89949b
     cursor: default
@@ -39,7 +39,9 @@
     text-shadow: none
     +box-shadow(none)
   &.buyads-cart-submit
-    float: right
+    width: 220px
+    display: block
+    margin: 16px auto 0
   &.btn-small
     margin: 0
     padding: 2px 8px
@@ -52,10 +54,24 @@
   padding: 0
   background-color: transparent
   border: 0
-  color: #e6e6e6
+  color: $lightestGray
   font-weight: bolder
   font-size: 22px
   cursor: pointer
   &:hover,
   &:active
-    color: #d5d5d5
+    color: $lighterGray
+
+.buyads-config-creative
+  float: left
+  margin-right: 10px
+  display: block
+  width: 85px
+  height: 85px
+  background-color: $lightestGray
+  color: $darkGray
+  border: 1px dashed $lightGray
+  &.is-active
+    border-style: solid
+
+

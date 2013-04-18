@@ -69,11 +69,14 @@ $width: $breakpoint - ($padding * 4)
 .buyads-cart-info
   float: left
   width: $sidebar
-  margin: 0 $padding
+  margin: 0 $padding 0 0
+  padding-left: $padding - 1
+  border-left: 1px solid $lightestGray
 
 .buyads-cart-items
   float: left
-  width: $width - ($sidebar + ($padding * 2))
+  margin-right: $padding
+  width: $width - $sidebar - ($padding * 3) // 1 sidebar margin, 1 sidebar padding, 1 own margin
 
 .buyads-tos-help
   margin: 10px 0 0

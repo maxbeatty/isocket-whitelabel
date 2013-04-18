@@ -25,7 +25,6 @@ define [
     @updateCreativeTag = (e) ->
       # is upload tab active?
       $activeTab = $(e.target).parent().prev().find('.tab-pane.active')
-      console.log $activeTab
 
       if $activeTab.attr('id') is 'upload'
         # unless fileUrl dimensions match placement size?
@@ -41,12 +40,13 @@ define [
         #   fileUrl: #???
         #   clickThrough: #??
       else
-        @toggleConfig
+        @closeConfig target: $activeTab
 
     @after 'initialize', ->
       @on 'click',
         configBtnSelector: @toggleConfig
         closeBtnSelector: @closeConfig
         saveBtnSelector: @updateCreativeTag
+        # TODO: click outside of creative, close it
 
   defineComponent creative

@@ -11,13 +11,15 @@ define [
       saveBtnSelector: '.pickadate__button--today'
 
     @toggleConfig = (e) ->
+      @trigger 'uiNeedsFilepicker', e.target
+
       # change big button state
       $(e.target).toggleClass('is-active pickadate__input--active')
         .next()
         # change state of popover
         .toggleClass('pickadate__holder--opened pickadate__holder--focused')
 
-      # if file was uploaded, show upload tab
+      # TODO: if file was uploaded, show upload tab
 
     @closeConfig = (e) ->
       $(e.target).parents('.pickadate__holder').prev().trigger('click')

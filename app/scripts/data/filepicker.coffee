@@ -38,7 +38,12 @@ define ['flight/component'], (defineComponent) ->
       # construct unless already done for this item
       if jQuery.isEmptyObject $fpInput.data()
         $fpInput.on('change', (e) ->
-          console.log e #JSON.stringify(e.fpfile)
+
+          # TODO: unless fileUrl dimensions match placement size?
+            # show error
+
+          $(this).val e.originalEvent.fpfile.url
+
         ).data
           'fp-mimetypes' : "image/*"
           'fp-container' : "modal"

@@ -20,29 +20,37 @@ define [
         .toggleClass('pickadate__holder--opened pickadate__holder--focused')
 
       # TODO: if file was uploaded, show upload tab
+      # right now, last shown tab will show
 
     @closeConfig = (e) ->
-      $(e.target).parents('.pickadate__holder').prev().trigger('click')
+      $(e.target).parents('.pickadate__holder')
+        .find('.alert').addClass('hidden').end() # hide shown error messages
+        .prev().trigger('click')
 
     @updateCreativeTag = (e) ->
       # is upload tab active?
       $activeTab = $(e.target).parent().prev().find('.tab-pane.active')
 
       if $activeTab.attr('id') is 'upload'
-        # unless fileUrl dimensions match placement size?
-          # show error
+        fileUrlInput = $activeTab.find '[name="buyadsFilepicker"]'
+        clickThroughInput = $activeTab.find '[name="buyadsClickThrough"]'
 
-        # unless valid click-through? and fileUrl?
-          # show error
+        if fileUrlInput.val().length > 0 and clickThroughInput[0].validity.valid
+          @trigger 'uiNeedsCreativeTag', data
+        else
+          @trigger 'uiShowCreativeError', $activeTab
+
+        # @trigger 'dataValidateCreative',
+        #   fileUrl: $activeTab.find '[name="buyadsFilepicker"]'
+        #   clickThrough: $activeTabfind '[name="buyadsClickThrough"]'
 
         # form tag from fileUrl and clickThrough
         # disable paste tab, make textarea readonly
-
-        # @trigger 'dataVerifyCreativeUpload',
-        #   fileUrl: #???
-        #   clickThrough: #??
       else
         @closeConfig target: $activeTab
+
+    @showError = (e, tab) ->
+      $(tab).find('.alert').removeClass 'hidden'
 
     @after 'initialize', ->
       @on 'click',
@@ -50,5 +58,7 @@ define [
         closeBtnSelector: @closeConfig
         saveBtnSelector: @updateCreativeTag
         # TODO: click outside of creative, close it
+
+      @on 'uiShowCreativeError', @showError
 
   defineComponent creative

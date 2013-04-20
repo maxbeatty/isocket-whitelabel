@@ -1,8 +1,9 @@
 "use strict"
 define [
   'flight/component',
-  'pickadate'
-], (defineComponent, pickadate) ->
+  'pickadate',
+  'jquery'
+], (defineComponent, pickadate, $) ->
   cart = ->
     cartRequested = false
     cartEmpty = true
@@ -21,6 +22,9 @@ define [
       emptyCartButtonSelector: '.buyads-empty-cart + .buyads-btn'
       cartPickadateSelector: '.buyads-datepicker'
       removeItemSelector: '.buyads-item-remove'
+      cartSubmitSelector: '.buyads-cart-submit'
+      cartUserSelector: '.buyads-cart-info'
+      cartItemSelector: '.buyads-cart-item'
 
     @requestCart = ->
       @trigger 'uiCartRequested' unless cartRequested
@@ -37,6 +41,32 @@ define [
         @select('cartSelector').toggleClass 'is-open'
       else
         @requestCart()
+
+    @submitCart = (e) ->
+      @trigger 'uiCartSubmitted',
+        data: @collectCartData()
+
+    @collectCartData = (e) ->
+      [
+        @select('cartUserSelector')
+          .find('input')
+          .serialize()
+          .replace(/(^|&)buyads\-/g, '$1'),
+
+        @select('cartItemSelector').map (i, item) ->
+          $(item).find('input').map (j, input) ->
+            $input = $(input)
+            if name = $input.attr('name').match(/\[([^\]]+)\]$/, '')?[1]
+              val = if name.match(/impression/)
+                $input.val() * 1000
+              else
+                $input.val() || ''
+
+              'orders[' + i + '][' + name + ']=' + val
+
+          .get().join '&'
+        .get().join '&'
+      ].join '&'
 
     @dismissCart = (e) ->
       # dismiss cart when 'esc' key is pressed
@@ -76,10 +106,30 @@ define [
       # TODO: confirm user wants to remove item
       $(e.target).parent().remove()
 
+    @showSubmitErrors = (e, data) ->
+      for field, message of data.message
+        if field == 'orders'
+          for i, errorObject of message
+            for subField, subMessage of errorObject
+              @displayError $(@select('cartItemSelector')[i])
+                .find("input[name*=\"#{subField}\"]"), subMessage
+        else
+          @displayError @select('cartUserSelector')
+            .find("input[name*=\"#{field}\"]"), message
+
+    @displayError = (elem, message) ->
+      # TODO: do something awesome with these error messages
+      # $(elem).val(message)
+
+    @confirmPurchase = (e, data) ->
+      # TODO: display a confirmation message and instructions on what to do next
+      # TODO: clear the cart
 
     @after 'initialize', ->
       @on 'dataCartServed', @launchCart
       @on 'dataCartItemServed', @renderCartItem
+      @on 'dataCartSubmittedError', @showSubmitErrors
+      @on 'dataCartSubmittedSuccess', @confirmPurchase
 
       @on 'click',
         cartBtnSelector: @toggleCart
@@ -88,6 +138,7 @@ define [
         emptyCartButtonSelector: @toggleCart
         addToCartBtnSelector: @addToCart
         removeItemSelector: @removeItem
+        cartSubmitSelector: @submitCart
 
       @on 'change',
         tosCheckboxSelector: @toggleTosHelp

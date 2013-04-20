@@ -1,7 +1,5 @@
 "use strict"
-define [
-  'flight/component'
-], (defineComponent) ->
+define ['flight/component'], (defineComponent) ->
 
   placements = ->
 

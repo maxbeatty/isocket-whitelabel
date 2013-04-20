@@ -5,7 +5,6 @@ define [
 ], (defineComponent, pickadate) ->
   cart = ->
     cartRequested = false
-    cartEmpty = true
 
     @defaultAttrs
       cartSelector: '.buyads-cart'
@@ -20,6 +19,8 @@ define [
       tosHelpSelector: '.buyads-tos-help'
       emptyCartButtonSelector: '.buyads-empty-cart + .buyads-btn'
       cartPickadateSelector: '.buyads-datepicker'
+      removeItemSelector: '.buyads-item-remove'
+      impInputSelector: '[name$="Kimps"]'
 
     @requestCart = ->
       @trigger 'uiCartRequested' unless cartRequested
@@ -43,38 +44,41 @@ define [
         @toggleCart()
 
     @toggleTosHelp = (e) ->
-      @select('tosHelpSelector').toggleClass 'is-accepted', $(e.target).is ':checked'
+      accepted = $(e.target).is ':checked'
+      @select('tosHelpSelector').toggleClass('is-accepted', accepted).next().attr('disabled', !accepted)
 
     @addToCart = (e) ->
       $(e.target).prop('disabled', true).text($(e.target).data('disabled-text'))
       @trigger 'uiCartItemRequested', placement: e.target
 
-    @removeFromCart = (e) ->
-      # remove html from cartItemsSelector
-      # TODO: cartEmpty = true if cart is empty
-      # TODO: change empty button back to empty state
-
     @renderCartItem = (e, data) ->
       # requires cart to be rendered and cartItemsSelector
       @toggleCart()
 
-      # No clue why this doesn't work
-      # @$node.select('cartItemsSelector').prepend data.markup
-      @$node.find('.buyads-cart-items').prepend data.markup
+      @select('cartItemsSelector').prepend data.markup
 
-      # @$node.select('cartPickadateSelector').pickadate
-      @$node.find('.buyads-datepicker').pickadate
+      @select('cartPickadateSelector').pickadate
         dateMin: true,
         format: 'd mmm, yyyy'
-
-      cartEmpty = false
-      # TODO: change empty button text to encourage adding more
+        formatSubmit: 'yyyy-mm-dd'
 
     # TODO: make sure end date is after end date
+
+    @removeItem = (e) ->
+      # TODO: confirm user wants to remove item
+      $(e.target).parent().remove()
+
+    @calcTotal = (e) ->
+      @trigger 'uiNeedsSubtotal', e.target
+
+    @updateTotal = (e, data) ->
+      $(data.target).parents('.buyads-span')
+        .find('[class$="subtotal"]').text data.subtotal
 
     @after 'initialize', ->
       @on 'dataCartServed', @launchCart
       @on 'dataCartItemServed', @renderCartItem
+      @on 'dataTotalServed', @updateTotal
 
       @on 'click',
         cartBtnSelector: @toggleCart
@@ -82,11 +86,14 @@ define [
         cartCloseButtonSelector: @toggleCart
         emptyCartButtonSelector: @toggleCart
         addToCartBtnSelector: @addToCart
+        removeItemSelector: @removeItem
 
       @on 'change',
         tosCheckboxSelector: @toggleTosHelp
+        impInputSelector: @calcTotal
+
+      @on 'keyup', impInputSelector: @calcTotal
 
       @on document, 'keyup', @dismissCart
-
 
   defineComponent cart

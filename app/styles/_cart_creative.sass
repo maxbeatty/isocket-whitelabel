@@ -1,0 +1,124 @@
+// extending pickadate theme for creative
+
+.pickadate__calendar
+  strong
+    font-weight: bold
+  em
+    font-style: italic
+  textarea
+    width: 96%
+  .hidden
+    display: none
+    visibility: hidden
+  .alert
+    padding: 8px 35px 8px 14px
+    margin-bottom: 20px
+    text-shadow: 0 1px 0 rgba(255,255,255,.5)
+    background-color: $warningBackground
+    border: 1px solid $warningBorder
+    +border-radius(4px)
+    color: $warningText
+  .alert-error
+    background-color: $errorBackground
+    border-color: $errorBorder
+    color: $errorText
+
+  // BOOTSTRAP
+  // ----------
+
+  .nav
+    margin: 0 0 20px
+    padding: 0
+    list-style: none
+
+  // Make links block level
+  .nav > li > a
+    display: block
+    color: #08c
+    text-decoration: none
+
+  .nav > li > a:hover,
+  .nav > li > a:focus
+    color: #005580
+    background-color: #eee
+
+
+  // Prevent IE8 from misplacing imgs
+  // See https://github.com/h5bp/html5-boilerplate/issues/984#issuecomment-3985989
+  .nav > li > a > img
+    max-width: none
+
+
+  // Redeclare pull classes because of specifity
+  .nav > .pull-right
+    float: right
+
+  // TABS AND PILLS
+  // -------------
+
+  // Common styles
+  .nav-tabs
+    +clearfix()
+    border-bottom: 1px solid #ddd
+
+  .nav-tabs > li
+    float: left
+    // Make the list-items overlay the bottom border
+    margin-bottom: -1px
+
+  // Actual tabs (as links)
+  .nav-tabs > li > a
+    padding: 8px 12px
+    margin-right: 2px
+    line-height: 20px
+    border: 1px solid transparent
+    +border-radius(4px 4px 0 0)
+    &:hover,
+    &:focus
+      border-color: #eee #eee #ddd
+
+  // Active state, and it's :hover/:focus to override normal :hover/:focus
+  .nav-tabs > .active > a,
+  .nav-tabs > .active > a:hover,
+  .nav-tabs > .active > a:focus
+    color: #555
+    text-decoration: none
+    background-color: #fff
+    border: 1px solid #ddd
+    border-bottom-color: transparent
+    cursor: default
+
+
+  // TABBABLE
+  // --------
+
+  // Clear any floats
+  .tabbable
+    +clearfix()
+
+  .tab-content
+    overflow: auto // prevent content from running below tabs
+
+
+  // Show/hide tabbable areas
+  .tab-content > .tab-pane
+    display: none
+
+  .tab-content > .active
+    display: block
+
+
+  // DISABLED STATES
+  // ---------------
+
+  // Gray out text
+  .nav > .disabled > a
+    color: #999
+
+  // Nuke hover/focus effects
+  .nav > .disabled > a:hover,
+  .nav > .disabled > a:focus
+    text-decoration: none
+    background-color: transparent
+    cursor: default
+

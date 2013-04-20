@@ -7,6 +7,7 @@ require.config
     # plugins
     text: '../../components/requirejs-text/text'
     pickadate: '../../components/pickadate/source/pickadate.legacy'
+    tab: '../../components/bootstrap/js/bootstrap-tab'
   map:
     '*':
       'flight/component': '../../components/flight/lib/component'

@@ -7,7 +7,8 @@
     "es5-shim": "git://github.com/kriskowal/es5-shim.git#2.0.0",
     "flight": "~1.0.7",
     "requirejs-text": "2.0.5",
-    "pickadate": "~2.1.8"
+    "pickadate": "~2.1.8",
+    "bootstrap": "~2.3.1"
   },
   "devDependencies": {}
 }

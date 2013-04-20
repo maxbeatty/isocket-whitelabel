@@ -111,7 +111,11 @@
     <% if (p.package.type === 'cpm') { %>
       <label for="buyads-orders[<%= p.index %>][impressions]">Impressions</label>
       <div class="buyads-input-append">
-        <input type="text" name="buyads-orders[<%= p.index %>][impressions]" class="buyads-input-small">
+        <input type="number" step="1" min="<%= p.package.minqty %>"
+          value="<%= p.package.minqty %>"
+          data-price="<%= p.package.price %>"
+          name="buyads-cart-item[<%= p.index %>]-Kimps"
+          class="buyads-input-small">
         <span class="buyads-input-add-on">K</span>
       </div>
 
@@ -139,7 +143,9 @@
 
         =
 
-        <span class="buyads-orders[<%= p.index %>]-subtotal"></span>
+        <span class="buyads-cart-item[<%= p.index %>]-subtotal">
+          <%= p.initialSubtotal %>
+        </span>
       </span>
     </div>
   </fieldset>

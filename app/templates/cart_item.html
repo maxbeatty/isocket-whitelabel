@@ -84,36 +84,42 @@
     <small><%= p.location%></small>
   </h4>
 
-  <fieldset class="picker-holder--classic">
-    <div class="buyads-span">
-      <label for="buyads-cart-item[<%= p.index %>]-start">Start Date</label>
-      <!-- asap? -->
-      <input name="buyads-cart-item[<%= p.index %>]-start" class="buyads-datepicker" type="text">
-    </div>
+  <div class="buyads-cart-item-detail">
+    <!-- Package ID -->
+    <input name="buyads-orders[<%= p.index %>][package_id]" value="<%= p.package.id %>"type="hidden">
 
-    <div class="buyads-span">
-      <label for="buyads-cart-item[<%= p.index %>]-end">End Date</label>
-      <!-- duration? -->
-      <input name="buyads-cart-item[<%= p.index %>]-end" class="buyads-datepicker" type="text">
-    </div>
+    <!-- TODO: creative -->
+    <div class="box">Configure Creative</div>
 
-    <div class="buyads-span">
+    <fieldset class="picker-holder--classic">
+      <!-- start -->
+      <div class="buyads-cols">
+        <label for="buyads-orders[<%= p.index %>][start_time]">Start Date</label>
+        <!-- asap? -->
+        <input name="buyads-orders[<%= p.index %>][start_time]" class="buyads-datepicker" type="text">
+      </div>
+
+      <!-- end -->
+      <div class="buyads-cols">
+        <label for="buyads-orders[<%= p.index %>][end_time]-">End Date</label>
+        <!-- duration? -->
+        <input name="buyads-orders[<%= p.index %>][end_time]" class="buyads-datepicker" type="text">
+      </div>
+    </fieldset>
 
     <!-- impressions / duration -->
     <% if (p.package.type === 'cpm') { %>
-      <label for="buyads-cart-item[<%= p.index %>]-Kimps">Impressions</label>
-
+      <label for="buyads-orders[<%= p.index %>][impressions]">Impressions</label>
       <div class="buyads-input-append">
-        <input type="text" name="buyads-cart-item[<%= p.index %>]-Kimps" class="buyads-input-small">
+        <input type="text" name="buyads-orders[<%= p.index %>][impressions]" class="buyads-input-small">
         <span class="buyads-input-add-on">K</span>
       </div>
 
       <span class="buyads-item-cpm-equation">
 
     <% } else { %>
-      <label for="buyads-cart-item[<%= p.index %>]-duration">Duration</label>
-
-      <select name="buyads-cart-item[<%= p.index %>]-duration">
+      <label for="buyads-orders[<%= p.index %>][duration]">Duration</label>
+      <select name="buyads-orders[<%= p.index %>][duration]">
         <option value="7">1 week</option>
         <option value="14">2 weeks</option>
         <option value="21">3 weeks</option>
@@ -133,7 +139,7 @@
 
         =
 
-        <span class="buyads-cart-item[<%= p.index %>]-subtotal"></span>
+        <span class="buyads-orders[<%= p.index %>]-subtotal"></span>
       </span>
     </div>
   </fieldset>

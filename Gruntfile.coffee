@@ -117,6 +117,9 @@ module.exports = (grunt) ->
           dest: 'test/spec'
         ]
     coffeelint:
+      options:
+        'max_line_length':
+          'level': 'warn'
       dist: [
         'Gruntfile.coffee',
         '<%= yeoman.app %>/scripts/*.coffee'

@@ -28,6 +28,9 @@ define [
         markup: cartItemTemplate { p: placement }
 
     @submitCart = (e, data) ->
+
+      # TODO: needs to be PJAX to work-around same origin policy issues?
+      # TODO: this should also be read from a config file
       $.ajax 'http://buyads.dev/wl/index.php/order',
         type: 'POST'
         data: data.data

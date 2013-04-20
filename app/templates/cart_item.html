@@ -104,7 +104,11 @@
       <label for="buyads-cart-item[<%= p.index %>]-Kimps">Impressions</label>
 
       <div class="buyads-input-append">
-        <input type="text" name="buyads-cart-item[<%= p.index %>]-Kimps" class="buyads-input-small">
+        <input type="number" step="1" min="<%= p.package.minqty %>"
+          value="<%= p.package.minqty %>"
+          data-price="<%= p.package.price %>"
+          name="buyads-cart-item[<%= p.index %>]-Kimps"
+          class="buyads-input-small">
         <span class="buyads-input-add-on">K</span>
       </div>
 
@@ -133,7 +137,9 @@
 
         =
 
-        <span class="buyads-cart-item[<%= p.index %>]-subtotal"></span>
+        <span class="buyads-cart-item[<%= p.index %>]-subtotal">
+          <%= p.initialSubtotal %>
+        </span>
       </span>
     </div>
   </fieldset>

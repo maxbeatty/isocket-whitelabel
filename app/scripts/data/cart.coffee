@@ -1,10 +1,11 @@
 "use strict"
 define [
   'flight/component',
+  'jquery',
   'text!../../../app/templates/cart.html',
   'text!../../../app/templates/cart_item.html',
   '../../../app/scripts/utils',
-], (defineComponent, cartTmpl, cartItemTmpl, utils) ->
+], (defineComponent, $, cartTmpl, cartItemTmpl, utils) ->
   cart = ->
     cartItemTemplate = utils.tmpl cartItemTmpl
 
@@ -26,8 +27,19 @@ define [
       @trigger 'dataCartItemServed',
         markup: cartItemTemplate { p: placement }
 
+    @submitCart = (e, data) ->
+      $.ajax 'http://buyads.dev/wl/index.php/order',
+        type: 'POST'
+        data: data.data
+        dataType: 'json'
+        error: (xhr) =>
+          @trigger 'dataCartSubmittedError', JSON.parse(xhr.responseText).error
+        success: (data) =>
+          @trigger 'dataCartSubmittedSuccess', data
+
     @after 'initialize', ->
       @on 'uiCartRequested', @serveCart
+      @on document, 'uiCartSubmitted', @submitCart
 
       @on 'uiCartItemRequested', @serveCartItem
 

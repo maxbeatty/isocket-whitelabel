@@ -20,6 +20,7 @@ define [
       tosHelpSelector: '.buyads-tos-help'
       emptyCartButtonSelector: '.buyads-empty-cart + .buyads-btn'
       cartPickadateSelector: '.buyads-datepicker'
+      removeItemSelector: '.buyads-item-remove'
 
     @requestCart = ->
       @trigger 'uiCartRequested' unless cartRequested
@@ -70,6 +71,11 @@ define [
 
     # TODO: make sure end date is after end date
 
+    @removeItem = (e) ->
+      # TODO: confirm user wants to remove item
+      $(e.target).parent().remove()
+
+
     @after 'initialize', ->
       @on 'dataCartServed', @launchCart
       @on 'dataCartItemServed', @renderCartItem
@@ -80,6 +86,7 @@ define [
         cartCloseButtonSelector: @toggleCart
         emptyCartButtonSelector: @toggleCart
         addToCartBtnSelector: @addToCart
+        removeItemSelector: @removeItem
 
       @on 'change',
         tosCheckboxSelector: @toggleTosHelp

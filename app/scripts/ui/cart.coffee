@@ -44,7 +44,8 @@ define [
         @toggleCart()
 
     @toggleTosHelp = (e) ->
-      @select('tosHelpSelector').toggleClass 'is-accepted', $(e.target).is ':checked'
+      accepted = $(e.target).is ':checked'
+      @select('tosHelpSelector').toggleClass('is-accepted', accepted).next().attr('disabled', !accepted)
 
     @addToCart = (e) ->
       $(e.target).prop('disabled', true).text($(e.target).data('disabled-text'))

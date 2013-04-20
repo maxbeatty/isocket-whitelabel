@@ -47,20 +47,23 @@
     padding: 2px 8px
     font-size: 12px
 
-.buyads-cart-close
-  position: absolute
-  top: 2%
-  right: 2%
+@mixin closeBtn ($font-size, $hoverColor)
+  float: right
   padding: 0
   background-color: transparent
   border: 0
   color: $lightestGray
   font-weight: bolder
-  font-size: 22px
+  font-size: $font-size
   cursor: pointer
   &:hover,
   &:active
-    color: $lighterGray
+    color: $hoverColor
+
+.buyads-cart-close
+  +closeBtn(22px, $lighterGray)
+.buyads-item-remove
+  +closeBtn(16px, $errorText)
 
 .buyads-config-creative
   display: block

@@ -13,6 +13,8 @@ define [
     @toggleConfig = (e) ->
       @trigger 'uiNeedsFilepicker', e.target
 
+      # TODO: if textarea.val().length > 0 then make green
+
       # change big button state
       $(e.target).toggleClass('is-active pickadate__input--active')
         .next()

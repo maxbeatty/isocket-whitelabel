@@ -36,16 +36,28 @@ define [
         clickThroughInput = $activeTab.find '[name="buyadsClickThrough"]'
 
         if fileUrlInput.val().length > 0 and clickThroughInput[0].validity.valid
-          @trigger 'uiNeedsCreativeTag', data
+          clickThrough = $(clickThroughInput).val()
+          fileUrl = fileUrlInput.val()
+          [w, h] = $activeTab.parents('.buyads-cart-item').find('.buyads-placement-dimension')
+          width = $(w).text().trim()
+          height = $(h).text().trim()
+
+          tag = """
+                <a href="CLICK_URL#{clickThrough}" target=_blank>
+                  <img width="#{width}px" height="#{height}px" src="#{fileUrl}" />
+                </a>
+                """
+
+          # disable paste tab
+          $activeTab.parents('.tabbable').find('[href="#paste"]').attr('disabled', true)
+          # make textarea readonly and assign tag to its value
+          $activeTab.prev().find('textarea').val(tag).attr('readonly', true)
+
+          @closeConfig target: $activeTab
+
         else
           @trigger 'uiShowCreativeError', $activeTab
 
-        # @trigger 'dataValidateCreative',
-        #   fileUrl: $activeTab.find '[name="buyadsFilepicker"]'
-        #   clickThrough: $activeTabfind '[name="buyadsClickThrough"]'
-
-        # form tag from fileUrl and clickThrough
-        # disable paste tab, make textarea readonly
       else
         @closeConfig target: $activeTab
 

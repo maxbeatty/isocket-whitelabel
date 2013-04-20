@@ -60,6 +60,7 @@ define [
       @select('cartPickadateSelector').pickadate
         dateMin: true,
         format: 'd mmm, yyyy'
+        formatSubmit: 'yyyy-mm-dd'
 
     # TODO: make sure end date is after end date
 

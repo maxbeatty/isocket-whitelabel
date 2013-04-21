@@ -57,9 +57,12 @@ define [
           @trigger 'dataCartSubmittedSuccess', data
 
     @serveSubtotal = (e, impInput) ->
-      @trigger 'dataTotalServed',
-        subtotal: @money impInput.value * impInput.getAttribute 'data-price'
-        target: impInput
+      if !isNaN(parseFloat(impInput.value)) and isFinite(impInput.value) and impInput.value >= impInput.min
+        @trigger 'dataTotalServed',
+          subtotal: @money impInput.value * impInput.getAttribute 'data-price'
+          target: impInput
+      else
+        @trigger 'dataInvalidImpressions', impInput
 
     @after 'initialize', ->
       @on 'uiCartRequested', @serveCart

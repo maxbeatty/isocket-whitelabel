@@ -162,8 +162,11 @@ define [
       @trigger 'uiNeedsSubtotal', e.target
 
     @updateTotal = (e, data) ->
-      $(data.target).parents('.buyads-span')
-        .find('[class$="subtotal"]').text data.subtotal
+      $(data.target).removeClass('is-invalid')
+        .parents('.buyads-span').find('[class$="subtotal"]').text data.subtotal
+
+    @highlightImpressions = (e, target) ->
+      $(target).addClass 'is-invalid'
 
     @after 'initialize', ->
       @on 'dataCartServed', @launchCart
@@ -171,6 +174,7 @@ define [
       @on 'dataCartSubmittedError', @showSubmitErrors
       @on 'dataCartSubmittedSuccess', @confirmPurchase
       @on 'dataTotalServed', @updateTotal
+      @on 'dataInvalidImpressions', @highlightImpressions
 
       @on 'click',
         cartBtnSelector: @toggleCart

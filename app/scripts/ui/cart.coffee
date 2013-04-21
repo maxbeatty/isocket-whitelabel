@@ -99,7 +99,11 @@ define [
         .next().attr('disabled', !accepted)
 
     @addToCart = (e) ->
-      $(e.target).prop('disabled', true).text($(e.target).data('disabled-text'))
+      addToCartBtn = $(e.target)
+      addToCartBtn.prop('disabled', true)
+        .data('enabled-text', addToCartBtn.text().trim())
+        .text(addToCartBtn.data('disabled-text'))
+
       @trigger 'uiCartItemRequested', placement: e.target
 
     @renderCartItem = (e, data) ->
@@ -118,6 +122,8 @@ define [
     @removeItem = (e) ->
       # TODO: confirm user wants to remove item
       $(e.target).parent().remove()
+
+      # TODO: re-enable related add-to-cart button
 
     @showSubmitErrors = (e, data) ->
       for field, message of data.message
@@ -151,12 +157,8 @@ define [
 
       @select(messageSelector).show()
 
-      @select('addToCartBtnSelector')
-        .prop('disabled', false)
-        .text(
-          @select('addToCartBtnSelector')
-          .data('enabled-text')
-        )
+      @select('addToCartBtnSelector').prop('disabled', false)
+        .text(@select('addToCartBtnSelector').data('enabled-text'))
 
     @calcTotal = (e) ->
       @trigger 'uiNeedsSubtotal', e.target

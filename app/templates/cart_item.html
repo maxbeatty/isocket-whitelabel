@@ -19,7 +19,7 @@
             <div class="tab-content">
               <div class="tab-pane active" id="paste">
 
-                <textarea name="buyads-cart-item[<%= p.index %>]-creative" placeholder="Paste your creative tag here"></textarea>
+                <textarea name="buyads-cart-item[<%= p.index %>]-creative_tag" placeholder="Paste your creative tag here"></textarea>
                 <label class="control-label">
                   <strong>Have macros?</strong>
                   Use
@@ -86,7 +86,7 @@
 
   <div class="buyads-cart-item-detail">
     <!-- Package ID -->
-    <input name="buyads-orders[<%= p.index %>][package_id]" value="<%= p.package.id %>"type="hidden">
+    <input name="buyads-orders[<%= p.index %>]-package_id" value="<%= p.package.id %>"type="hidden">
 
     <!-- TODO: creative -->
     <div class="box">Configure Creative</div>
@@ -94,22 +94,22 @@
     <fieldset class="picker-holder--classic">
       <!-- start -->
       <div class="buyads-cols">
-        <label for="buyads-orders[<%= p.index %>][start_time]">Start Date</label>
+        <label for="buyads-orders[<%= p.index %>]-start_time">Start Date</label>
         <!-- asap? -->
-        <input name="buyads-orders[<%= p.index %>][start_time]" class="buyads-datepicker" type="text">
+        <input name="buyads-orders[<%= p.index %>]-start_time" class="buyads-datepicker" type="text">
       </div>
 
       <!-- end -->
       <div class="buyads-cols">
-        <label for="buyads-orders[<%= p.index %>][end_time]-">End Date</label>
+        <label for="buyads-orders[<%= p.index %>]-end_time-">End Date</label>
         <!-- duration? -->
-        <input name="buyads-orders[<%= p.index %>][end_time]" class="buyads-datepicker" type="text">
+        <input name="buyads-orders[<%= p.index %>]-end_time" class="buyads-datepicker" type="text">
       </div>
     </fieldset>
 
     <!-- impressions / duration -->
     <% if (p.package.type === 'cpm') { %>
-      <label for="buyads-orders[<%= p.index %>][impressions]">Impressions</label>
+      <label for="buyads-orders[<%= p.index %>]-impressions">Impressions</label>
       <div class="buyads-input-append">
         <input type="number" step="1" min="<%= p.package.minqty %>"
           value="<%= p.package.minqty %>"
@@ -122,8 +122,8 @@
       <span class="buyads-item-cpm-equation">
 
     <% } else { %>
-      <label for="buyads-orders[<%= p.index %>][duration]">Duration</label>
-      <select name="buyads-orders[<%= p.index %>][duration]">
+      <label for="buyads-orders[<%= p.index %>]-duration">Duration</label>
+      <select name="buyads-orders[<%= p.index %>]-duration">
         <option value="7">1 week</option>
         <option value="14">2 weeks</option>
         <option value="21">3 weeks</option>

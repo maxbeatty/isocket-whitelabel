@@ -136,7 +136,7 @@ define [
             .find("input[name*=\"#{field}\"]"), message
 
     @displayError = (elem, message) ->
-      $(elem).addClass('error')
+      $(elem).addClass('is-invalid')
       # TODO: do something awesome with these error messages
       # $(elem).val(message)
 

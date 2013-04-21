@@ -21,13 +21,17 @@ define [
       emptyCartButtonSelector: '.buyads-empty-cart + .buyads-btn'
       cartPickadateSelector: '.buyads-datepicker'
       removeItemSelector: '.buyads-item-remove'
-<<<<<<< HEAD
       cartSubmitSelector: '.buyads-cart-submit'
       cartUserSelector: '.buyads-cart-info'
       cartItemSelector: '.buyads-cart-item'
-=======
       impInputSelector: '[name$="Kimps"]'
->>>>>>> origin/config-creatives
+      dateInputSelector: '[name$="_time"]'
+      durationSelector: '[name$="_duration"]'
+      fileUploadSelectors: '[name="buyadsFilepicker"], [name="buyadsClickThrough"]'
+      allInputSelectors: 'input, textarea, select'
+      newUserConfirmationSelector: '.buyads-new-user-confirmation'
+      existingUserConfirmationSelector: '.buyads-existing-user-confirmation'
+
 
     @requestCart = ->
       @trigger 'uiCartRequested' unless cartRequested
@@ -41,11 +45,15 @@ define [
 
     @toggleCart = ->
       if cartRequested
+        @select('newUserConfirmationSelector').hide()
+        @select('existingUserConfirmationSelector').hide()
+
         @select('cartSelector').toggleClass 'is-open'
       else
         @requestCart()
 
     @submitCart = (e) ->
+      @select('allInputSelectors').removeClass('error')
       @trigger 'uiCartSubmitted',
         data: @collectCartData()
 
@@ -53,19 +61,28 @@ define [
       [
         @select('cartUserSelector')
           .find('input')
+          .not(@attr['tosCheckboxSelector'])
           .serialize()
           .replace(/(^|&)buyads\-/g, '$1'),
 
-        @select('cartItemSelector').map (i, item) ->
-          $(item).find('input').map (j, input) ->
-            $input = $(input)
-            if name = $input.attr('name').match(/\[([^\]]+)\]$/, '')?[1]
-              val = if name.match(/impression/)
-                $input.val() * 1000
-              else
-                $input.val() || ''
+        @select('cartItemSelector').map (i, item) =>
+          $(item).find('input, textarea')
+            .not(@attr['dateInputSelector'])
+            .not(@attr['durationSelector'])
+            .not(@attr['fileUploadSelectors'])
+            .map (j, input) =>
+              $input = $(input)
+              if name = $input.attr('name').match(/-([^\]]+)$/, '')?[1]
+                field = switch
+                  when name.match(/_submit$/) then name.replace(/_submit$/, '')
+                  when name.match(/Kimps$/) then 'impressions'
+                  else name
 
-              'orders[' + i + '][' + name + ']=' + val
+                val = switch
+                  when name.match(/Kimps$/) then $input.val() * 1000
+                  else $input.val()
+
+                'orders[' + i + '][' + field + ']=' + val
 
           .get().join '&'
         .get().join '&'
@@ -78,7 +95,8 @@ define [
 
     @toggleTosHelp = (e) ->
       accepted = $(e.target).is ':checked'
-      @select('tosHelpSelector').toggleClass('is-accepted', accepted).next().attr('disabled', !accepted)
+      @select('tosHelpSelector').toggleClass('is-accepted', accepted)
+        .next().attr('disabled', !accepted)
 
     @addToCart = (e) ->
       $(e.target).prop('disabled', true).text($(e.target).data('disabled-text'))
@@ -106,19 +124,39 @@ define [
         if field == 'orders'
           for i, errorObject of message
             for subField, subMessage of errorObject
+              selector = if subField == 'impressions'
+                @attr['impInputSelector']
+              else
+                "input[name*=\"#{subField}\"]"
+
               @displayError $(@select('cartItemSelector')[i])
-                .find("input[name*=\"#{subField}\"]"), subMessage
+                .find(selector), subMessage
         else
           @displayError @select('cartUserSelector')
             .find("input[name*=\"#{field}\"]"), message
 
     @displayError = (elem, message) ->
+      $(elem).addClass('error')
       # TODO: do something awesome with these error messages
       # $(elem).val(message)
 
     @confirmPurchase = (e, data) ->
-      # TODO: display a confirmation message and instructions on what to do next
-      # TODO: clear the cart
+      orderCount = data.orders.length
+      @select('cartItemSelector').remove();
+
+      messageSelector = if data.registered
+        'newUserConfirmationSelector'
+      else
+        'existingUserConfirmationSelector'
+
+      @select(messageSelector).show()
+
+      @select('addToCartBtnSelector')
+        .prop('disabled', false)
+        .text(
+          @select('addToCartBtnSelector')
+          .data('enabled-text')
+        )
 
     @calcTotal = (e) ->
       @trigger 'uiNeedsSubtotal', e.target

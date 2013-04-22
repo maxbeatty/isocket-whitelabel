@@ -44,9 +44,8 @@ define [
 
     @submitCart = (e, data) ->
 
-      # TODO: needs to be PJAX to work-around same origin policy issues?
-      # TODO: this should also be read from a config file
-      $.ajax 'http://buyads.dev/wl/index.php/order',
+      # TODO: JSONP if WL_HOST won't allow cross-domain access
+      $.ajax '//@@WL_HOST',
         type: 'POST'
         data: data.data
         dataType: 'json'

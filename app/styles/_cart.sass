@@ -12,6 +12,8 @@
 
 @import pickadate
 
+@import modules/alert
+
 $breakpoint: 1024px
 $sidebar: 260px
 $padding: 20px
@@ -36,6 +38,8 @@ $width: $breakpoint - ($padding * 4)
   left: 50%
   z-index: $zIndexModal
   width: $width
+  max-height: 600px
+  overflow-y: auto
   padding: $padding
   padding-top: 0
   margin-left: $width / -2 - $padding
@@ -55,10 +59,17 @@ $width: $breakpoint - ($padding * 4)
     border: 0
     margin: 0
     padding: 0
-  h2
+  h2,
+  h3
     display: block
-    font-size: 21px
     margin: 15px 0
+  h2
+    font-size: 21px
+  h3
+    font-size: 16px
+  .hidden
+    display: none
+    visibility: hidden
 
 .buyads-span
   float: left

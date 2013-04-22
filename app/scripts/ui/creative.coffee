@@ -9,15 +9,13 @@ define [
       configBtnSelector: '.buyads-config-creative'
       closeBtnSelector: '.pickadate__button--clear'
       saveBtnSelector: '.pickadate__button--today'
+      creativeTagSelector: '[name$="creative_tag"]'
 
     @toggleConfig = (e) ->
       @trigger 'uiNeedsFilepicker', e.target
 
-      # TODO: if textarea.val().length > 0 then make green
-
       # change big button state
-      $(e.target).toggleClass('is-active pickadate__input--active')
-        .next()
+      $(e.target).toggleClass('is-active').removeClass('is-invalid').next()
         # change state of popover
         .toggleClass('pickadate__holder--opened pickadate__holder--focused')
 
@@ -50,10 +48,12 @@ define [
                 </a>
                 """
 
-          # disable paste tab
-          $activeTab.parents('.tabbable').find('[href="#paste"]').attr('disabled', true)
-          # make textarea readonly and assign tag to its value
-          $activeTab.prev().find('textarea').val(tag).attr('readonly', true)
+          # hide paste tab
+          $activeTab.parents('.tabbable').find('li').first().hide()
+
+          @select('creativeTagSelector').val(tag)
+            .attr('readonly', true)
+            .trigger('change')
 
           @closeConfig target: $activeTab
 
@@ -66,6 +66,9 @@ define [
     @showError = (e, tab) ->
       $(tab).find('.alert').removeClass 'hidden'
 
+    @updateConfigBtn = (e, data) ->
+      @select('configBtnSelector').toggleClass 'is-good', e.target.value.length
+
     @after 'initialize', ->
       @on 'click',
         configBtnSelector: @toggleConfig
@@ -74,5 +77,7 @@ define [
         # TODO: click outside of creative, close it
 
       @on 'uiShowCreativeError', @showError
+
+      @on 'change', creativeTagSelector: @updateConfigBtn
 
   defineComponent creative

@@ -9,15 +9,15 @@
             <div class="tabbable">
               <ul class="nav nav-tabs">
                 <li class="active">
-                  <a data-toggle="tab" href="#paste">Paste</a>
+                  <a data-toggle="tab" href="#paste<%= p.index %>">Paste</a>
                 </li>
                 <li class="">
-                  <a data-toggle="tab" href="#upload">Upload</a>
+                  <a data-toggle="tab" href="#upload<%= p.index %>">Upload</a>
                 </li>
               </ul>
 
               <div class="tab-content">
-                <div class="tab-pane active" id="paste">
+                <div class="tab-pane active" id="paste<%= p.index %>">
 
                   <textarea name="buyads-cart-item[<%= p.index %>]-creative_tag" placeholder="Paste your creative tag here"></textarea>
                   <label class="control-label">
@@ -30,7 +30,7 @@
                   </label>
                 </div>
 
-                <div class="tab-pane" id="upload">
+                <div class="tab-pane" id="upload<%= p.index %>">
                   <div class="alert hidden">
                     Please upload an image and set a click through URL before saving.
                   </div>

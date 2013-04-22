@@ -10,6 +10,7 @@ define [
       closeBtnSelector: '.pickadate__button--clear'
       saveBtnSelector: '.pickadate__button--today'
       creativeTagSelector: '[name$="creative_tag"]'
+      cartItemSelector: '.buyads-cart-item'
 
     @toggleConfig = (e) ->
       @trigger 'uiNeedsFilepicker', e.target
@@ -38,7 +39,7 @@ define [
         if fileUrlInput.val().length > 0 and clickThroughInput[0].validity.valid
           clickThrough = $(clickThroughInput).val()
           fileUrl = fileUrlInput.val()
-          [w, h] = $activeTab.parents('.buyads-cart-item').find('.buyads-placement-dimension')
+          [w, h] = $activeTab.parents(@attr['cartItemSelector']).find('.buyads-placement-dimension')
           width = $(w).text().trim()
           height = $(h).text().trim()
 
@@ -67,7 +68,10 @@ define [
       $(tab).find('.alert').removeClass 'hidden'
 
     @updateConfigBtn = (e, data) ->
-      @select('configBtnSelector').toggleClass 'is-good', e.target.value.length
+      $(e.target)
+        .closest(@attr['cartItemSelector'])
+        .find(@attr['configBtnSelector'])
+        .toggleClass 'is-good', e.target.value.length
 
     @after 'initialize', ->
       @on 'click',

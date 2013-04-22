@@ -23,6 +23,10 @@ module.exports = (grunt) ->
       dev: 'whitelabel.dev'
       prod: 'whitelabel.buyads.com'
       prodSSL: 'd2y4kgzxmykmku.cloudfront.net'
+    wl:
+      host:
+        dev: 'buyads.dev/wl/index.php/order'
+        prod: 'www.buyads.com/wl/index.php/order'
 
   grunt.initConfig
     yeoman: yeomanConfig
@@ -233,20 +237,29 @@ module.exports = (grunt) ->
       dist:
         options:
           variables:
+            WL_HOST: '<%= isocket.wl.host.prod %>'
             API_HOST: '<%= isocket.api.host.prod %>'
             BUILD: '<%= build %>'
             CDN: '<%= isocket.cdn.prod %>'
             CDN_SSL: '<%= isocket.cdn.prodSSL %>'
             VERSION: '<%= isocket.api.version %>'
-        files: [
+        files: [{
           expand: true
           flatten: true
           src: ['<%= yeoman.dist %>/<%= isocket.api.version %>/store.js']
           dest: '<%= yeoman.dist %>/<%= isocket.api.version %>/'
+          },
+          {
+            expand: true
+            flatten: true
+            src: ['<%= yeoman.dist %>/<%= isocket.api.version %>/front.js']
+            dest: '<%= yeoman.dist %>/<%= isocket.api.version %>/'
+          }
         ]
       server:
         options:
           variables:
+            WL_HOST: '<%= isocket.wl.host.dev %>'
             API_HOST: '<%= isocket.api.host.dev %>'
             BUILD: '../dist/<%= isocket.api.version %>' #YOLO
             CDN: '<%= isocket.cdn.dev %>'
@@ -257,6 +270,12 @@ module.exports = (grunt) ->
           flatten: true
           src: ['<%= yeoman.dist %>/<%= isocket.api.version %>/store.js']
           dest: '<%= yeoman.dist %>/<%= isocket.api.version %>/'
+          },
+          {
+            expand: true
+            flatten: true
+            src: ['<%= yeoman.dist %>/<%= isocket.api.version %>/front.js']
+            dest: '<%= yeoman.dist %>/<%= isocket.api.version %>/'
           },
           {
             expand: true

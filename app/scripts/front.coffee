@@ -16,6 +16,8 @@ require.config
       deps: ['jquery', 'es5shim', 'es5sham']
     'app':
       deps: ['../../components/flight/lib/index']
+    'jquery':
+      export: 'jQuery'
 
 require ['app'], (App) ->
   App.initialize()

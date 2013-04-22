@@ -42,6 +42,18 @@ define [
       @trigger 'dataCartItemServed',
         markup: cartItemTemplate { p: placement }
 
+    @submitCart = (e, data) ->
+
+      # TODO: JSONP if WL_HOST won't allow cross-domain access
+      $.ajax '//@@WL_HOST',
+        type: 'POST'
+        data: data.data
+        dataType: 'json'
+        error: (xhr) =>
+          @trigger 'dataCartSubmittedError', JSON.parse(xhr.responseText).error
+        success: (data) =>
+          @trigger 'dataCartSubmittedSuccess', data
+
     @serveSubtotal = (e, impInput) ->
       if !isNaN(parseFloat(impInput.value)) and isFinite(impInput.value) and impInput.value >= impInput.min
         @trigger 'dataTotalServed',
@@ -52,6 +64,7 @@ define [
 
     @after 'initialize', ->
       @on 'uiCartRequested', @serveCart
+      @on document, 'uiCartSubmitted', @submitCart
 
       @on 'uiCartItemRequested', @serveCartItem
 

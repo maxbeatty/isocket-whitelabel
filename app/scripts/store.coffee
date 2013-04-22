@@ -3,16 +3,14 @@
 class BuyAdsWhiteLabel
   constructor: ->
     @el = document.getElementById 'buyads-whitelabel'
+    @secure = 'https:' is document.location.protocol
     @setupShop()
     @getFront()
     @populate @el.getAttribute('data-property'), @el.getAttribute('data-key')
 
   getFront: ->
     fpath = '/@@VERSION/@@BUILD/front.js'
-    fhost = if 'https:' is document.location.protocol
-      '//@@CDN_SSL'
-    else
-      '//@@CDN'
+    fhost = if @secure then '//@@CDN_SSL' else '//@@CDN'
 
     front = document.createElement 'script'
     front.async = true

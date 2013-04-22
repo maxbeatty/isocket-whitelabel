@@ -32,7 +32,7 @@ define [
       # is upload tab active?
       $activeTab = $(e.target).parent().prev().find('.tab-pane.active')
 
-      if $activeTab.attr('id') is 'upload'
+      if $activeTab.attr('id').match /^upload/
         fileUrlInput = $activeTab.find '[name="buyadsFilepicker"]'
         clickThroughInput = $activeTab.find '[name="buyadsClickThrough"]'
 
@@ -52,7 +52,8 @@ define [
           # hide paste tab
           $activeTab.parents('.tabbable').find('li').first().hide()
 
-          @select('creativeTagSelector').val(tag)
+          # set textarea value of this item to our newly created tag
+          $activeTab.prev().find(@attr['creativeTagSelector']).val(tag)
             .attr('readonly', true)
             .trigger('change')
 

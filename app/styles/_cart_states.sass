@@ -1,3 +1,6 @@
+/* Define states for different components, modules, etc. */
+
+// cart and backdrop are initially hidden and can be triggered open
 .buyads-cart-backdrop
   display: none
 
@@ -8,9 +11,29 @@
     & + .buyads-cart-backdrop
       display: block
 
+// hide help message about tos once accepted
 .buyads-tos-help
   &.is-accepted
     visibility: hidden
 
+// hide message about empty cart when item is present
 .buyads-cart-item ~ .buyads-empty-cart
   display: none
+
+// hide order confirmation until successfully complete
+.buyads-confirmation
+  display: none
+  &.alert-success // instead of `is-complete` to save on size
+    display: block
+  // display message based on user type
+  .buyads-new,
+  .buyads-exising
+    display: none
+    &.is-customer-type
+      display: block
+
+// hide error messages until they occur
+.buyads-error
+  display: none
+  &.is-open
+    display: block

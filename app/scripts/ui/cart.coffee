@@ -6,6 +6,7 @@ define [
 ], (defineComponent, pickadate, $) ->
   cart = ->
     cartRequested = false
+    invalidInput = 'is-invalid'
 
     @defaultAttrs
       cartSelector: '.buyads-cart'
@@ -29,8 +30,11 @@ define [
       durationSelector: '[name$="_duration"]'
       fileUploadSelectors: '[name="buyadsFilepicker"], [name="buyadsClickThrough"]'
       allInputSelectors: 'input, textarea, select'
-      newUserConfirmationSelector: '.buyads-new-user-confirmation'
-      existingUserConfirmationSelector: '.buyads-existing-user-confirmation'
+      # order confirmation
+      orderConfirmationSelector: '.buyads-confirmation'
+      existingUserConfirmationSelector: '.buyads-existing'
+      newUserConfirmationSelector: '.buyads-new'
+      errorMsgListSelector: '.alert-error ul'
 
 
     @requestCart = ->
@@ -41,19 +45,23 @@ define [
 
       cartRequested = true
 
+      # assume user is addressing their mistake (makes form look nice before submitting)
+      @select('cartSelector').on 'focus', '.'+invalidInput, (e) =>
+        @forgetInvalid e.target
+
       @toggleCart()
 
     @toggleCart = ->
       if cartRequested
-        @select('newUserConfirmationSelector').hide()
-        @select('existingUserConfirmationSelector').hide()
-
         @select('cartSelector').toggleClass 'is-open'
       else
         @requestCart()
 
     @submitCart = (e) ->
-      @select('allInputSelectors').removeClass('error')
+      # disable error states
+      @select('allInputSelectors').removeClass(invalidInput)
+      @select('errorMsgListSelector').parent().removeClass('is-open')
+
       @trigger 'uiCartSubmitted',
         data: @collectCartData()
 
@@ -126,36 +134,57 @@ define [
       # TODO: re-enable related add-to-cart button
 
     @showSubmitErrors = (e, data) ->
+      errorFields = []
+      errorMessages = []
+
       for field, message of data.message
-        if field == 'orders'
-          for i, errorObject of message
-            for subField, subMessage of errorObject
-              selector = if subField == 'impressions'
-                @attr['impInputSelector']
-              else
-                "input[name*=\"#{subField}\"]"
+        if field is 'orders'
+          if typeof message is 'string' # one order required case
+            errorMessages.push message
+          else
+            for i, errorObject of message
+              for subField, subMessage of errorObject
+                selector = if subField is 'impressions'
+                  @attr['impInputSelector']
+                else
+                  "input[name*=\"#{subField}\"]"
 
-              @displayError $(@select('cartItemSelector')[i])
-                .find(selector), subMessage
+                errorFields.push $(@select('cartItemSelector')[i]).find(selector)
+                errorMessages.push subMessage
         else
-          @displayError @select('cartUserSelector')
-            .find("input[name*=\"#{field}\"]"), message
+          errorFields.push @select('cartUserSelector').find("input[name*=\"#{field}\"]")
+          errorMessages.push message
 
-    @displayError = (elem, message) ->
-      $(elem).addClass('is-invalid')
-      # TODO: do something awesome with these error messages
-      # $(elem).val(message)
+      unless errorMessages.length is 0
+        # highlight invalid inputs
+        $.each errorFields, (i, el) =>
+          @highlightInvalid null, el
+
+        # add all messages to error alert
+        frag = document.createDocumentFragment()
+        for e in errorMessages
+          msg = document.createElement 'li'
+          msg.innerHTML = e
+          frag.appendChild msg
+
+        @select('errorMsgListSelector').html(frag)
+          .parent().addClass('is-open') # L-A-Z-Y
 
     @confirmPurchase = (e, data) ->
       orderCount = data.orders.length
+
+      # empty cart
       @select('cartItemSelector').remove();
+
+      # show confirmation message
+      @select('orderConfirmationSelector').addClass('alert-success')
 
       messageSelector = if data.registered
         'newUserConfirmationSelector'
       else
         'existingUserConfirmationSelector'
 
-      @select(messageSelector).show()
+      @select(messageSelector).addClass('is-customer-type')
 
       @select('addToCartBtnSelector').prop('disabled', false)
         .text(@select('addToCartBtnSelector').data('enabled-text'))
@@ -164,11 +193,14 @@ define [
       @trigger 'uiNeedsSubtotal', e.target
 
     @updateTotal = (e, data) ->
-      $(data.target).removeClass('is-invalid')
+      $(data.target).removeClass(invalidInput)
         .parents('.buyads-span').find('[class$="subtotal"]').text data.subtotal
 
-    @highlightImpressions = (e, target) ->
-      $(target).addClass 'is-invalid'
+    @highlightInvalid = (e, target) ->
+      $(target).addClass invalidInput
+
+    @forgetInvalid = (target) ->
+      $(target).removeClass invalidInput
 
     @after 'initialize', ->
       @on 'dataCartServed', @launchCart
@@ -176,7 +208,7 @@ define [
       @on 'dataCartSubmittedError', @showSubmitErrors
       @on 'dataCartSubmittedSuccess', @confirmPurchase
       @on 'dataTotalServed', @updateTotal
-      @on 'dataInvalidImpressions', @highlightImpressions
+      @on 'dataInvalidImpressions', @highlightInvalid
 
       @on 'click',
         cartBtnSelector: @toggleCart

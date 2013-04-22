@@ -1,20 +1,23 @@
 <div class="buyads-cart">
   <button type="button" class="buyads-cart-close">&times;</button>
-  <h2>
-    Your Campaign
-    <!-- cart icon w/ count? -->
-  </h2>
+  <h2>Your Campaign</h2>
+
+  <div class="buyads-error alert alert-error">
+    <h3>These errors prevented your order from being placed!</h3>
+    <ul></ul>
+  </div>
 
   <div class="buyads-cart-items">
-    <!-- cart_item.html -->
 
-    <p class="buyads-new-user-confirmation">
-      Your order has been placed, and we've sent you an email with your new login information for BuyAds.com, where you can check on the status of your order.
-    </p>
-
-    <p class="buyads-existing-user-confirmation">
-      Your order has been placed! Log in to you BuyAds.com account to check on the status of your order.
-    </p>
+    <div class="buyads-confirmation alert">
+      <h3>Your order has been placed!</h3>
+      <p class="buyads-new">
+        We sent you an email with your new login information for <a href="http://www.buyads.com" target="_blank">BuyAds.com</a>, where you can check the status of your order.
+      </p>
+      <p class="buyads-existing">
+        <a href="https://www.buyads.com/login" target="_blank">Log in to your BuyAds.com account</a> to check the status of your order.
+      </p>
+    </div>
 
     <p class="buyads-empty-cart">You haven't added any placements yet</p>
 
@@ -41,7 +44,7 @@
 
     <p class="buyads-tos-help">You must accept before continuing</p>
 
-    <button type="button" class="buyads-cart-submit buyads-btn">Submit Order for Approval</button>
+    <button type="button" class="buyads-cart-submit buyads-btn" disabled>Submit Order for Approval</button>
   </div>
 </div>
 

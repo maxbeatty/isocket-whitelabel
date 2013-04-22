@@ -25,6 +25,7 @@ define [
       cartSubmitSelector: '.buyads-cart-submit'
       cartUserSelector: '.buyads-cart-info'
       cartItemSelector: '.buyads-cart-item'
+      creativeConfigBtnSelector: '.buyads-config-creative'
       impInputSelector: '[name$="Kimps"]'
       dateInputSelector: '[name$="_time"]'
       durationSelector: '[name$="_duration"]'
@@ -144,10 +145,10 @@ define [
           else
             for i, errorObject of message
               for subField, subMessage of errorObject
-                selector = if subField is 'impressions'
-                  @attr['impInputSelector']
-                else
-                  "input[name*=\"#{subField}\"]"
+                selector = switch subField
+                  when 'impressions' then @attr['impInputSelector']
+                  when 'creative_tag' then @attr['creativeConfigBtnSelector']
+                  else "input[name*=\"#{subField}\"]"
 
                 errorFields.push $(@select('cartItemSelector')[i]).find(selector)
                 errorMessages.push subMessage

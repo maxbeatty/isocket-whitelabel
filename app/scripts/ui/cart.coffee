@@ -1,9 +1,8 @@
 "use strict"
 define [
   'flight/component',
-  'pickadate',
-  'jquery'
-], (defineComponent, pickadate, $) ->
+  'pickadate'
+], (defineComponent, pickadate) ->
   cart = ->
     cartRequested = false
     invalidInput = 'is-invalid'

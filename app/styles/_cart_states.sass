@@ -25,6 +25,8 @@
   display: none
   &.alert-success // instead of `is-complete` to save on size
     display: block
+    & + .buyads-empty-cart
+      display: none // don't show message about cart being empty
   // display message based on user type
   .buyads-new,
   .buyads-exising

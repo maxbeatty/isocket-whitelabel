@@ -8,5 +8,7 @@ describe 'Store', ->
     expect(front.src).toMatch(/front.js/)
 
   xit 'should populate the store with data from the API', ->
+    # TODO: not sure how to test this
+    expect(window.YourBuyAdsWhiteLabel.inventory).toBeDefined()
 
 

@@ -50,10 +50,10 @@ class BuyAdsWhiteLabel
         @inventory = JSON.parse httpRequest.responseText
 
         if document.createEvent # !IE8
-          evt = document.createEvent "CustomEvent"
+          evt = document.createEvent 'CustomEvent'
           evt.initCustomEvent 'dataInventory', true, true, {}
           document.dispatchEvent evt
 
       httpRequest.send()
 
-this.YourBuyAdsWhiteLabel = new BuyAdsWhiteLabel()
+@YourBuyAdsWhiteLabel = new BuyAdsWhiteLabel()

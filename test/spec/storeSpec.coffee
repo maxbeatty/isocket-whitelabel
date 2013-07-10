@@ -10,6 +10,6 @@ describe 'Store', ->
   it 'should populate the store with data from the API', ->
     expect('this').to.be.ok
     # TODO: not sure how to test this
-    # expect(window.YourBuyAdsWhiteLabel.inventory).toBeDefined()
+    # expect(window.YourBuyAdsWhiteLabel.inventory).to.be.defined()
 
 

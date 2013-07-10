@@ -14,7 +14,7 @@ function testBower {
   if hash bower 2>/dev/null; then
     echo "bower installed - good"
   else
-    npm install -g bower
+    npm install bower
   fi
 }
 
@@ -22,12 +22,12 @@ function testGrunt {
   if hash grunt 2>/dev/null; then
     echo "grunt installed - good"
   else
-    npm install -g grunt-cli
+    npm install grunt-cli
   fi
 }
 
 function build {
-  npm install && bower install && grunt test
+  npm install && node_modules/bower/bin/bower install && node_modules/grunt-cli/bin/grunt test
 
   if [ $? -ne 0 ]; then
     echo "build failed"

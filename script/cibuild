@@ -1,0 +1,45 @@
+#!/bin/bash
+
+function testNpm {
+  if hash npm 2>/dev/null; then
+    echo "npm installed - good"
+  else
+    echo "need to install npm"
+    exit 1;
+  fi
+}
+
+
+function testBower {
+  if hash bower 2>/dev/null; then
+    echo "bower installed - good"
+  else
+    npm install -g bower
+  fi
+}
+
+function testGrunt {
+  if hash grunt 2>/dev/null; then
+    echo "grunt installed - good"
+  else
+    npm install -g grunt-cli
+  fi
+}
+
+function build {
+  npm install && bower install && grunt test
+
+  if [ $? -ne 0 ]; then
+    echo "build failed"
+    exit 1;
+  fi
+}
+
+testNpm && testBower && testGrunt
+
+if [ $? -ne 0 ]; then
+  echo "dependencies failed"
+  exit 1;
+else
+  build
+fi

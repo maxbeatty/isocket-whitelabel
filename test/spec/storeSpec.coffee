@@ -8,8 +8,8 @@ describe 'Store', ->
     expect(front.src).to.match(/front.js/)
 
   it 'should populate the store with data from the API', ->
-    expect('this').to.be.ok
+    # expect('this').to.be.ok
     # TODO: not sure how to test this
-    # expect(window.YourBuyAdsWhiteLabel.inventory).to.be.defined()
+    expect(window.YourBuyAdsWhiteLabel.inventory).to.be.defined()
 
 

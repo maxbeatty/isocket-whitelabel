@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Spec Runner</title>
+
+  <link rel="stylesheet" href="../components/mocha/mocha.css" />
+</head>
+<body>
+  <div id="mocha"></div>
+
+  <script src="../components/mocha/mocha.js"></script>
+  <script>
+    mocha.setup('bdd');
+  </script>
+
+  <script src="../components/chai/chai.js"></script>
+  <script>
+    var expect = chai.expect;
+  </script>
+
+  <script
+    src="../.tmp/scripts/store.js"
+    id="buyads-whitelabel"
+    data-key="foobar"
+    data-property="10KDPKSBO1">
+  </script>
+
+  <script src="../.tmp/test/spec/storeSpec.js"></script>
+
+  <script>
+    if (navigator.userAgent.indexOf('PhantomJS') < 0) {
+      mocha.run();
+    }
+  </script>
+
+</body>
+</html>

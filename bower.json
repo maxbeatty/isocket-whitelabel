@@ -10,5 +10,9 @@
     "pickadate": "~2.1.8",
     "bootstrap": "~2.3.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "~1.12.0",
+    "mocha-flight": "~0.2.0",
+    "chai": "~1.7.2"
+  }
 }
